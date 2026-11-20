@@ -6,69 +6,65 @@
 <title>TraderMaker.app - Zachovaj tvár a buď úspešný po svojom</title>
 <style>
 *{box-sizing:border-box;margin:0;padding:0}
-body{font-family:Inter,system-ui,-apple-system,Segoe UI,Roboto,Arial,sans-serif;background:#faf7f2;color:#1a1512;line-height:1.6}
-.wrap{max-width:1080px;margin:0 auto;padding:0 20px}
-header{position:sticky;top:0;background:rgba(250,247,242,.95);backdrop-filter:blur(8px);border-bottom:1px solid #e8ddd0;z-index:10}
-.top{display:flex;align-items:center;justify-content:space-between;padding:14px 0}
-.logo{font-weight:900;font-size:22px;letter-spacing:-.5px}
-.logo span{color:#b45309}
-nav{display:flex;gap:8px;flex-wrap:wrap}
-nav a{text-decoration:none;color:#1a1512;font-weight:700;font-size:14px;padding:8px 12px;border-radius:999px;border:1px solid transparent}
-nav a:hover{border-color:#e8ddd0;background:#fff}
-.hero{padding:56px 0 28px}
-.badge{display:inline-block;background:#1a1512;color:#fff;padding:6px 12px;border-radius:999px;font-size:12px;letter-spacing:.12em;font-weight:800}
-h1{font-size:44px;line-height:1.05;letter-spacing:-1.5px;margin:18px 0 14px;max-width:820px}
-h1 em{font-style:normal;color:#b45309}
-.lead{font-size:19px;color:#4a3f36;max-width:760px}
-.quote{margin:26px 0;background:#fff;border:1px solid #e8ddd0;border-left:6px solid #b45309;border-radius:16px;padding:22px}
+body{font-family:Inter,system-ui,-apple-system,Segoe UI,Roboto,Arial,sans-serif;background:#050810;color:#f2efe9;line-height:1.6;overflow-x:hidden}
+body:before{content:"";position:fixed;inset:0;background:
+radial-gradient(600px 400px at 85% 10%, rgba(212,175,55,.18), transparent 60%),
+radial-gradient(700px 500px at 10% 90%, rgba(80,120,255,.14), transparent 60%),
+linear-gradient(rgba(255,255,255,.04) 1px, transparent 1px),
+linear-gradient(90deg, rgba(255,255,255,.04) 1px, transparent 1px);
+background-size:auto,auto,44px 44px,44px 44px;pointer-events:none;z-index:0}
+.chart{position:fixed;right:-40px;top:120px;opacity:.16;pointer-events:none;z-index:0}
+.wrap{max-width:1080px;margin:0 auto;padding:0 20px;position:relative;z-index:1}
+header{position:sticky;top:0;background:rgba(5,8,16,.85);backdrop-filter:blur(12px);border-bottom:1px solid rgba(255,255,255,.08);z-index:10}
+.top{display:flex;align-items:center;justify-content:space-between;padding:14px 0;gap:12px;flex-wrap:wrap}
+.logo{display:flex;align-items:center;gap:10px;font-weight:900;font-size:22px;letter-spacing:-.5px}
+.logo svg{width:38px;height:38px}
+.logo b{color:#f2efe9}.logo i{font-style:normal;color:#d4af37}
+nav{display:flex;gap:6px;flex-wrap:wrap;align-items:center}
+nav a{text-decoration:none;color:#e8e2d8;font-weight:700;font-size:14px;padding:8px 12px;border-radius:999px}
+nav a:hover{background:rgba(255,255,255,.08)}
+.auth{display:flex;gap:8px}
+.btn{display:inline-block;background:#d4af37;color:#0a0f1e;text-decoration:none;font-weight:800;padding:11px 18px;border-radius:999px;text-align:center;font-size:14px}
+.btn.light{background:transparent;color:#f2efe9;border:1px solid rgba(255,255,255,.25)}
+.hero{padding:64px 0 28px}
+.badge{display:inline-block;background:rgba(212,175,55,.16);border:1px solid rgba(212,175,55,.4);color:#e9d18a;padding:6px 12px;border-radius:999px;font-size:12px;letter-spacing:.12em;font-weight:800}
+h1{font-size:46px;line-height:1.02;letter-spacing:-1.5px;margin:18px 0 14px;max-width:840px}
+h1 em{font-style:normal;color:#d4af37}
+.lead{font-size:19px;color:#c9c2b4;max-width:760px}
+.quote{margin:26px 0;background:rgba(255,255,255,.06);border:1px solid rgba(255,255,255,.1);border-left:6px solid #d4af37;border-radius:16px;padding:22px}
 .quote p{font-size:18px}
-.quote b{color:#b45309}
+.quote b{color:#e9d18a}
 .grid{display:grid;grid-template-columns:1fr 1fr;gap:16px;margin:28px 0 8px}
 @media(max-width:720px){.grid{grid-template-columns:1fr}h1{font-size:34px}}
-.card{background:#fff;border:1px solid #e8ddd0;border-radius:20px;padding:22px;display:flex;flex-direction:column;gap:10px}
+.card{background:rgba(255,255,255,.05);border:1px solid rgba(255,255,255,.1);border-radius:20px;padding:22px;display:flex;flex-direction:column;gap:10px;backdrop-filter:blur(6px)}
+.card:hover{border-color:rgba(212,175,55,.5)}
 .card h2{font-size:24px;letter-spacing:-.5px}
-.card p{color:#4a3f36}
-.tag{font-size:12px;font-weight:800;letter-spacing:.12em;text-transform:uppercase;color:#b45309}
-.btn{display:inline-block;margin-top:6px;background:#1a1512;color:#fff;text-decoration:none;font-weight:800;padding:12px 16px;border-radius:999px;text-align:center}
-.btn.light{background:#fff;color:#1a1512;border:1px solid #1a1512}
+.card p{color:#c9c2b4}
+.tag{font-size:12px;font-weight:800;letter-spacing:.12em;text-transform:uppercase;color:#d4af37}
 .section{padding:28px 0}
-.panel{background:#1a1512;color:#fff;border-radius:24px;padding:28px}
-.panel h2{font-size:30px;letter-spacing:-.8px;margin-bottom:10px}
-.panel p{color:#d6ccc2}
-.price{display:flex;gap:16px;flex-wrap:wrap;margin-top:18px}
-.price div{background:#fff;color:#1a1512;border-radius:16px;padding:16px;flex:1;min-width:220px}
-.price b{font-size:28px}
-footer{border-top:1px solid #e8ddd0;padding:22px 0 36px;color:#7a6a5e;font-size:14px}
-.small{font-size:13px;color:#7a6a5e}
+.auth-big{display:flex;gap:12px;flex-wrap:wrap;margin-top:18px}
+footer{border-top:1px solid rgba(255,255,255,.08);padding:22px 0 36px;color:#9a937f;font-size:14px}
+.small{font-size:13px;color:#9a937f}
 </style>
 </head>
 <body>
-<header><div class="wrap top"><div class="logo">TraderMaker<span>.app</span></div><nav><a href="index.html">Domov</a><a href="schodiky.html">Schodíky</a><a href="emocie.html">Emócie</a><a href="xau.html">XAU</a><a href="vesmir.html">Vesmír</a><a href="#komunita">Komunita</a></nav></div></header>
+<svg class="chart" width="420" height="260" viewBox="0 0 420 260" fill="none"><g stroke="#d4af37" stroke-width="2"><rect x="20" y="140" width="28" height="60"/><line x1="34" y1="110" x2="34" y2="230"/><rect x="90" y="100" width="28" height="70"/><line x1="104" y1="70" x2="104" y2="200"/><rect x="160" y="60" width="28" height="80"/><line x1="174" y1="30" x2="174" y2="170"/><rect x="230" y="40" width="28" height="70" fill="#d4af37"/><line x1="244" y1="20" x2="244" y2="130"/></g><path d="M0 210 L420 60" stroke="#fff" stroke-opacity=".2" stroke-dasharray="4 6"/></svg>
+<header><div class="wrap top"><div class="logo"><svg viewBox="0 0 48 48" fill="none"><rect x="4" y="28" width="10" height="14" fill="#d4af37"/><line x1="9" y1="20" x2="9" y2="46" stroke="#d4af37" stroke-width="2"/><rect x="19" y="18" width="10" height="16" fill="#d4af37"/><line x1="24" y1="8" x2="24" y2="38" stroke="#d4af37" stroke-width="2"/><rect x="34" y="8" width="10" height="16" fill="#d4af37"/><line x1="39" y1="2" x2="39" y2="30" stroke="#d4af37" stroke-width="2"/><path d="M39 0 L41 3 L44 3 L42 5 L43 8 L39 6 L35 8 L36 5 L34 3 L37 3 Z" fill="#ffd700"/></svg><span><b>Trader</b><i>Maker</i><span style="font-size:12px;color:#9a937f;font-weight:600">.app</span></span></div><nav><a href="index.html">Domov</a><a href="schodiky.html">Schodíky</a><a href="emocie.html">Emócie</a><a href="xau.html">XAU</a><a href="vesmir.html">Vesmír</a></nav><div class="auth"><a class="btn light" href="#registracia">Prihlásiť sa</a><a class="btn" href="#registracia">Registrovať sa</a></div></div></header>
 <main class="wrap">
 <section class="hero">
-<span class="badge">LEN INFORMÁCIE, NIE ODPORÚČANIE</span>
+<span class="badge">LEN INFORMÁCIE, NIE ODPORÚČANIE • NOČNÝ REŽIM</span>
 <h1>Rozhodovať sa v obchodovaní je niekedy ako ísť <em>proti logike.</em></h1>
 <p class="lead">Logika nechce, aby si robil niečo, z čoho máš nepríjemné emócie. A z burzy máš iba negatívne emócie. Mohol som mať viac, mal som už predať, čo keď mi to ujde, prečo som to robil.</p>
-<div class="quote"><p><b>Nauč sa s nami rozlíšiť, kedy je logika ovplyvnená emóciami a kedy informáciami.</b><br><br>Ide o obchodovanie na CFD burze s osobným obchodníkom a nie o nejaký systém generujúci peniaze. Nesľubujeme, že to bude lepšie, <b>garantujeme, že to bude iné.</b></p></div>
+<div class="quote"><p><b>Nauč sa s nami rozlíšiť, kedy je logika ovplyvnená emóciami a kedy informáciami.</b><br><br>Ide o obchodovanie na CFD burze s informáciami o každom možnom priebehu a nie o nejaký systém generujúci peniaze. Nesľubujeme, že to bude lepšie, <b>garantujeme, že to bude iné.</b></p></div>
 <p>Tu sa hneď niečo naučíš a nič za to nechceš. Žiadny tlak, žiadny háčik, žiadne ale. Rozhoduješ sa sám.</p>
 </section>
-
-<section>
-<div class="grid">
-<article class="card"><span class="tag">01 • Schodíky</span><h2>Trading schodíky</h2><p>Príručka prežitia, keď trh praská pod nohami. Originál 1:1, tak ako si ho spravil.</p><a class="btn" href="schodiky.html">Otvoriť Schodíky 1:1 →</a><span class="small">Súbor: schodiky.html</span></article>
-<article class="card"><span class="tag">02 • Emócie</span><h2>Emócie a trading</h2><p>Konzistentný systém, ktorý prežije aj tvoje emócie. Originál 1:1, TLB protokol.</p><a class="btn" href="emocie.html">Otvoriť Emócie 1:1 →</a><span class="small">Súbor: emocie.html</span></article>
-<article class="card"><span class="tag">03 • XAU</span><h2>XAU / Zlato</h2><p>Zlato nie je graf. Je to terén. Zlatý padák GP-7A. Originál 1:1, XAU manuál.</p><a class="btn" href="xau.html">Otvoriť XAU 1:1 →</a><span class="small">Súbor: xau.html</span></article>
-<article class="card"><span class="tag">04 • Vesmír</span><h2>Vesmír • Biblia</h2><p>Forex je oceán, komodity sú dno, indexy sú lode, akcie sú raketa. Mapa vesmíru, podľa ktorej sa nestratíš. Originál 1:1.</p><a class="btn" href="vesmir.html">Otvoriť Vesmír 1:1 →</a><span class="small">Súbor: vesmir.html</span></article>
-</div>
-<p class="small">Ako to funguje na stránke: V GitHube musia byť spolu s týmto index.html aj tie 4 súbory s presne týmito menami: schodiky.html, emocie.html, xau.html, vesmir.html. Potom kliknutie otvorí originál 1:1 so všetkým.</p>
-</section>
-
-<section class="section" id="komunita">
-<div class="panel"><h2>Komunita, nie kurz za 500.</h2><p>Komunita ľudí, kde môžu zdieľať poznatky, komentovať, dopýtať sa čo nie je jasné, nesúhlasiť s vysvetlením prečo. Nie monológ, ale dialóg. Keď prerobíš, tak 4% účtu a nie celý účet, lebo si bol varovaný.</p>
-<div class="price"><div><span class="tag">Prvý mesiac</span><br><b>2 €</b><p>Na vyskúšanie, nech si to ohmataješ.</p></div><div><span class="tag">Potom mesačne</span><br><b>9,99 €</b><p>Ako dve kávy. Žiadny tlak, len pozvanie.</p></div></div>
-<p style="margin-top:16px"><a class="btn light" href="mailto:info@tradermaker.app" style="background:#fff;color:#1a1512">Zapísať sa do komunity</a></p>
-</div>
-</section>
+<section><div class="grid">
+<article class="card"><span class="tag">01 • Schodíky</span><h2>Trading schodíky</h2><p>Príručka prežitia, keď trh praská pod nohami.</p><a class="btn" href="schodiky.html">Otvoriť Schodíky →</a></article>
+<article class="card"><span class="tag">02 • Emócie</span><h2>Emócie a trading</h2><p>Konzistentný systém, ktorý prežije aj tvoje emócie.</p><a class="btn" href="emocie.html">Otvoriť Emócie →</a></article>
+<article class="card"><span class="tag">03 • XAU</span><h2>XAU / Zlato</h2><p>Zlato nie je graf. Je to terén. Zlatý padák GP-7A.</p><a class="btn" href="xau.html">Otvoriť XAU →</a></article>
+<article class="card"><span class="tag">04 • Vesmír</span><h2>Vesmír • Biblia</h2><p>Forex je oceán, komodity sú dno, indexy sú lode, akcie sú raketa.</p><a class="btn" href="vesmir.html">Otvoriť Vesmír →</a></article>
+</div></section>
+<section class="section" id="registracia"><h2 style="font-size:28px;letter-spacing:-.6px">Začni po svojom.</h2><p style="color:#c9c2b4;max-width:680px">Žiadne ceny na domove, žiadne tlačenie. Len sa zaregistruj alebo prihlás a pozri si to v kľude. Komunitu vymyslíme inak, samostatne.</p><div class="auth-big"><a class="btn" href="#registracia">Registrovať sa</a><a class="btn light" href="#registracia">Prihlásiť sa</a></div><p class="small" style="margin-top:12px">Len informácie, nie odporúčanie. Keď prerobíš, tak 4% účtu a nie celý účet, lebo si bol varovaný.</p></section>
 </main>
 <footer><div class="wrap"><b>TraderMaker.app</b> • Zachovaj tvár a buď úspešný po svojom. Nie byť kráľ, ale žiť naplno.<br><span class="small">Len informácie, nie odporúčanie • Rozhoduješ sa sám.</span></div></footer>
 </body>

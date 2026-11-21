@@ -1,1 +1,12 @@
-<svg xmlns="http://www.w3.org/2000/svg" width="44" height="44" viewBox="0 0 44 44"><circle cx="22" cy="11" r="10" fill="#e2bd55" opacity=".18"/><rect x="2" y="2" width="40" height="40" rx="11" fill="#0d1310" stroke="#e2bd55" stroke-width="1.2"/><path d="M22 5l1.6 2.8 3.1.4-2.3 2.2.6 3.1-2.9-1.6-2.9 1.6.6-3.1-2.3-2.2 3.1-.4z" fill="#e2bd55"/><rect x="8" y="27" width="6" height="9" rx="1.5" fill="#e2bd55"/><rect x="10.2" y="23.5" width="1.6" height="3.5" rx=".8" fill="#fff"/><rect x="19" y="21" width="6" height="15" rx="1.5" fill="#f4f0e4"/><rect x="21.2" y="17.5" width="1.6" height="3.5" rx=".8" fill="#fff"/><rect x="30" y="15" width="6" height="21" rx="1.5" fill="#e2bd55"/><rect x="32.2" y="11.5" width="1.6" height="3.5" rx=".8" fill="#fff"/></svg>
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64">
+  <rect width="64" height="64" rx="14" fill="#0A0E1A"/>
+  <rect x="2" y="2" width="60" height="60" rx="12" fill="none" stroke="#E8B923" stroke-width="2.5"/>
+  <!-- hviezda - vacsia, vysie -->
+  <path d="M32 6 L35 13.5 L43 14 L37 19.5 L38.5 27.5 L32 23.5 L25.5 27.5 L27 19.5 L21 14 L29 13.5 Z" fill="#E8B923"/>
+  <!-- 3 hrube sviecky - bez drobnych knotov, ktore sa pri 16px stracaju -->
+  <rect x="12" y="36" width="12" height="18" rx="2.5" fill="#E8B923"/>
+  <rect x="26" y="28" width="12" height="26" rx="2.5" fill="#F4F0E4"/>
+  <rect x="40" y="39" width="12" height="15" rx="2.5" fill="#E8B923"/>
+  <!-- jeden hruby knot len na strednej - stredobod -->
+  <rect x="31" y="23" width="3" height="5" rx="1.5" fill="#E8B923"/>
+</svg>

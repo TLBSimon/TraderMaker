@@ -201,6 +201,10 @@
   var section = document.querySelector('.vesmir-section');
   var progress = document.getElementById('vesmirProgress');
   var isLeaving = false;
+  var hasPushed = false;
+  var lastValidHref = location.href;
+  var lastPop = 0;
+  var fallbackDone = false;
   function forceShow(){
     if(!section) return;
     section.classList.remove('vesmir-leaving','vesmir-entering');
@@ -261,12 +265,13 @@
       var id = href.slice(1);
       var target = document.getElementById(id);
       if(target) target.scrollIntoView({behavior:'smooth', block:'start'});
-      try{ history.pushState({page:id}, '', href); }catch(err){}
+      try{ history.pushState({page:id}, '', href); hasPushed = true; lastValidHref = href; }catch(err){}
       return;
     }
     if(href === '#'){
       e.preventDefault();
       window.scrollTo({top:0, behavior:'smooth'});
+      try{ history.pushState({page:'top'}, '', '#vesmir'); hasPushed = true; lastValidHref = '#vesmir'; }catch(err){}
       return;
     }
     var isPage = href.indexOf('.html') !== -1 || href === '/' || href === '/index.html' || href.indexOf('/schodiky') !== -1 || href.indexOf('/emocie') !== -1 || href.indexOf('/xau') !== -1 || href.indexOf('/vesmir') !== -1 || href.indexOf('/dennicek') !== -1 || href.indexOf('/komunita') !== -1 || href.indexOf('tradermaker.app') !== -1;
@@ -275,16 +280,32 @@
       e.preventDefault();
       isLeaving = true;
       if(section){ section.classList.remove('vesmir-entered'); section.classList.add('vesmir-leaving'); }
-      try{ history.pushState({page:href}, '', href); }catch(err){}
+      try{ history.pushState({page:href}, '', href); hasPushed = true; lastValidHref = href; }catch(err){}
       setTimeout(function(){ window.location.href = href; }, 250);
       setTimeout(forceShow, 900);
       return;
     }
   }, false);
   window.addEventListener('popstate', function(ev){
+    var now = Date.now();
+    var isDouble = (now - lastPop) < 400;
+    lastPop = now;
     isLeaving = false;
     forceShow();
     updateProgress();
+    // Fallback na Domov pri state null: Domov = vrch stranky (pre vesmir.html) / index.html v celej appke.
+    // Priamy vstup ma tiez null state, ale hasPushed=false, tak ho neprebijame — Back na externy web ostane.
+    if(!ev.state && hasPushed && !fallbackDone){
+      fallbackDone = true;
+      // Domov = vrch, pokojne, bez dalsieho pushState
+      try{ window.scrollTo({top:0, behavior:'auto'}); }catch(e){ window.scrollTo(0,0); }
+      // Ak sme na vesmir.html a uzivatel isiel Spat az za prvy interny push, druhy Spat ho dostane na index.html cez historiu prehliadaca.
+      // Tu len zabezpecime, ze obsah je vidiet — nikdy cierna plocha.
+      setTimeout(forceShow, 50);
+    }
+    // Dvojity Spat rychlo: este raz vynut ukazanie poslednej platnej stranky
+    if(isDouble){ setTimeout(forceShow, 350); }
+    setTimeout(forceShow, 700);
   });
   window.addEventListener('pageshow', function(){ forceShow(); });
 })();

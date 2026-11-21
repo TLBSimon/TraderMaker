@@ -2,6 +2,37 @@
 <html lang="sk">
 <head>
 <meta charset="UTF-8">
+<!-- PREFETCH - prednačítanie stránok, aby prechody nesekali -->
+<link rel="prefetch" href="emocie.html">
+<link rel="prefetch" href="schodiky.html">
+<link rel="prefetch" href="xau.html">
+<link rel="prefetch" href="vesmir.html">
+<link rel="dns-prefetch" href="https://tradermaker.app">
+<style>
+  /* PLYNULEJŠIE PRECHODY - len transform + opacity na GPU, žiadne sekanie */
+  html { scroll-behavior: smooth; }
+  body {
+    opacity: 0;
+    animation: tmFadeIn 350ms cubic-bezier(.22,.61,.36,1) forwards;
+    will-change: opacity, transform;
+  }
+  @keyframes tmFadeIn {
+    from { opacity: 0; transform: translateY(6px); }
+    to { opacity: 1; transform: translateY(0); }
+  }
+  body.tm-leaving {
+    opacity: 0 !important;
+    transform: translateY(-6px);
+    transition: opacity 220ms ease-out, transform 220ms ease-out;
+  }
+  /* Karty / obsah - jemný stagger, ale nikdy nezostanú skryté */
+  [data-tm-card] { animation: tmCardIn 400ms ease-out both; }
+  @keyframes tmCardIn { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
+  /* Poistka - ak by sa niečo zaseklo, obsah musí byť vidieť */
+  body.tm-force-visible, body.tm-force-visible main, body.tm-force-visible #root {
+    opacity: 1 !important; visibility: visible !important; transform: none !important;
+  }
+</style>
 
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>React Artifact</title>
@@ -2035,5 +2066,67 @@ Error generating stack: `+u.message+`
 </script>
   <script>(function(){function m(a){var h=a.getAttribute("href");if(!h)return;try{var u=new URL(h,document.baseURI);if(((u.protocol==="http:"||u.protocol==="https:")&&u.host!==location.host)||u.protocol==="mailto:"||u.protocol==="tel:"||u.protocol==="sms:"){a.target="_blank";a.rel="noopener noreferrer";}}catch(e){}}function s(){document.querySelectorAll("a[href]").forEach(m);}if(document.readyState!=="loading"){s();}else{document.addEventListener("DOMContentLoaded",s);}document.addEventListener("click",function(e){var a=e.target&&e.target.closest&&e.target.closest("a[href]");if(a){m(a);}},true);})();</script>
   <script type="application/json" data-clippy-inline-media-manifest="1">{"version":1,"slots":[]}</script>
+
+<!-- SMOOTH PRECHODY + PREFETCH + OPRAVA SPÄŤ - len toto je pridané, obsah sa nemení -->
+<script>
+(function() {
+  // Poistka proti čiernej obrazovke po Späť (bfcache / back-forward cache)
+  function ensureVisible() {
+    document.body.classList.remove("tm-leaving");
+    document.body.classList.add("tm-force-visible");
+    document.body.style.opacity = "1";
+    document.body.style.visibility = "visible";
+    document.body.style.overflow = "";
+    setTimeout(function(){ document.body.classList.remove("tm-force-visible"); }, 600);
+  }
+  window.addEventListener("pageshow", function(e) { ensureVisible(); });
+  window.addEventListener("load", function() { setTimeout(ensureVisible, 400); });
+  setTimeout(ensureVisible, 500);
+
+  // Prefetch na hover - keď prejdeš myšou na odkaz, stránka sa prednačíta, prechod potom neseká
+  var links = document.querySelectorAll('a[href$=".html"]');
+  var prefetched = {};
+  function doPrefetch(href) {
+    if (!href || prefetched[href]) return;
+    prefetched[href] = true;
+    try {
+      var l = document.createElement("link");
+      l.rel = "prefetch"; l.href = href;
+      document.head.appendChild(l);
+    } catch(e) {}
+    // aj cez fetch do cache, ale bez blokovania
+    try { if (window.fetch) fetch(href, { credentials: "same-origin" }).catch(function(){}); } catch(e) {}
+  }
+  links.forEach(function(a) {
+    a.addEventListener("mouseenter", function() { doPrefetch(a.getAttribute("href")); }, { passive: true });
+    a.addEventListener("touchstart", function() { doPrefetch(a.getAttribute("href")); }, { passive: true });
+    a.addEventListener("focus", function() { doPrefetch(a.getAttribute("href")); }, { passive: true });
+  });
+  // Idle prefetch - keď je prehliadač voľný, prednačítaj všetky 4 stránky
+  function idlePrefetch() {
+    ["emocie.html","schodiky.html","xau.html","vesmir.html"].forEach(doPrefetch);
+  }
+  if ("requestIdleCallback" in window) requestIdleCallback(idlePrefetch, { timeout: 2000 });
+  else setTimeout(idlePrefetch, 1500);
+
+  // Plynulejší prechod pri kliknutí - jemný fade-out 200ms, potom natívna navigácia
+  // S poistkou: ak by sa navigácia zasekala, po 350ms ju vynútime. Späť rieši prehliadač natívne.
+  document.addEventListener("click", function(e) {
+    var a = e.target.closest ? e.target.closest('a[href$=".html"]') : null;
+    if (!a) return;
+    var href = a.getAttribute("href");
+    if (!href || href.indexOf("#") === 0) return;
+    if (a.target === "_blank") return;
+    // Len pre vnútorné .html stránky, nie pre kotvy v tej istej stránke
+    if (href === location.pathname.split("/").pop()) return;
+    e.preventDefault();
+    document.body.classList.add("tm-leaving");
+    var done = false;
+    function go() { if (!done) { done = true; location.href = href; } }
+    setTimeout(go, 200);
+    setTimeout(go, 350); // poistka - nikdy nezostať na fade-out
+  }, false);
+})();
+</script>
 </body>
 </html>

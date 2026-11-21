@@ -61,6 +61,12 @@ html, body { overflow-x: clip; }
   #root .tm-page-leaving, #root .tm-page-entering, #root .tm-page-entering.tm-page-entered { transition: none !important; filter: none !important; }
 }
 </style>
+
+<style id="tm-finish-v2">
+/* v2: zlatý scroll ukazovateľ + animácia len cez transform (nie width). Ostatné bez zmeny. */
+#root .tm-progress-fill { background: linear-gradient(90deg, #E8B923, #E9C46A) !important; box-shadow: 0 0 16px rgba(232,185,35,.55), 0 0 32px rgba(233,196,106,.35) !important; transform-origin: left center; will-change: transform; }
+@media (prefers-reduced-motion: reduce) { #root .tm-progress-fill { transition: none !important; } }
+</style>
 </head>
 <body>
   <div id="root"></div>
@@ -409,5 +415,66 @@ window.addEventListener('load', function(){ tmInjectStairs(); tmObserveReveals()
 })();
 </script>
   
-</body>
+<script>
+(function(){
+'use strict';
+/* TraderMaker · Schodíky · v2 — zlatý progress bar cez transform: scaleX. V1 vrstva sa nemení. */
+var tmFill = null;
+var tmFillObs = null;
+var tmLastPct = -1;
+function tmFindFill(){
+  if(tmFill) return tmFill;
+  try {
+    var el = document.querySelector('#root div[class*="z-[100]"] > div.h-full');
+    if(el) tmFill = el;
+  } catch(e){}
+  return tmFill;
+}
+function tmConvertProgress(){
+  var el = tmFindFill();
+  if(!el) return;
+  if(!el.classList.contains('tm-progress-fill')) el.classList.add('tm-progress-fill');
+  var w = el.style.width || '';
+  if(!w) return;
+  var pct = parseFloat(w);
+  if(isNaN(pct)) return;
+  if(w === '100%' && tmLastPct === 100) return;
+  tmLastPct = pct;
+  var scale = Math.max(0, Math.min(1, pct / 100));
+  el.style.width = '100%';
+  el.style.transform = 'scaleX(' + scale + ')';
+  el.style.transition = 'transform 0.12s linear';
+  try { el.style.willChange = 'transform'; } catch(e){}
+}
+function tmWatchProgress(){
+  if(tmFillObs) return;
+  var el = tmFindFill();
+  if(!el) return;
+  tmConvertProgress();
+  try {
+    tmFillObs = new MutationObserver(function(){ tmConvertProgress(); });
+    tmFillObs.observe(el, {attributes: true, attributeFilter: ['style']});
+  } catch(e){}
+}
+var tmPending2 = false;
+function tmTick2(){
+  if(tmPending2) return;
+  tmPending2 = true;
+  requestAnimationFrame(function(){ tmPending2 = false; tmWatchProgress(); });
+}
+function tmInit2(){
+  try {
+    var mo = new MutationObserver(function(){ tmTick2(); });
+    mo.observe(document.documentElement, {childList: true, subtree: true});
+  } catch(e){}
+  tmWatchProgress();
+}
+if(document.readyState === 'loading'){
+  document.addEventListener('DOMContentLoaded', tmInit2);
+} else {
+  tmInit2();
+}
+window.addEventListener('load', function(){ tmWatchProgress(); });
+})();
+</script></body>
 </html>

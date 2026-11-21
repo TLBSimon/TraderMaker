@@ -1,13 +1,12 @@
 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64">
   <rect width="64" height="64" rx="14" fill="#0A0E1A"/>
-  <!-- 3 sviečky -->
-  <rect x="14" y="34" width="8" height="16" rx="1.5" fill="#E8B923"/>
-  <rect x="28" y="26" width="8" height="24" rx="1.5" fill="#E8B923"/>
-  <rect x="42" y="38" width="8" height="12" rx="1.5" fill="#E8B923"/>
-  <!-- knôty -->
-  <rect x="17" y="30" width="2" height="4" fill="#E8B923"/>
-  <rect x="31" y="22" width="2" height="4" fill="#E8B923"/>
-  <rect x="45" y="34" width="2" height="4" fill="#E8B923"/>
-  <!-- hviezda nad tým -->
-  <path d="M32 4 L34.2 10.5 L41 10.8 L35.8 15.2 L37.5 22 L32 18.2 L26.5 22 L28.2 15.2 L23 10.8 L29.8 10.5 Z" fill="#E8B923"/>
+  <rect x="2" y="2" width="60" height="60" rx="12" fill="none" stroke="#E8B923" stroke-width="2.5"/>
+  <!-- hviezda - vacsia, vysie -->
+  <path d="M32 6 L35 13.5 L43 14 L37 19.5 L38.5 27.5 L32 23.5 L25.5 27.5 L27 19.5 L21 14 L29 13.5 Z" fill="#E8B923"/>
+  <!-- 3 hrube sviecky - bez drobnych knotov, ktore sa pri 16px stracaju -->
+  <rect x="12" y="36" width="12" height="18" rx="2.5" fill="#E8B923"/>
+  <rect x="26" y="28" width="12" height="26" rx="2.5" fill="#F4F0E4"/>
+  <rect x="40" y="39" width="12" height="15" rx="2.5" fill="#E8B923"/>
+  <!-- jeden hruby knot len na strednej - stredobod -->
+  <rect x="31" y="23" width="3" height="5" rx="1.5" fill="#E8B923"/>
 </svg>

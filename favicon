@@ -1,0 +1,13 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64">
+  <rect width="64" height="64" rx="14" fill="#0A0E1A"/>
+  <!-- 3 sviečky -->
+  <rect x="14" y="34" width="8" height="16" rx="1.5" fill="#E8B923"/>
+  <rect x="28" y="26" width="8" height="24" rx="1.5" fill="#E8B923"/>
+  <rect x="42" y="38" width="8" height="12" rx="1.5" fill="#E8B923"/>
+  <!-- knôty -->
+  <rect x="17" y="30" width="2" height="4" fill="#E8B923"/>
+  <rect x="31" y="22" width="2" height="4" fill="#E8B923"/>
+  <rect x="45" y="34" width="2" height="4" fill="#E8B923"/>
+  <!-- hviezda nad tým -->
+  <path d="M32 4 L34.2 10.5 L41 10.8 L35.8 15.2 L37.5 22 L32 18.2 L26.5 22 L28.2 15.2 L23 10.8 L29.8 10.5 Z" fill="#E8B923"/>
+</svg>

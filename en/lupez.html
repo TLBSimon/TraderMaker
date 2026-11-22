@@ -1,0 +1,266 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Organized Robbery - Catalogue | TraderMaker</title>
+<style>
+*{margin:0;padding:0;box-sizing:border-box}
+html{--vy:-16px}
+html[data-dir="-1"]{--vy:16px}
+body{background:#0A0E1A;color:#F3F4F6;font-family:Georgia,serif;overflow-x:hidden;padding-bottom:110px}
+body::before{content:"";position:fixed;inset:0;pointer-events:none;z-index:90;opacity:.1;mix-blend-mode:overlay;background-image:url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='160' height='160'><filter id='n'><feTurbulence type='fractalNoise' baseFrequency='.9' numOctaves='2' stitchTiles='stitch'/></filter><rect width='100%' height='100%' filter='url(%23n)'/></svg>")}
+body::after{content:"";position:fixed;inset:0;pointer-events:none;z-index:89;background:radial-gradient(ellipse at center,transparent 55%,rgba(0,0,0,.55) 100%)}
+[hidden]{display:none !important}
+button{font:inherit;cursor:pointer;border:0}
+header{display:flex;align-items:center;gap:14px;padding:14px 18px;border-bottom:1px solid #232B45;font-family:Arial,sans-serif}
+header b{color:#E8B923;letter-spacing:2px}
+.back{color:#E8B923;text-decoration:none;font:600 12px Arial,sans-serif;border:1px solid #E8B923;padding:5px 11px;border-radius:999px}
+.pg{max-width:860px;margin:0 auto;padding:26px 18px 10px}
+.live,.pill,.side{font-family:ui-monospace,Menlo,Consolas,monospace}
+.live{position:fixed;top:12px;right:14px;z-index:60;display:flex;align-items:center;gap:8px;padding:7px 12px;border-radius:999px;background:rgba(16,22,42,.75);border:1px solid rgba(232,185,35,.25);backdrop-filter:blur(10px);font-size:9px;letter-spacing:.16em;color:rgba(255,255,255,.75);view-transition-name:live}
+.live i{width:7px;height:7px;border-radius:50%;background:#10B981;box-shadow:0 0 8px #10B981;animation:pulse 2.4s ease-in-out infinite}
+.live b{color:#E8B923;font-weight:500}
+@keyframes pulse{50%{opacity:.45}}
+.side{position:fixed;left:10px;top:50%;transform:translateY(-50%);z-index:60;display:flex;flex-direction:column;gap:16px;view-transition-name:side}
+.side button{display:flex;align-items:center;gap:7px;background:none;color:rgba(255,255,255,.35);font-size:10px;letter-spacing:.12em}
+.side button i{width:7px;height:7px;border-radius:50%;background:currentColor;transition:.35s}
+.side button.on{color:#E8B923}.side button.on i{box-shadow:0 0 10px #E8B923;transform:scale(1.4)}
+.pill{position:fixed;left:50%;bottom:calc(14px + env(safe-area-inset-bottom,0px));transform:translateX(-50%);z-index:60;display:flex;align-items:center;gap:4px;padding:6px;border-radius:999px;background:rgba(16,22,42,.82);border:1px solid rgba(232,185,35,.3);backdrop-filter:blur(14px);box-shadow:0 12px 40px rgba(0,0,0,.6);view-transition-name:pill;white-space:nowrap}
+.pill button{background:none;color:rgba(255,255,255,.45);padding:10px 13px;border-radius:999px;font-size:10px;letter-spacing:.12em;display:flex;align-items:center;gap:7px;transition:.35s}
+.pill button i{width:6px;height:6px;border-radius:50%;background:currentColor}
+.pill button.on{color:#0A0E1A;background:#E8B923;box-shadow:0 0 18px rgba(232,185,35,.45)}
+.pill button:disabled{opacity:.25;cursor:default}
+.pill .ar{padding:10px 14px;font-size:15px}
+.pill .sep{color:rgba(232,185,35,.5);font-size:10px}
+.hero{text-align:center;padding:14px 0 6px}
+.hero h1{font-size:clamp(28px,6vw,46px);letter-spacing:.06em}
+.hero p{color:#E8B923;font-style:italic;margin-top:6px;font-size:14px}
+.bridge{display:flex;flex-direction:column;align-items:center;gap:8px;margin:26px 0 6px}
+.bridge .go{background:none;border:1px solid #E8B923;color:#E8B923;padding:11px 20px;border-radius:999px;font:700 12px Arial,sans-serif;letter-spacing:.08em}
+.bridge .go:hover{background:rgba(232,185,35,.12)}
+.crumbwrap{position:relative;width:70%;height:46px}
+.crumble{width:100%;height:2px;background:linear-gradient(90deg,transparent,#E8B923 20%,#E8B923 45%,rgba(232,185,35,.25) 75%,transparent);-webkit-mask:repeating-linear-gradient(90deg,#000 0 9px,transparent 9px 11px,#000 11px 30px,transparent 30px 33px);mask:repeating-linear-gradient(90deg,#000 0 9px,transparent 9px 11px,#000 11px 30px,transparent 30px 33px)}
+.crumbwrap i,.trace i,.dust i{position:absolute;width:3px;height:3px;border-radius:50%;background:#E8B923}
+.crumbwrap i{top:1px;animation:fall 3.2s linear infinite;opacity:0}
+@keyframes fall{0%{transform:translate(0,0);opacity:0}20%{opacity:.95}100%{transform:translate(8px,42px);opacity:0}}
+.plan{background:rgba(255,255,255,.04);border:1px solid #232B45;border-left:4px solid #EF4444;border-radius:6px;padding:18px;margin-top:18px}
+.tag{font:600 12px Arial,sans-serif;color:#EF4444}
+.plan h3{font-size:20px;margin-top:2px}
+.chip{display:inline-block;margin-top:8px;background:#0A0E1A;color:#E8B923;border:1px solid #E8B923;font:700 11px Arial,sans-serif;letter-spacing:.06em;padding:5px 10px;border-radius:999px}
+.ud{font-size:13px;color:#D1D5DB;margin-top:8px;line-height:1.5}
+.nums{display:grid;grid-template-columns:repeat(4,1fr);gap:6px;margin-top:12px}
+.nums div{background:rgba(255,255,255,.06);border-radius:6px;padding:8px}
+.nums small{display:block;color:#E8B923;font:600 10px Arial,sans-serif;letter-spacing:.06em}
+.nums b{font:700 15px Arial,sans-serif}.nums .st{color:#EF4444}
+.row{margin-top:12px}
+.row h4{font:700 11px Arial,sans-serif;letter-spacing:.14em;color:#E8B923;margin-bottom:4px}
+.row p,.row li{font-size:14px;color:#E5E7EB;line-height:1.55}
+.row ul{list-style:none;display:grid;gap:5px}
+.row li{background:rgba(255,255,255,.04);border-radius:6px;padding:6px 9px}
+.row li b{color:#E8B923;font:700 12px Arial,sans-serif}
+.row.out p{border-left:3px solid #EF4444;padding-left:9px}
+.guide{margin-top:26px;background:#0A0E1A;border:1px solid #E8B923;border-radius:12px;padding:22px}
+.guide .k{font:700 11px Arial,sans-serif;letter-spacing:.18em;color:#EF4444}
+.guide h2{font-size:22px;color:#E8B923;margin-top:8px}
+.guide>p{color:#9CA3AF;font-size:14px;margin-top:6px}
+.rules{display:grid;gap:10px;margin-top:14px}
+.rule{background:rgba(255,255,255,.04);border:1px solid #232B45;border-radius:10px;padding:12px}
+.rule b{color:#E8B923;font:700 13px Arial,sans-serif}.rule p{font-size:13.5px;color:#D1D5DB;margin-top:4px;line-height:1.55}
+.guide .end{font-size:13px;color:#E8B923;margin-top:14px}
+.trace{position:relative;height:70px;margin-top:10px;opacity:0;transition:opacity 1s;background:linear-gradient(to top,rgba(232,185,35,.2),transparent)}
+.trace.on{opacity:1}.trace i{bottom:6px;animation:drift 7s ease-in-out infinite alternate}
+@keyframes drift{from{transform:translate(0,0);opacity:.35}to{transform:translate(6px,-5px);opacity:.85}}
+.pfoot{display:flex;justify-content:space-between;align-items:center;margin-top:18px;padding-top:12px;border-top:1px dashed #232B45;font:600 11px Arial,sans-serif;color:#9CA3AF;letter-spacing:.08em}
+.pnum{background:#E8B923;color:#0A0E1A;padding:4px 10px;border-radius:999px;font:700 11px Arial,sans-serif}
+.disc{text-align:center;color:#6B7280;font:12px Arial,sans-serif;margin-top:14px}
+.engr{text-align:center;color:#FFF3B0;margin-top:14px}
+.engr h2{font-size:clamp(24px,4vw,34px);letter-spacing:.12em;text-shadow:0 1px 0 rgba(255,255,255,.45),0 0 24px rgba(232,185,35,.35)}
+.engr p{font-size:11px;letter-spacing:.14em;margin-top:6px}
+.intro{text-align:center;color:#D1D5DB;font-size:14px;margin:10px auto 0;max-width:560px;line-height:1.6}
+.gw{position:relative;border-radius:12px;padding:38px 30px 30px;margin-top:30px;overflow:hidden}
+.gw .stamp{position:absolute;top:12px;right:16px;font:700 10px Arial,sans-serif;letter-spacing:.12em;padding:4px 9px;border-radius:999px;z-index:3}
+.s1{background:linear-gradient(135deg,#FFD700,#E8B923 30%,#FFF3B0 50%,#E8B923 70%,#FFD700);border:3px solid #FFF3B0;border-radius:3px;box-shadow:inset 0 0 0 7px rgba(255,255,255,.18),inset 0 2px 0 rgba(255,255,255,.7),0 12px 40px rgba(232,185,35,.5);animation:breathe 5s ease-in-out infinite}
+.s1::before{content:"";position:absolute;inset:0;pointer-events:none;background:linear-gradient(115deg,transparent 35%,rgba(255,255,255,.35) 48%,transparent 60%);background-size:250% 100%;animation:sheen 9s ease-in-out infinite}
+@keyframes breathe{50%{box-shadow:inset 0 0 0 7px rgba(255,255,255,.22),inset 0 2px 0 rgba(255,255,255,.8),0 14px 56px rgba(255,215,0,.7)}}
+@keyframes sheen{0%,100%{background-position:120% 0}50%{background-position:-20% 0}}
+.s1 .stamp{background:rgba(255,255,255,.55);color:#4A380A}
+.s2{background:linear-gradient(135deg,#8A6D1A,#A68B1E 30%,#6B5310 55%,#8A6D1A 80%,#5A450D);border:2px solid #6B5310;filter:saturate(.8);box-shadow:inset 0 0 0 7px rgba(0,0,0,.18),0 10px 30px rgba(0,0,0,.5);clip-path:polygon(0 0,95% 0,100% 4%,100% 100%,5% 100%,0 95%)}
+.s2 .stamp{background:rgba(0,0,0,.35);color:#FFF3B0}
+.s3{background:linear-gradient(135deg,#4A380A,#5A450D 30%,#2A1F00 60%,#4A380A);border:1px solid #2A1F00;filter:saturate(.5) brightness(.85);box-shadow:inset 0 0 0 7px rgba(0,0,0,.25),0 10px 30px rgba(0,0,0,.6);clip-path:polygon(0 3%,2% 1%,5% 4%,9% 1%,14% 3%,20% 0%,26% 3%,33% 1%,40% 4%,48% 1%,55% 3%,62% 0%,70% 3%,77% 1%,84% 4%,91% 1%,97% 3%,100% 6%,99% 90%,96% 96%,90% 92%,83% 98%,75% 93%,67% 98%,58% 93%,50% 98%,41% 92%,32% 98%,24% 93%,15% 97%,8% 92%,3% 96%,0% 88%)}
+.s3 .stamp{background:rgba(0,0,0,.45);color:#D8C9A8}
+.cracks{position:absolute;inset:0;pointer-events:none;z-index:2;opacity:.8}
+.cracks path{stroke-dasharray:1;stroke-dashoffset:1;animation:crack 2.6s ease-out .3s forwards}
+@keyframes crack{to{stroke-dashoffset:0}}
+.dust{position:absolute;inset:0;pointer-events:none;z-index:2}
+.dust i{opacity:0;animation:dfall 3s linear infinite}
+@keyframes dfall{0%{transform:translate(0,0);opacity:0}15%{opacity:.95}100%{transform:translate(14px,130px);opacity:0}}
+.torn{position:relative;background:#E8D9B0;color:#1A1200;padding:24px 22px;box-shadow:0 12px 28px rgba(0,0,0,.45);clip-path:polygon(0 4%,3% 1%,8% 5%,14% 1%,22% 4%,31% 0%,39% 4%,48% 1%,57% 5%,66% 1%,74% 4%,83% 0%,91% 4%,97% 1%,100% 6%,99% 92%,95% 98%,88% 94%,79% 99%,70% 95%,61% 99%,52% 94%,43% 99%,34% 95%,25% 99%,16% 94%,8% 98%,3% 94%,0% 90%)}
+.s3 .torn{opacity:.8}.s2 .torn{opacity:.93}
+.pin{display:inline-block;background:#0A0E1A;color:#E8B923;font:700 11px Arial,sans-serif;padding:5px 10px;border-radius:999px}
+.s2 .pin{background:#8A6D1A}.s3 .pin{background:#4A380A}
+.late{font:600 10px Arial,sans-serif;background:rgba(0,0,0,.15);padding:3px 8px;border-radius:999px;margin-left:4px}
+.torn h3{font-size:25px;margin-top:12px}
+.hist{font:13px Arial,sans-serif;color:#6B5A2A;margin-top:3px}
+.ul{font:700 12px Arial,sans-serif;margin-top:14px;letter-spacing:.04em}
+.ud2{background:rgba(0,0,0,.12);border:1px dashed #A68B1E;border-radius:8px;padding:10px 12px;font-size:14px;margin-top:6px;line-height:1.5}
+.gn{display:grid;grid-template-columns:repeat(4,1fr);gap:8px;margin-top:12px}
+.gn div{background:rgba(255,255,255,.55);padding:10px;border-radius:6px;font:12px Arial,sans-serif}
+.gn b{display:block;font-size:19px;margin-top:2px}.gn .st b{color:#B3261E}
+.why{font-size:15px;margin-top:12px;line-height:1.55}
+.fb{display:grid;gap:7px;margin-top:12px;font-size:13px}
+.fb div{background:rgba(255,255,255,.5);border-left:3px solid #EF4444;padding:9px 10px;line-height:1.45}
+.fb .w{border-color:#E8B923}.fb .r{border-color:#22C55E}
+.cesta{margin-top:30px;background:#10162A;border:1px solid #E8B923;border-radius:12px;padding:24px}
+.cesta .k{font:700 11px Arial,sans-serif;letter-spacing:.18em;color:#EF4444}
+.cesta h2{font-size:22px;color:#E8B923;margin-top:8px}
+.cesta>p{color:#9CA3AF;font-size:14px;margin-top:6px}
+.steps{display:grid;gap:12px;margin-top:16px}
+.step{background:rgba(255,255,255,.04);border:1px solid #232B45;border-radius:10px;padding:14px}
+.step b{color:#E8B923;font:700 13px Arial,sans-serif}.step p{font-size:13.5px;color:#D1D5DB;margin-top:4px;line-height:1.55}
+.md{display:flex;gap:4px;margin-top:12px}
+.md div{flex:1;text-align:center;padding:10px 4px;border-radius:6px;font:700 10px Arial,sans-serif;letter-spacing:.06em;position:relative}
+.m1{background:linear-gradient(135deg,#FFD700,#FFF3B0);color:#1A1200;box-shadow:0 0 18px rgba(255,215,0,.4)}
+.m2{background:linear-gradient(135deg,#8A6D1A,#6B5310);color:#FFF3B0}
+.m3{background:linear-gradient(135deg,#4A380A,#2A1F00);color:#D8C9A8}
+.m3::after{content:"";position:absolute;left:28%;top:100%;width:3px;height:3px;border-radius:50%;background:#E8B923;box-shadow:16px -3px 0 #E8B923,30px 3px 0 #E8B923,-12px 1px 0 #E8B923;animation:mdf 2.8s linear infinite}
+@keyframes mdf{0%{transform:translateY(-12px);opacity:0}25%{opacity:1}100%{transform:translateY(20px);opacity:0}}
+.md .ar{flex:0;align-self:center;color:#E8B923;font-weight:800;background:none;padding:0 2px}
+.mbar{height:6px;border-radius:3px;margin-top:8px;background:linear-gradient(90deg,#FFD700,#C9B45A 25%,#8A6D1A 50%,#4A380A 75%,#2A1F00)}
+.mlab{font:600 10px Arial,sans-serif;letter-spacing:.1em;color:#9CA3AF;margin-top:14px;text-align:center}
+.cesta .end{font-size:14px;color:#E8B923;margin-top:16px}
+#sand{position:fixed;inset:0;z-index:80;pointer-events:none;overflow:hidden}
+#sand i{position:absolute;width:5px;height:5px;border-radius:50%;background:#E8B923;box-shadow:0 0 8px #E8B923;opacity:0;animation:sand 1.2s ease-out forwards}
+@keyframes sand{0%{transform:translate(0,0) scale(1);opacity:0}15%{opacity:1}100%{transform:translate(var(--dx),var(--dy)) scale(.3);opacity:0}}
+::view-transition-group(pill),::view-transition-group(side),::view-transition-group(live){animation-duration:350ms}
+::view-transition-old(root){animation:350ms ease both vtOut}
+::view-transition-new(root){animation:350ms ease both vtIn}
+@keyframes vtOut{to{opacity:0;transform:translateY(var(--vy))}}
+@keyframes vtIn{from{opacity:0;transform:translateY(calc(var(--vy) * -1))}}
+body.fade{transition:opacity .175s}
+@media(max-width:560px){
+ .pg{padding:20px 14px 10px}.gw{padding:34px 16px 22px}.gn,.nums{grid-template-columns:1fr 1fr}
+ .pill button{padding:10px 9px;font-size:9px}.pill .ar{padding:10px 11px}.side button span{display:none}.side{left:7px}
+ .live{font-size:8px;padding:6px 9px}.torn{padding:20px 14px}
+}
+@media(prefers-reduced-motion:reduce){*{animation-duration:.01ms !important;animation-iteration-count:1 !important}}
+</style>
+</head>
+<body>
+<header><b>TRADERMAKER</b><a class="back" href="lupez.html">← Robbery (Lúpež)</a></header>
+<div class="live" aria-live="polite"><i></i><span>LIVE • LOCKED</span><b id="liveTxt">01 • ROBBERY</b></div>
+<nav class="side" aria-label="Pages"><button id="s1" class="on"><i></i><span>01</span></button><button id="s2"><i></i><span>02</span></button></nav>
+<div id="sand" aria-hidden="true"></div>
+
+<main id="p1" class="pg">
+<section class="hero"><h1>Organized Robbery</h1><p>Page 1 • Three plans on the wall. Not a signal. A plan.</p></section>
+<div id="plans"></div>
+<div class="guide">
+<p class="k">HOW TO READ THE ROBBERY?</p><h2>Not a signal. A plan.</h2>
+<p>Let no one tell you what to click. Here you read the plan and decide yourself.</p>
+<div class="rules">
+<div class="rule"><b>1. ENTRY IS NOT A SIGNAL</b><p>Entry is the place where that person is thinking about going in. Not an instruction for you to go too.</p></div>
+<div class="rule"><b>2. STOP IS A BRAKE</b><p>Every robbery has a stop. Not because it's afraid. Because it knows when to leave.</p></div>
+<div class="rule"><b>3. A HOLE IS A GIFT</b><p>When someone finds a hole in your plan, it's not hate. It's the most valuable thing they can give you.</p></div>
+</div>
+<p class="end">Read the 3 plans above. Find your hole in them. And then go to the Gold Wall.</p>
+</div>
+<div class="trace" id="trace" aria-hidden="true"></div>
+<div class="bridge"><div class="crumbwrap" id="cw" aria-hidden="true"><div class="crumble"></div></div><button class="go" id="goDown">↓ Page 2 - Gold Wall</button></div>
+<div class="pfoot"><span>Organized Robbery • Catalogue</span><span class="pnum">PAGE 1 of 2</span><span>Next: Gold Wall ↓</span></div>
+<p class="disc">Information only, not advice. You decide.</p>
+</main>
+
+<main id="p2" class="pg" hidden>
+<div class="bridge" style="margin-top:0"><button class="go" id="goUp">↑ Back to Page 1 - Robbery</button></div>
+<div class="engr"><h2>GOLD WALL</h2><p>MOST PERSISTENT ROBBERS • CARVED IN GOLD</p></div>
+<p class="intro">Reward for persistence, not a bonus. You stayed 3 months, so you have a place - and a guarantee you'll be seen.</p>
+<div id="gold"></div>
+<div class="cesta">
+<p class="k">STEP 3 • HOW DO YOU GET ON THE GOLD WALL?</p><h2>Not a bonus. Reward for persistence.</h2>
+<p>You don't get there because you're the best. You get there because you stayed.</p>
+<div class="steps">
+<div class="step"><b>1. STAY 3 MONTHS</b><p>Regular client. Not one trade, not one week. 3 months in a row, ideas on the table, no flex.</p></div>
+<div class="step"><b>2. 1× A MONTH YOU PIN A PLAN</b><p>For 1 day, max a week. Your plan, your unit, your hole. Others will tell you where your hole is.</p></div>
+<div class="step"><b>3. AFTER 12h ANOTHER CAN COME</b><p>Yours moves lower. It doesn't fall apart right away.</p>
+<div class="md"><div class="m1">SOLID</div><div class="ar">→</div><div class="m2">DESTROYED</div><div class="ar">→</div><div class="m3">DUST</div></div><div class="mbar"></div><p class="mlab">TRANSITION • NOT A JUMP • GRADUALLY</p></div>
+</div>
+<p class="end">Marek, Petra, Jano already did it. Not because they hit everything. Because they stayed.</p>
+</div>
+<div class="pfoot"><span>Gold Wall • Catalogue</span><span class="pnum">PAGE 2 of 2</span><span>↑ Page 1 is above</span></div>
+<p class="disc">Information only, not advice. You decide.</p>
+</main>
+
+<div class="pill" role="navigation" aria-label="Catalogue">
+<button class="ar" id="prev" aria-label="Page 1" disabled>‹</button>
+<button id="b1" class="on"><i></i>01 ROBBERY</button><span class="sep">•</span><button id="b2"><i></i>02 GOLD WALL</button>
+<button class="ar" id="next" aria-label="Page 2">›</button>
+</div>
+
+<script>
+const R=Math.random,$=id=>document.getElementById(id);
+const mk=(p,n,f)=>{for(let k=0;k<n;k++){const i=document.createElement('i');f(i,k);p.appendChild(i)}};
+const NL=['ENTRY','EXIT','STOP','RISK'];
+const plans=[
+{t:'XAU / Gold',u:'🎯 SNIPER',d:'Waits for one precise shot. One entry, one exit. No chaos. If he misses, he waits for the next day.',v:['5 000 $','5 200 $','4 950 $','1 %'],
+why:'I see a wall around the entry. Price is leaning on it and hasn\'t let go yet. If it holds behind it, I see a step to 5 200 $. If it cracks, the plan ends before it started.',
+w:'Candle closing above the wall and price not coming back below it.',
+a:[['If the wall holds','I go.'],['If it cracks','I don\'t click.'],['If a wick comes under 4 950 $','stop is too late, I\'m not chasing it.']],
+c:'Today and this week. Don\'t click on Friday after 15:00, because it jumps.',o:'Closed candle under 4 950 $ or big news right before entry. Then the plan is dead.'},
+{t:'EUR / USD',u:'🛡️ TANKS',d:'Heavy unit. Slowly pushes through the wall, holds position. Doesn\'t dodge at the first hit.',v:['1,08','1,12','1,07','0,5 %'],
+why:'Euro is in a sideways range. The middle doesn\'t interest me, there\'s only noise there. I wait for the edge, not the middle. When it breaks through, I go with it.',
+w:'Confirmation at the edge: price bounces off it and doesn\'t close back into the middle.',
+a:[['If the edge holds','I go.'],['If it closes under 1,07','I don\'t click.'],['If a wick comes under 1,07','stop is too late, I\'m not chasing it.']],
+c:'This week. On Tuesday watch out for a false breakout, wait for confirmation.',o:'Closing under 1,07 or a move without confirmation that turns the sideways range into chaos.'},
+{t:'BTC',u:'⚡ FAST SQUAD',d:'Quickly in, quickly out. Scalp, small profit, gone. Speed is its armour. It doesn\'t sit in a trade for hours.',v:['95 000 $','110 000 $','90 000 $','1 %'],
+why:'Bitcoin goes up steps (Schodíky). One step nothing, series everything. I take it as a series of small steps, not one big throw. Stop is my brake.',
+w:'Whether the step holds and whether the new low stays above the stop.',
+a:[['If the step holds','I go for a small profit.'],['If it comes back under the last step','I don\'t click.'],['If a wick comes under 90 000 $','stop is too late.']],
+c:'Today. On Sunday evening it flies, don\'t go fast then. Max 2 fast entries per day.',o:'Closing under 90 000 $ or a third entry in a day. Then the plan is not playing.'}];
+$('plans').innerHTML=plans.map((p,n)=>`<article class="plan"><p class="tag">PLAN NO. ${n+1}</p><h3>${p.t}</h3><span class="chip">UNIT: ${p.u}</span><p class="ud">${p.d}</p>
+<div class="nums">${p.v.map((x,i)=>`<div><small>${NL[i]}</small><b${i==2?' class="st"':''}>${x}</b></div>`).join('')}</div>
+<div class="row"><h4>WHY</h4><p>${p.why}</p></div><div class="row"><h4>WHAT I'M WATCHING</h4><p>${p.w}</p></div>
+<div class="row"><h4>IF → THEN</h4><ul>${p.a.map(x=>`<li><b>${x[0]}</b> → ${x[1]}</li>`).join('')}</ul></div>
+<div class="row"><h4>TIME WINDOW</h4><p>${p.c}</p></div><div class="row out"><h4>WHAT WOULD KICK ME OUT</h4><p>${p.o}</p></div></article>`).join('');
+const CR='<div class="cracks"><svg width="100%" height="100%" viewBox="0 0 400 300" preserveAspectRatio="none"><path pathLength="1" d="M20 0 L80 90 L60 140 L110 200 L90 300 M200 0 L180 70 L230 130 L210 220 L240 300" stroke="rgba(0,0,0,.55)" stroke-width="1.6" fill="none"/><path pathLength="1" d="M0 110 L70 100 L130 145 L200 125 L260 170 L330 150 L400 190 M400 40 L330 70 L280 60 L210 110" stroke="rgba(0,0,0,.5)" stroke-width="1.3" fill="none"/><path pathLength="1" d="M22 0 L82 90 L62 140 L112 200 M0 112 L70 102 L130 147" stroke="rgba(255,243,176,.3)" stroke-width=".7" fill="none"/></svg></div>';
+const gold=[
+{c:'s1',st:'✦ SOLID GOLD ✦',pin:'📌 PINNED • 1 DAY • SOLID GOLD',tm:'⏳ 18h left',n:'1. Marek - XAU / Gold',h:'Regular client • 3 months • 12 ideas • Never flexed once',u:'🎯 SNIPER',d:'<b>🎯 Sniper:</b> Waits for one precise shot. One entry, one exit. No chaos. If he misses, he waits for the next day.',v:['5 000 $','5 200 $','4 950 $','1 %'],w:'I\'m waiting for the wall. If the wall holds, I go. If it cracks, I don\'t click. Tell me where my hole is.',f:[['Jano','Stop is too late, add a second one.'],['Petra','On Friday after 15:00 it jumps.'],['Šimon','Split into two entries.']]},
+{c:'s2',st:'⚠ DESTROYED • CRACKS',pin:'📌 14h AGO • DESTROYED',tm:'🕰️ Moving lower',n:'2. Petra - BTC',h:'Regular client • 4 months • 18 ideas • Series, not one trade',u:'⚡ FAST SQUAD',d:'<b>⚡ Fast squad:</b> Quickly in, quickly out. Scalp, small profit, gone. Speed is its armour. It doesn\'t sit in a trade for hours.',v:['95 000 $','110 000 $','90 000 $','1 %'],w:'Bitcoin goes by steps. One step nothing, series everything. Stop is my brake.',f:[['Marek','With a fast squad the stop is too far. Shorten it.'],['Jano','On Sunday evening it flies, don\'t go fast then.'],['Šimon','Give yourself max 2 fast entries a day, not 10.']]},
+{c:'s3',st:'☁ DUST • FALLING APART',pin:'🕰️ 5 DAYS AGO • DUST • MEMORY',tm:'',n:'3. Jano - EUR / USD',h:'Regular client • 5 months • 22 ideas • Side construction',u:'🛡️ TANKS',d:'<b>🛡️ Tanks:</b> Heavy unit. Slowly pushes through the wall, holds position. Doesn\'t dodge at the first hit.',v:['1,08','1,12','1,07','0,5 %'],w:'Euro in sideways. I wait for the edge, not the middle. When it breaks through, I go with it.',f:[['Petra','Tanks are slow, but here you set too small a stop.'],['Marek','Watch out for euro on Tuesday, false breakout.'],['Šimon','Tanks + sideways = wait for confirmation.']]}];
+$('gold').innerHTML=gold.map(g=>`<article class="gw ${g.c}"><span class="stamp">${g.st}</span>${g.c=='s1'?'':CR}${g.c=='s3'?'<div class="dust"></div>':''}
+<div class="torn" style="transform:rotate(${g.c=='s1'?-.6:g.c=='s2'?1:-1.2}deg)"><span class="pin">${g.pin}</span>${g.tm?`<span class="late">${g.tm}</span>`:''}
+<h3>${g.n}</h3><p class="hist">${g.h}</p><p class="ul">UNIT: ${g.u}</p><div class="ud2">${g.d}</div>
+<div class="gn">${g.v.map((x,i)=>`<div${i==2?' class="st"':''}>${NL[i]}<b>${x}</b></div>`).join('')}</div>
+<p class="why"><b>Why:</b> ${g.w}</p>
+<div class="fb"><div>🕳️ <b>HOLE - ${g.f[0][0]}:</b> ${g.f[0][1]}</div><div class="w">⚠️ <b>WARNING - ${g.f[1][0]}:</b> ${g.f[1][1]}</div><div class="r">💡 <b>RECOMMENDATION - ${g.f[2][0]}:</b> ${g.f[2][1]}</div></div></div></article>`).join('');
+mk($('trace'),30,i=>{i.style.left=(3+R()*94)+'%';i.style.bottom=(4+R()*40)+'px';i.style.width=i.style.height=(2+R()*2.5)+'px';i.style.animationDelay=(R()*6)+'s'});
+mk($('cw'),10,i=>{i.style.left=(10+R()*80)+'%';i.style.animationDelay=(R()*3.2)+'s'});
+document.querySelectorAll('.dust').forEach(d=>mk(d,18,i=>{i.style.left=(4+R()*92)+'%';i.style.top=(R()*55)+'%';i.style.animationDelay=(R()*3)+'s';i.style.animationDuration=(2.4+R()*1.8)+'s'}));
+const P1=$('p1'),P2=$('p2'),reduce=matchMedia('(prefers-reduced-motion:reduce)').matches;
+let cur=1,busy=false;
+function blow(){const s=$('sand');if(reduce)return;s.innerHTML='';const w=innerWidth;
+ mk(s,40,i=>{i.style.top=(15+R()*70)+'%';i.style.left=(70+R()*28)+'%';i.style.setProperty('--dx',-(w*(.5+R()*.5))+'px');i.style.setProperty('--dy',(R()*120-20)+'px');i.style.animationDelay=(R()*.5)+'s'});
+ setTimeout(()=>s.innerHTML='',2000)}
+function swap(n){cur=n;P1.hidden=n!==1;P2.hidden=n!==2;
+ $('b1').classList.toggle('on',n===1);$('b2').classList.toggle('on',n===2);$('s1').classList.toggle('on',n===1);$('s2').classList.toggle('on',n===2);
+ $('prev').disabled=n===1;$('next').disabled=n===2;$('liveTxt').textContent=n===1?'01 • ROBBERY':'02 • GOLD WALL';
+ document.title=(n===1?'Organized Robbery':'Gold Wall')+' - Catalogue | TraderMaker';
+ if(n===2)$('trace').classList.add('on');window.scrollTo(0,0)}
+function go(n){if(n===cur||busy)return;busy=true;document.documentElement.dataset.dir=n>cur?1:-1;
+ if(n===2)blow();
+ if(document.startViewTransition&&!reduce){document.startViewTransition(()=>swap(n)).finished.finally(()=>busy=false)}
+ else{document.body.classList.add('fade');document.body.style.opacity=0;setTimeout(()=>{swap(n);document.body.style.opacity=1;busy=false},175)}}
+$('b1').onclick=$('s1').onclick=$('prev').onclick=$('goUp').onclick=()=>go(1);
+$('b2').onclick=$('s2').onclick=$('next').onclick=$('goDown').onclick=()=>go(2);
+document.addEventListener('keydown',e=>{if(e.key==='ArrowRight')go(2);else if(e.key==='ArrowLeft')go(1)});
+const atBottom=()=>innerHeight+scrollY>=document.documentElement.scrollHeight-6,atTop=()=>scrollY<=2;
+let acc=0,last=0;
+addEventListener('wheel',e=>{const now=Date.now();if(now-last>400)acc=0;last=now;
+ if(cur===1&&e.deltaY>0&&atBottom()){acc+=e.deltaY;if(acc>260){acc=0;go(2)}}
+ else if(cur===2&&e.deltaY<0&&atTop()){acc+=-e.deltaY;if(acc>260){acc=0;go(1)}}else acc=0},{passive:true});
+let ty=0,ab=false,at=false;
+addEventListener('touchstart',e=>{ty=e.touches[0].clientY;ab=atBottom();at=atTop()},{passive:true});
+addEventListener('touchend',e=>{const dy=e.changedTouches[0].clientY-ty;if(cur===1&&ab&&dy<-90)go(2);else if(cur===2&&at&&dy>90)go(1)},{passive:true});
+</script>
+</body>
+</html>

@@ -1,0 +1,451 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="theme-color" content="#2B1D0E">
+<title>Marketplace (Trhovisko) – The Market Cabin – TraderMaker</title>
+<meta name="description" content="Marketplace (Trhovisko): one wooden cabin where you don't share money, but what you saw, thought, did and learned. Information only, not advice.">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Ctext y='.9em' font-size='90'%3E🛖%3C/text%3E%3C/svg%3E">
+<style>
+:root{
+  --bark:#2B1D0E; --wood:#7A4E28; --wood-d:#5A3718; --wood-l:#A5703D;
+  --cream:#F4E8CE; --paper:#FBF4E2; --line:#D3BF93; --ink:#2B1D0E; --muted:#6B4A22;
+  --gold:#D4AF37; --sage:#5E8650; --brick:#A9493E;
+  --serif:Rockwell,"Roboto Slab","Rockwell Extra Bold",Cambria,Georgia,serif;
+  --sans:"Avenir Next","Segoe UI",system-ui,-apple-system,Roboto,Helvetica,Arial,sans-serif;
+}
+*{box-sizing:border-box;margin:0;padding:0}
+html{-webkit-text-size-adjust:100%}
+body{font-family:var(--sans);background:var(--cream);color:var(--ink);line-height:1.6}
+button{font:inherit;color:inherit}
+a{color:inherit}
+:focus-visible{outline:3px solid var(--gold);outline-offset:2px}
+
+/* ---------- top beam ---------- */
+.beam{position:relative;z-index:3;display:flex;justify-content:space-between;align-items:center;
+  padding:12px clamp(14px,4vw,32px);color:var(--cream);
+  background:linear-gradient(#3B2814,#2B1D0E);border-bottom:4px solid #1F1409}
+.brand{font-family:var(--serif);font-size:18px;letter-spacing:.06em;text-decoration:none;color:var(--cream)}
+.lang{display:flex;align-items:center;gap:4px;font-size:15px}
+.lang button{background:none;border:0;border-bottom:2px solid transparent;color:rgba(244,232,206,.7);
+  padding:6px 8px;cursor:pointer;min-height:40px;min-width:40px}
+.lang button[aria-pressed="true"]{color:var(--cream);border-bottom-color:var(--gold)}
+.lang span{color:rgba(244,232,206,.4)}
+
+/* ---------- hero ---------- */
+.hero{--scene:clamp(400px,46vw,560px);position:relative;overflow:hidden;padding-bottom:var(--scene);
+  background:linear-gradient(180deg,#F2DDB0 0%,#F5E3BC 42%,#EDBF86 100%)}
+.hero-text{position:relative;z-index:2;text-align:center;padding:0 18px 28px}
+.sign{position:relative;display:inline-block;margin-top:36px;padding:16px clamp(26px,6vw,56px) 14px;border-radius:8px;
+  background:
+    repeating-linear-gradient(0deg,rgba(255,255,255,.05) 0 2px,transparent 2px 6px),
+    linear-gradient(180deg,#8A5B2E,#6B4423);
+  border:4px solid #3E2A16;box-shadow:0 10px 24px rgba(43,29,14,.35)}
+.sign::before,.sign::after{content:"";position:absolute;top:-40px;width:3px;height:36px;background:#6B4A2A}
+.sign::before{left:18%}.sign::after{right:18%}
+.sign h1{font-family:var(--serif);font-weight:700;font-size:clamp(38px,9vw,78px);letter-spacing:.12em;line-height:1.05;
+  color:#F6E2B3;text-shadow:0 -1px 0 rgba(0,0,0,.55),0 1px 0 rgba(255,255,255,.18)}
+.sign .sub{display:block;margin-top:4px;font-family:var(--serif);font-style:italic;font-size:clamp(14px,2.4vw,18px);color:#E7C98A}
+.lead{margin:24px auto 0;max-width:36ch;font-family:var(--serif);font-size:clamp(17px,2.3vw,21px);line-height:1.55;color:var(--bark)}
+#scene{position:absolute;left:0;bottom:0;width:100%;height:var(--scene);display:block}
+
+@keyframes smoke{0%{transform:translate(0,0) scale(.6);opacity:0}20%{opacity:.5}100%{transform:translate(30px,-80px) scale(1.7);opacity:0}}
+@keyframes glow{0%,100%{opacity:.5}50%{opacity:.85}}
+@keyframes flick{0%,100%{transform:scale(1,1)}50%{transform:scale(.94,1.12)}}
+.smoke{fill:#EADFC8;opacity:.35;transform-box:fill-box;transform-origin:center;animation:smoke 10s ease-out infinite}
+.smoke:nth-of-type(2){animation-delay:3.3s}.smoke:nth-of-type(3){animation-delay:6.6s}
+.glow{animation:glow 7s ease-in-out infinite}
+.flame{transform-box:fill-box;transform-origin:50% 100%;animation:flick 1.8s ease-in-out infinite}
+
+/* ---------- table (feed) ---------- */
+.table{border-top:6px solid #1F1409;padding:44px 16px 60px;
+  background-color:var(--wood);
+  background-image:
+    linear-gradient(180deg,rgba(0,0,0,.22),transparent 140px),
+    repeating-linear-gradient(90deg,transparent 0 158px,rgba(0,0,0,.28) 158px 160px),
+    repeating-linear-gradient(0deg,rgba(255,255,255,.035) 0 2px,transparent 2px 7px)}
+.wrap{max-width:720px;margin:0 auto}
+.composer{background:var(--paper);border:1px solid var(--line);border-radius:10px;padding:20px;box-shadow:0 3px 0 rgba(0,0,0,.28)}
+.composer h2{font-family:var(--serif);font-size:clamp(20px,3.4vw,24px);line-height:1.25;margin-bottom:14px}
+.types{display:flex;flex-wrap:wrap;gap:8px;margin-bottom:12px}
+.chip{border:1px solid var(--line);background:var(--paper);color:var(--ink);border-radius:999px;padding:6px 14px;min-height:40px;cursor:pointer}
+.chip[aria-pressed="true"]{background:var(--wood-d);border-color:var(--wood-d);color:var(--cream)}
+.composer textarea{display:block;width:100%;min-height:92px;resize:vertical;border:1px solid var(--line);border-radius:8px;
+  padding:12px;font:inherit;font-size:16px;line-height:1.5;background:#FFFCF3;color:var(--ink)}
+.composer-foot{display:flex;flex-wrap:wrap;align-items:center;gap:12px;margin-top:12px}
+.put{background:var(--wood-d);color:var(--cream);border:0;border-radius:8px;padding:11px 20px;min-height:44px;cursor:pointer;font-weight:600;transition:background .2s}
+.put:hover{background:#7A4E28}
+.note{flex:1;min-width:200px;font-size:15px;color:var(--brick)}
+
+.filters{display:flex;flex-wrap:wrap;gap:8px;margin:26px 0 8px}
+.filters .chip{background:rgba(251,244,226,.14);border-color:rgba(251,244,226,.35);color:var(--cream)}
+.filters .chip[aria-pressed="true"]{background:var(--paper);border-color:var(--paper);color:var(--ink)}
+
+.card{position:relative;background:var(--paper);border:1px solid var(--line);border-radius:10px;padding:22px 20px 16px;margin-top:18px;
+  box-shadow:0 3px 0 rgba(0,0,0,.28)}
+.card::before{content:"";position:absolute;top:8px;left:50%;width:8px;height:8px;margin-left:-4px;border-radius:50%;background:var(--wood-d);opacity:.7}
+.meta{display:flex;flex-wrap:wrap;align-items:center;gap:10px;font-size:15px}
+.meta b{font-weight:700}
+.tag{font-size:13px;border:1px solid var(--line);border-radius:999px;padding:1px 10px;color:var(--muted)}
+.when{margin-left:auto;font-size:14px;color:var(--muted)}
+.card h3{font-family:var(--serif);font-size:19px;line-height:1.3;margin-top:10px}
+.card p{margin-top:6px;font-size:17px;line-height:1.6;max-width:62ch}
+.react{display:flex;flex-wrap:wrap;gap:8px;margin-top:14px}
+.react button{border:1px solid var(--line);background:transparent;border-radius:999px;padding:5px 14px;min-height:38px;cursor:pointer;font-size:14px;color:var(--muted);transition:background .2s,color .2s}
+.react button[aria-pressed="true"]{background:var(--wood-d);border-color:var(--wood-d);color:var(--cream)}
+.react i{font-style:normal;margin-left:6px}
+
+/* ---------- rules plaque ---------- */
+.rules{padding:60px 18px;background:var(--cream)}
+.plaque{max-width:640px;margin:0 auto;text-align:center;padding:32px clamp(20px,5vw,44px);border-radius:12px;
+  background:#3B2814;border:6px solid var(--wood);box-shadow:0 10px 26px rgba(43,29,14,.3);color:var(--cream)}
+.plaque p{font-family:var(--serif);font-size:clamp(16px,2.3vw,19px);line-height:1.65}
+.plaque p+p{margin-top:16px}
+.plaque p.msg{font-size:clamp(20px,3.4vw,27px);line-height:1.4;color:#F2D07A;margin-top:24px}
+
+/* ---------- footer ---------- */
+footer{background:var(--bark);color:#E8DCC0;text-align:center;padding:36px 18px 40px;font-size:14px}
+footer .disc{font-size:16px;font-weight:600;color:var(--cream)}
+footer .legal{margin-top:8px;color:#CDBE9C}
+footer a{display:inline-block;margin-top:16px;color:var(--gold);padding:8px 4px}
+
+
+/* --- FORESTS AND MOUNTAINS COME ALIVE - design stays --- */
+@keyframes birdFly{0%{left:-12%;top:8%;opacity:0}8%{opacity:1}92%{opacity:1}100%{left:112%;top:14%;opacity:0}}
+@keyframes birdBob{0%,100%{transform:translateY(0)}50%{transform:translateY(-6px)}}
+@keyframes leafFall{0%{transform:translateY(-20px) rotate(0deg);opacity:0}10%{opacity:1}90%{opacity:1}100%{transform:translateY(520px) rotate(320deg) translateX(30px);opacity:0}}
+@keyframes cloudDrift{from{left:-22%}to{left:112%}}
+@keyframes pineSway{0%,100%{transform:rotate(0deg)}50%{transform:rotate(1.2deg)}}
+@keyframes firefly{0%,100%{transform:translate(0,0);opacity:.2}25%{transform:translate(14px,-18px);opacity:1}50%{transform:translate(-10px,-32px);opacity:.6}75%{transform:translate(8px,-14px);opacity:1}}
+@keyframes cabinBreathe{0%,100%{transform:scale(1)}50%{transform:scale(1.005)}}
+@keyframes mountainBreathe{0%,100%{transform:translateY(0)}50%{transform:translateY(-3px)}}
+@keyframes cardIn{from{opacity:0;transform:translateY(16px)}to{opacity:1;transform:translateY(0)}}
+.hero{position:relative}
+.forest-life{position:absolute;inset:0;pointer-events:none;z-index:1;overflow:hidden}
+.forest-life .bird{position:absolute;font-size:22px;animation:birdFly 22s linear infinite, birdBob 1.2s ease-in-out infinite}
+.forest-life .bird:nth-child(1){top:8%;animation-delay:0s}
+.forest-life .bird:nth-child(2){top:13%;animation-delay:7s;animation-duration:26s;font-size:18px}
+.forest-life .bird:nth-child(3){top:5%;animation-delay:14s;animation-duration:20s;font-size:16px}
+.forest-life .cloud{position:absolute;top:12%;width:130px;height:36px;border-radius:999px;background:rgba(255,255,255,.55);filter:blur(8px);animation:cloudDrift 38s linear infinite}
+.forest-life .cloud:nth-child(4){top:22%;animation-duration:52s;animation-delay:-18s;width:170px}
+.forest-life .cloud:nth-child(5){top:6%;animation-duration:32s;animation-delay:-8s;width:100px}
+.forest-life .leaf{position:absolute;top:0;font-size:18px;animation:leafFall 9s linear infinite}
+.forest-life .leaf:nth-child(6){left:12%;animation-delay:0s}
+.forest-life .leaf:nth-child(7){left:28%;animation-delay:2.5s;animation-duration:11s}
+.forest-life .leaf:nth-child(8){left:68%;animation-delay:1s}
+.forest-life .leaf:nth-child(9){left:82%;animation-delay:4s;animation-duration:10s}
+.forest-life .leaf:nth-child(10){left:48%;animation-delay:5.5s;animation-duration:12s}
+.forest-life .fly{position:absolute;width:6px;height:6px;border-radius:50%;background:#FFD777;box-shadow:0 0 10px #FFD777;animation:firefly 6s ease-in-out infinite}
+.forest-life .fly:nth-child(11){left:38%;top:68%}
+.forest-life .fly:nth-child(12){left:62%;top:74%;animation-delay:1.5s}
+.forest-life .fly:nth-child(13){left:52%;top:62%;animation-delay:3s}
+#pines{transform-box:fill-box;transform-origin:50% 100%;animation:pineSway 6s ease-in-out infinite}
+#far,#mid,#near{animation:mountainBreathe 9s ease-in-out infinite}
+#mid{animation-delay:1.5s}
+#near{animation-delay:3s}
+#cabin{transform-box:fill-box;transform-origin:50% 100%;animation:cabinBreathe 7s ease-in-out infinite}
+.card{animation:cardIn .6s ease both}
+.card:nth-child(2){animation-delay:.12s}
+.card:nth-child(3){animation-delay:.24s}
+.composer{animation:cardIn .6s ease both}
+.sign{animation:cardIn .6s ease both}
+@media (prefers-reduced-motion:reduce){*{animation:none!important;transition:none!important}}
+
+@media (max-width:520px){.when{margin-left:0;width:100%}}
+</style>
+</head>
+<body>
+
+<div class="beam">
+  <a class="brand" href="/">TraderMaker</a>
+  <div class="lang" role="group" aria-label="Language">
+    <button type="button" data-lang="sk" aria-pressed="false">SK</button><span aria-hidden="true">|</span><button type="button" data-lang="en" aria-pressed="true">EN</button>
+  </div>
+</div>
+
+<header class="hero">
+  <div class="forest-life" aria-hidden="true">
+    <span class="bird">🕊️</span><span class="bird">🕊️</span><span class="bird">🦅</span>
+    <span class="cloud"></span><span class="cloud"></span><span class="cloud"></span>
+    <span class="leaf">🍂</span><span class="leaf">🍁</span><span class="leaf">🍂</span><span class="leaf">🍁</span><span class="leaf">🍂</span>
+    <span class="fly"></span><span class="fly"></span><span class="fly"></span>
+  </div>
+  <div class="hero-text">
+    <div class="sign">
+      <h1>MARKETPLACE (Trhovisko)</h1>
+      <span class="sub">The Market Cabin</span>
+    </div>
+    <p class="lead" data-i18n="lead">One wooden cabin where you don't share money, but what you saw, thought, did and learned.</p>
+  </div>
+
+  <svg id="scene" viewBox="0 150 1200 470" preserveAspectRatio="xMidYMax slice" aria-hidden="true" focusable="false">
+    <defs>
+      <radialGradient id="sun"><stop offset="0" stop-color="#FFF1C9" stop-opacity=".95"/><stop offset="1" stop-color="#FFF1C9" stop-opacity="0"/></radialGradient>
+      <linearGradient id="haze" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#F1D3A0" stop-opacity="0"/><stop offset="1" stop-color="#F1D3A0" stop-opacity=".8"/></linearGradient>
+      <radialGradient id="winglow"><stop offset="0" stop-color="#FFC95C" stop-opacity=".7"/><stop offset="1" stop-color="#FFC95C" stop-opacity="0"/></radialGradient>
+      <radialGradient id="fireglow"><stop offset="0" stop-color="#F5A623" stop-opacity=".6"/><stop offset="1" stop-color="#F5A623" stop-opacity="0"/></radialGradient>
+    </defs>
+
+    <circle cx="600" cy="330" r="250" fill="url(#sun)"/>
+    <g id="far"></g>
+    <rect x="-50" y="340" width="1300" height="190" fill="url(#haze)"/>
+    <g id="mid"></g>
+    <rect x="-50" y="400" width="1300" height="130" fill="url(#haze)" opacity=".7"/>
+    <g id="near"></g>
+    <g id="pines"></g>
+
+    <!-- ground -->
+    <path d="M-20 540C240 506 430 514 600 514S960 506 1220 536V630H-20Z" fill="#55492A"/>
+    <path d="M-20 592C300 566 900 566 1220 592V630H-20Z" fill="#3F3520"/>
+
+    <!-- cabin -->
+    <g id="cabin">
+      <rect x="690" y="335" width="26" height="66" fill="#5A4636"/>
+      <rect x="686" y="329" width="34" height="8" fill="#463427"/>
+      <polygon points="420,404 600,316 780,404" fill="#3E2A16" stroke="#2A1B0E" stroke-width="3" stroke-linejoin="round"/>
+      <polygon points="474,402 600,336 726,402" fill="#6B4423"/>
+      <path d="M520,390L600,350L680,390M500,400L600,362L700,400" stroke="#5A3718" stroke-width="2" fill="none"/>
+      <circle cx="600" cy="378" r="9" fill="#F6C560" stroke="#3E2A16" stroke-width="3"/>
+      <rect x="455" y="398" width="290" height="109" fill="#7A4E28"/>
+      <path d="M455 412H745M455 426H745M455 440H745M455 454H745M455 468H745M455 482H745M455 496H745" stroke="#5A3718" stroke-width="2"/>
+      <rect x="449" y="398" width="12" height="109" fill="#6B4423"/>
+      <rect x="739" y="398" width="12" height="109" fill="#6B4423"/>
+      <ellipse class="glow" cx="503" cy="461" rx="64" ry="52" fill="url(#winglow)"/>
+      <ellipse class="glow" cx="697" cy="461" rx="64" ry="52" fill="url(#winglow)"/>
+      <rect x="480" y="442" width="46" height="38" fill="#F6C560" stroke="#3E2A16" stroke-width="4"/>
+      <path d="M503 442V480M480 461H526" stroke="#3E2A16" stroke-width="3"/>
+      <rect x="674" y="442" width="46" height="38" fill="#F6C560" stroke="#3E2A16" stroke-width="4"/>
+      <path d="M697 442V480M674 461H720" stroke="#3E2A16" stroke-width="3"/>
+      <rect x="578" y="446" width="44" height="61" rx="3" fill="#3A2412"/>
+      <circle cx="613" cy="478" r="2.6" fill="#E8B923"/>
+      <circle class="glow" cx="640" cy="458" r="16" fill="url(#winglow)"/>
+      <circle cx="640" cy="458" r="3.5" fill="#FFC95C"/>
+      <rect x="426" y="424" width="348" height="8" fill="#3E2A16"/>
+      <rect x="436" y="430" width="8" height="77" fill="#5A3718"/>
+      <rect x="756" y="430" width="8" height="77" fill="#5A3718"/>
+      <rect x="424" y="505" width="352" height="12" fill="#6B4423"/>
+      <rect x="424" y="515" width="352" height="3" fill="#3E2A16"/>
+      <!-- benches and people -->
+      <g fill="#4B2F17"><rect x="468" y="492" width="86" height="5"/><rect x="474" y="497" width="4" height="9"/><rect x="544" y="497" width="4" height="9"/>
+        <rect x="652" y="492" width="86" height="5"/><rect x="658" y="497" width="4" height="9"/><rect x="728" y="497" width="4" height="9"/></g>
+      <g fill="#2A1B0E">
+        <circle cx="492" cy="468" r="6.5"/><rect x="485.5" y="475" width="13" height="19" rx="5"/>
+        <circle cx="521" cy="470" r="6.5"/><rect x="514.5" y="477" width="13" height="17" rx="5"/>
+        <circle cx="698" cy="468" r="6.5"/><rect x="691.5" y="475" width="13" height="19" rx="5"/>
+      </g>
+      <!-- smoke -->
+      <circle class="smoke" cx="703" cy="324" r="9"/>
+      <circle class="smoke" cx="703" cy="324" r="9"/>
+      <circle class="smoke" cx="703" cy="324" r="9"/>
+    </g>
+
+    <!-- fire pit -->
+    <g id="fire">
+      <circle class="glow" cx="880" cy="535" r="64" fill="url(#fireglow)"/>
+      <rect x="832" y="540" width="34" height="12" rx="5" fill="#4B2F17"/>
+      <rect x="896" y="540" width="34" height="12" rx="5" fill="#4B2F17"/>
+      <ellipse cx="880" cy="549" rx="21" ry="6" fill="#6A6A62"/>
+      <path class="flame" d="M880 546C867 534 871 521 880 508C884 519 895 523 893 537C891 543 885 547 880 546Z" fill="#F5A623"/>
+      <path class="flame" d="M880 546C874 539 876 531 880 524C883 531 888 534 887 540C886 544 883 546 880 546Z" fill="#FFD777"/>
+    </g>
+  </svg>
+</header>
+
+<main class="table">
+  <div class="wrap">
+    <section class="composer" aria-labelledby="ctitle">
+      <h2 id="ctitle" data-i18n="ctitle">Put your idea on the table</h2>
+      <form id="form" novalidate>
+        <div class="types" role="group" aria-label="Post type" id="ctypes">
+          <button type="button" class="chip" data-ctype="saw" data-i18n="saw" aria-pressed="false">I saw</button>
+          <button type="button" class="chip" data-ctype="thought" data-i18n="thought" aria-pressed="true">I thought</button>
+          <button type="button" class="chip" data-ctype="did" data-i18n="did" aria-pressed="false">I did</button>
+          <button type="button" class="chip" data-ctype="learned" data-i18n="learned" aria-pressed="false">I learned</button>
+        </div>
+        <textarea id="ctext" maxlength="280" rows="3" data-i18n-ph="ph" placeholder="What did you see, think, do or learn?" aria-label="Post"></textarea>
+        <div class="composer-foot">
+          <button type="submit" class="put" data-i18n="put">Put on the table</button>
+          <p class="note" id="note" role="status" aria-live="polite"></p>
+        </div>
+      </form>
+    </section>
+
+    <div class="filters" role="group" aria-label="Filter" id="filters">
+      <button type="button" class="chip" data-filter="all" data-i18n="all" aria-pressed="true">All</button>
+      <button type="button" class="chip" data-filter="saw" data-i18n="saw" aria-pressed="false">I saw</button>
+      <button type="button" class="chip" data-filter="thought" data-i18n="thought" aria-pressed="false">I thought</button>
+      <button type="button" class="chip" data-filter="did" data-i18n="did" aria-pressed="false">I did</button>
+      <button type="button" class="chip" data-filter="learned" data-i18n="learned" aria-pressed="false">I learned</button>
+    </div>
+
+    <div id="feed"></div>
+  </div>
+</main>
+
+<section class="rules">
+  <div class="plaque">
+    <p data-i18n="r1">Marketplace is one wooden cabin where people tell each other what they saw, thought, did and learned.</p>
+    <p data-i18n="r2">It's not a place for showing off: no money, no cars, no lambo, and whoever flexes goes away, because if someone sets fire here, we all burned.</p>
+    <p class="msg" data-i18n="r3">Come, put your idea on the table, we're in this together.</p>
+  </div>
+</section>
+
+<footer>
+  <p class="disc" data-i18n="disc">Information only, not advice. You decide.</p>
+  <p class="legal">Šimon Čierťaský - TradeMaker, IČO 57 992 291, Bratislava, tradermaker.app</p>
+  <a href="/" data-i18n="back">Back to TraderMaker</a>
+</footer>
+
+<script>
+(function(){
+  /* ---------- candlestick mountains ---------- */
+  function rng(a){return function(){a|=0;a=a+0x6D2B79F5|0;var t=Math.imul(a^a>>>15,1|a);t=t+Math.imul(t^t>>>7,61|t)^t;return((t^t>>>14)>>>0)/4294967296}}
+  var NS='http://www.w3.org/2000/svg';
+  function el(n,a,p){var e=document.createElementNS(NS,n);for(var k in a)e.setAttribute(k,a[k]);if(p)p.appendChild(e);return e}
+
+  function layer(id,o){
+    var g=document.getElementById(id), r=rng(o.seed), prev=null, n=Math.ceil(1320/o.step), cs=[], i,j;
+    for(i=0;i<n;i++){
+      var x=-50+i*o.step+o.w/2, p=0;
+      for(j=0;j<o.peaks.length;j++){var b=o.peaks[j], v=b[1]*(1-Math.abs(x-b[0])/b[2]); if(v>p)p=v}
+      var close=Math.max(p,20)+(r()-.5)*o.noise*2;
+      var open=prev===null?close-(r()-.5)*o.noise:prev;
+      if(Math.abs(close-open)<7)close=open+(r()>.5?7:-7);
+      prev=close;
+      cs.push({x:x,o:open,c:close});
+    }
+    var d='M'+cs[0].x+' '+(o.base+60);
+    cs.forEach(function(k){d+='L'+k.x+' '+(o.base-Math.max(k.o,k.c))});
+    d+='L'+cs[cs.length-1].x+' '+(o.base+60)+'Z';
+    el('path',{d:d,fill:o.mass,opacity:'.5'},g);
+    cs.forEach(function(k){
+      var top=Math.max(k.o,k.c), bot=Math.min(k.o,k.c), col=k.c>k.o?o.g:o.r;
+      var hi=top+4+r()*o.wick, lo=bot-4-r()*o.wick;
+      el('line',{x1:k.x,x2:k.x,y1:o.base-hi,y2:o.base-lo,stroke:col,'stroke-width':2.4},g);
+      el('rect',{x:k.x-o.w/2,y:o.base-top,width:o.w,height:top-bot,rx:2,fill:col},g);
+    });
+  }
+  layer('far',{seed:11,step:34,w:24,base:500,noise:16,wick:34,g:'#8DAA7E',r:'#C48B7C',mass:'#D9B98A',
+    peaks:[[470,325,240],[745,310,230],[180,300,260],[1010,285,260],[330,170,140],[900,150,150],[605,200,130]]});
+  layer('mid',{seed:23,step:44,w:32,base:508,noise:20,wick:30,g:'#739A62',r:'#B8665A',mass:'#B89A6C',
+    peaks:[[390,230,190],[830,240,200],[90,200,200],[1120,210,200],[600,120,200]]});
+  layer('near',{seed:37,step:58,w:42,base:516,noise:20,wick:22,g:'#5E8650',r:'#A9493E',mass:'#8A7448',
+    peaks:[[440,110,150],[780,100,150],[200,130,190],[1000,120,190],[610,40,100]]});
+
+  var pg=document.getElementById('pines');
+  [[120,100],[170,80],[1035,95],[1090,110],[405,78],[797,86]].forEach(function(p){
+    var x=p[0],h=p[1],y=514;
+    for(var t=0;t<3;t++){
+      var w=22-t*4, yy=y-t*h*.28;
+      el('path',{d:'M'+x+' '+(yy-h*.5)+'L'+(x-w)+' '+yy+'H'+(x+w)+'Z',fill:'#46512F'},pg);
+    }
+    el('rect',{x:x-3,y:y,width:6,height:8,fill:'#3A2A18'},pg);
+  });
+
+  /* ---------- content ---------- */
+  var T={
+    sk:{lead:'Jedna drevená chata, kde sa nezdieľajú peniaze, ale to, čo si videl, myslel, urobil a naučil sa.',
+      ctitle:'Polož na stôl svoju myšlienku',saw:'Videl som',thought:'Myslel som',did:'Urobil som',learned:'Naučil som sa',
+      ph:'Čo si videl, myslel, urobil alebo sa naučil?',put:'Polož na stôl',all:'Všetko',agree:'Súhlasím',differ:'Myslím inak',
+      empty:'Napíš aspoň vetu.',flex:'Toto patrí mimo chaty. Napíš, čo si videl, myslel, urobil alebo sa naučil, bez čísel o peniazoch a bez áut.',
+      now:'práve teraz',you:'Ty',
+      r1:'Trhovisko je jedna drevená chata, kde si ľudia hovoria, čo videli, mysleli, urobili a naučili sa.',
+      r2:'Nie je to miesto na predvádzanie: bez peňazí, bez áut, bez lambo, a kto flexuje, ide preč, lebo keď to tu niekto podpáli, všetci sme zhoreli.',
+      r3:'Príď, polož na stôl svoju myšlienku, sme v tom spolu.',
+      disc:'Len informácie, nie odporúčanie. Rozhoduješ sa sám.',back:'Späť na TraderMaker'},
+    en:{lead:'One wooden cabin where you don\'t share money, but what you saw, thought, did and learned.',
+      ctitle:'Put your idea on the table',saw:'I saw',thought:'I thought',did:'I did',learned:'I learned',
+      ph:'What did you see, think, do or learn?',put:'Put on the table',all:'All',agree:'I agree',differ:'I think differently',
+      empty:'Write at least a sentence.',flex:'This belongs outside the cabin. Write what you saw, thought, did or learned, without money numbers and without cars.',
+      now:'just now',you:'You',
+      r1:'Marketplace is one wooden cabin where people tell each other what they saw, thought, did and learned.',
+      r2:'It\'s not a place for showing off: no money, no cars, no lambo, and whoever flexes goes away, because if someone sets fire here, we all burned.',
+      r3:'Come, put your idea on the table, we\'re in this together.',
+      disc:'Information only, not advice. You decide.',back:'Back to TraderMaker'}
+  };
+  var posts=[
+    {id:1,type:'did',who:'Marek',when:{sk:'dnes',en:'today'},
+     title:{sk:'Obchod, čo som neurobil',en:'The trade I didn\'t take'},
+     text:{sk:'Videl som XAU na supporte, čakal som, nedočkal som, neklikol som. A to je win.',en:'I saw XAU on support, I waited, I didn\'t get it, I didn\'t click. And that\'s a win.'},a:0,d:0,mine:null},
+    {id:2,type:'did',who:'Simona',when:{sk:'dnes',en:'today'},
+     title:{sk:'Pravidlo je šéf',en:'The rule is the boss'},
+     text:{sk:'Pocit mi hovoril klikni, pravidlo hovorilo čakaj. Poslúchla som pravidlo.',en:'Feeling told me click, rule told me wait. I listened to the rule.'},a:0,d:0,mine:null},
+    {id:3,type:'saw',who:'Tomáš',when:{sk:'dnes',en:'today'},
+     title:{sk:'Nudný deň',en:'Boring day'},
+     text:{sk:'EUR/USD sa celý deň držalo v úzkom pásme. Pozeral som a nič som nerobil. Aj nuda je informácia.',en:'EUR/USD stayed in a narrow range all day. I watched and did nothing. Even boredom is information.'},a:0,d:0,mine:null},
+    {id:4,type:'thought',who:'Šimon',when:{sk:'včera',en:'yesterday'},
+     title:{sk:'Séria je viac',en:'Series is more'},
+     text:{sk:'Jeden obchod nič neznamená. Séria znamená všetko.',en:'One trade means nothing. Series means everything.'},a:0,d:0,mine:null},
+    {id:5,type:'learned',who:'Petra',when:{sk:'včera',en:'yesterday'},
+     title:{sk:'Čo som sa naučila',en:'What I learned'},
+     text:{sk:'Obchod, čo som neurobila, ma naučil viac ako obchod, čo som urobila.',en:'The trade I didn\'t take taught me more than the trade I did.'},a:0,d:0,mine:null}
+  ];
+  var L='en', filter='all', ctype='thought', nextId=100;
+
+  function esc(s){return String(s).replace(/[&<>"]/g,function(c){return{'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]})}
+  function cnt(n){return n>0?'<i>'+n+'</i>':''}
+
+  function render(){
+    var h='';
+    posts.forEach(function(p){
+      if(filter!=='all'&&p.type!==filter)return;
+      h+='<article class="card"><div class="meta"><b>'+esc(p.who[L]||p.who)+'</b><span class="tag">'+T[L][p.type]+'</span><span class="when">'+esc(p.when[L])+'</span></div>'
+        +(p.title?'<h3>'+esc(p.title[L])+'</h3>':'')
+        +'<p>'+esc(p.text[L])+'</p>'
+        +'<div class="react">'
+        +'<button type="button" data-id="'+p.id+'" data-act="a" aria-pressed="'+(p.mine==='a')+'">'+T[L].agree+cnt(p.a)+'</button>'
+        +'<button type="button" data-id="'+p.id+'" data-act="d" aria-pressed="'+(p.mine==='d')+'">'+T[L].differ+cnt(p.d)+'</button>'
+        +'</div></article>';
+    });
+    document.getElementById('feed').innerHTML=h;
+  }
+
+  function applyLang(){
+    document.documentElement.lang=L;
+    document.querySelectorAll('[data-i18n]').forEach(function(e){e.textContent=T[L][e.getAttribute('data-i18n')]});
+    document.querySelectorAll('[data-i18n-ph]').forEach(function(e){e.placeholder=T[L][e.getAttribute('data-i18n-ph')]});
+    document.querySelectorAll('[data-lang]').forEach(function(b){b.setAttribute('aria-pressed',b.getAttribute('data-lang')===L)});
+    document.getElementById('note').textContent='';
+    render();
+  }
+
+  document.querySelectorAll('[data-lang]').forEach(function(b){
+    b.addEventListener('click',function(){L=b.getAttribute('data-lang');applyLang()});
+  });
+  document.getElementById('ctypes').addEventListener('click',function(e){
+    var b=e.target.closest('[data-ctype]'); if(!b)return; ctype=b.getAttribute('data-ctype');
+    this.querySelectorAll('[data-ctype]').forEach(function(x){x.setAttribute('aria-pressed',x===b)});
+  });
+  document.getElementById('filters').addEventListener('click',function(e){
+    var b=e.target.closest('[data-filter]'); if(!b)return; filter=b.getAttribute('data-filter');
+    this.querySelectorAll('[data-filter]').forEach(function(x){x.setAttribute('aria-pressed',x===b)});
+    render();
+  });
+  document.getElementById('feed').addEventListener('click',function(e){
+    var b=e.target.closest('[data-act]'); if(!b)return;
+    var id=+b.getAttribute('data-id'), act=b.getAttribute('data-act'), p=posts.filter(function(x){return x.id===id})[0];
+    if(p.mine===act){p[act]--;p.mine=null}
+    else{if(p.mine)p[p.mine]--;p.mine=act;p[act]++}
+    render();
+    var f=document.querySelector('[data-id="'+id+'"][data-act="'+act+'"]'); if(f)f.focus();
+  });
+
+  var FLEX=/\d[\d\s.,]*\s?(€|eur\b|\$|usd\b)|[€$]\s?\d|lambo|ferrari|porsche|rolex|zarobil|zárobok|zarobila|earned|my car|moje auto|nové auto/i;
+  document.getElementById('form').addEventListener('submit',function(e){
+    e.preventDefault();
+    var ta=document.getElementById('ctext'), note=document.getElementById('note'), v=ta.value.trim();
+    if(!v){note.textContent=T[L].empty;ta.focus();return}
+    if(FLEX.test(v)){note.textContent=T[L].flex;ta.focus();return}
+    note.textContent='';
+    posts.unshift({id:nextId++,type:ctype,who:{sk:T.sk.you,en:T.en.you},when:{sk:T.sk.now,en:T.en.now},title:null,text:{sk:v,en:v},a:0,d:0,mine:null});
+    ta.value=''; filter='all';
+    document.querySelectorAll('[data-filter]').forEach(function(x){x.setAttribute('aria-pressed',x.getAttribute('data-filter')==='all')});
+    render();
+  });
+
+  applyLang();
+})();
+</script>
+</body>
+</html>

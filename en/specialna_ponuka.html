@@ -1,0 +1,109 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Card - Special Offer - coloured - TraderMaker</title>
+<style>
+*{margin:0;padding:0;box-sizing:border-box}
+body{font-family:Arial,sans-serif;background:radial-gradient(ellipse at 50% 0%, #5A3E22 0%, #3A2A12 45%, #241A0D 100%);color:#E8DCC0;min-height:100vh}
+a{text-decoration:none;color:inherit}
+.wrap{max-width:940px;margin:0 auto;padding:24px 16px}
+.card{background:#0A0E1A;border:4px solid #E8B923;border-radius:28px;padding:36px 26px;color:#fff;box-shadow:0 18px 40px rgba(0,0,0,.45);text-align:center;position:relative;overflow:hidden}
+.card:before{content:"";position:absolute;inset:0;background:radial-gradient(ellipse at 50% 0%,rgba(232,185,35,.15),transparent 55%);pointer-events:none}
+.card .top{letter-spacing:4px;font-size:12px;color:#E8B923;position:relative}
+.card h1{font-family:Georgia,serif;font-size:36px;letter-spacing:3px;color:#E8B923;margin-top:10px;position:relative}
+.card p{margin-top:12px;line-height:1.7;color:#E8DCC0;position:relative}
+.price{margin-top:18px;font-size:18px;position:relative}
+.price b{color:#E8B923;font-size:28px}
+.grid{display:grid;grid-template-columns:1fr 1fr;gap:16px;margin-top:24px;text-align:left;position:relative}
+.opt{border-radius:18px;outline:none;padding:20px;border:1px solid rgba(0,0,0,.35);transition:transform .2s;box-shadow:0 10px 24px rgba(0,0,0,.35)}
+.opt:hover{transform:translateY(-4px) scale(1.01)}
+.opt b{font-family:Georgia,serif;font-size:19px}
+.opt span{display:block;font-size:12px;letter-spacing:1px;margin-top:4px;opacity:.9}
+.opt p{font-size:14px;line-height:1.55;margin-top:8px}
+.pocasie{background:linear-gradient(160deg,#3A2A12 0%,#5A6A7A 45%,#6AA0C0 70%,#A88BC0 100%);color:#fff}
+.pocasie p{color:#EAF6FF}
+.trhovisko{background:linear-gradient(160deg,#8B5A2A,#C49A5A 55%,#F5EFE0 100%);color:#2B2110}
+.trhovisko p{color:#4A2E00}
+.lupez{background:linear-gradient(160deg,#000,#1A0A0A 60%,#2A0A0A);color:#fff;border-color:#EF4444}
+.lupez p{color:#FECACA}
+.vestica{background:linear-gradient(160deg,#1A0A2E,#6A1A8A 55%,#EC4899 100%);color:#fff}
+.vestica p{color:#FCE7F3}
+.btn{display:inline-block;margin-top:24px;background:#E8B923;color:#0A0E1A;padding:15px 28px;border-radius:999px;font-weight:800;position:relative;box-shadow:0 10px 30px rgba(232,185,35,.45)}
+small{display:block;margin-top:12px;color:#9CA3AF;font-size:12px;position:relative}
+.note{max-width:940px;margin:14px auto;padding:0 16px;line-height:1.6;color:#D8C9A8;font-size:14px}
+
+/* --- ANIMATIONS + FILL - design stays, it just lives --- */
+@keyframes fadeUp{from{opacity:0;transform:translateY(14px)}to{opacity:1;transform:translateY(0)}}
+@keyframes goldGlow{0%,100%{box-shadow:0 18px 40px rgba(0,0,0,.45),0 0 0 rgba(232,185,35,0)}50%{box-shadow:0 18px 40px rgba(0,0,0,.45),0 0 28px rgba(232,185,35,.35)}}
+@keyframes floatY{0%,100%{transform:translateY(0)}50%{transform:translateY(-4px)}}
+@keyframes laser{0%{left:-20%;opacity:0}15%{opacity:1}85%{opacity:1}100%{left:110%;opacity:0}}
+@keyframes neonPulse{0%,100%{filter:brightness(1)}50%{filter:brightness(1.18)}}
+@keyframes waterShift{0%{background-position:0% 0%}50%{background-position:100% 50%}100%{background-position:0% 0%}}
+@keyframes bubble{0%{transform:translateY(0) scale(.8);opacity:0}15%{opacity:.7}100%{transform:translateY(-520px) scale(1.4);opacity:0}}
+@keyframes shimmer{0%{transform:translateX(-120%)}100%{transform:translateX(220%)}}
+@keyframes marquee{from{transform:translateX(0)}to{transform:translateX(-50%)}}
+@keyframes steam{0%{transform:translateY(0) scale(.9);opacity:0}30%{opacity:.8}100%{transform:translateY(-18px) scale(1.2);opacity:0}}
+.card{animation:goldGlow 4s ease-in-out infinite, fadeUp .6s ease both}
+.card h1{animation:fadeUp .6s .05s ease both}
+.card p,.price{animation:fadeUp .6s .1s ease both}
+.opt{animation:fadeUp .6s ease both;position:relative;overflow:hidden}
+.opt:nth-child(1){animation-delay:.15s}
+.opt:nth-child(2){animation-delay:.25s}
+.opt:nth-child(3){animation-delay:.35s}
+.opt:nth-child(4){animation-delay:.45s}
+.opt b{animation:floatY 3s ease-in-out infinite;display:inline-block}
+.opt:hover{transform:translateY(-6px) scale(1.02);box-shadow:0 16px 32px rgba(0,0,0,.45)}
+.pocasie{background-size:180% 180%;animation:waterShift 7s ease-in-out infinite}
+.vestica{animation:neonPulse 3.2s ease-in-out infinite}
+.lupez .laser{position:absolute;top:42%;left:-20%;width:45%;height:2px;background:linear-gradient(90deg,transparent,#EF4444,#FF6B6B,transparent);box-shadow:0 0 12px #EF4444;animation:laser 2.8s linear infinite;pointer-events:none}
+.lupez .laser2{top:68%;animation-delay:1.4s}
+.vestica .spark{position:absolute;width:6px;height:6px;border-radius:50%;background:#F0ABFC;box-shadow:0 0 10px #F0ABFC;animation:floatY 2.2s ease-in-out infinite}
+.pocasie .steam{position:absolute;right:16px;top:10px;font-size:18px;animation:steam 2.6s ease-in-out infinite}
+.trhovisko .flame{position:absolute;right:14px;top:10px;font-size:18px;animation:floatY 2s ease-in-out infinite}
+.btn{animation:fadeUp .6s .5s ease both;overflow:hidden}
+.btn:after{content:"";position:absolute;top:0;left:0;width:40%;height:100%;background:linear-gradient(90deg,transparent,rgba(255,255,255,.55),transparent);animation:shimmer 2.8s ease-in-out infinite}
+.btn:hover{transform:scale(1.04)}
+.mud-bg{position:fixed;inset:0;pointer-events:none;overflow:hidden;z-index:0}
+.mud-bg i{position:absolute;bottom:-20px;border-radius:50%;background:radial-gradient(circle,rgba(232,185,35,.45),rgba(90,62,34,.15));animation:bubble 9s linear infinite}
+.mud-bg i:nth-child(1){left:12%;width:14px;height:14px;animation-delay:0s}
+.mud-bg i:nth-child(2){left:28%;width:9px;height:9px;animation-delay:2s;animation-duration:11s}
+.mud-bg i:nth-child(3){left:55%;width:18px;height:18px;animation-delay:1s}
+.mud-bg i:nth-child(4){left:72%;width:10px;height:10px;animation-delay:3.5s;animation-duration:10s}
+.mud-bg i:nth-child(5){left:88%;width:16px;height:16px;animation-delay:.5s}
+.wrap,.note{position:relative;z-index:1}
+.marquee{margin-top:18px;overflow:hidden;white-space:nowrap;border-top:1px solid rgba(232,185,35,.25);border-bottom:1px solid rgba(232,185,35,.25);padding:9px 0;position:relative}
+.marquee div{display:inline-block;animation:marquee 18s linear infinite;font-size:12px;letter-spacing:2px;color:#E8B923}
+.fill-row{display:flex;gap:8px;justify-content:center;flex-wrap:wrap;margin-top:16px;position:relative}
+.fill-row span{font-size:11px;letter-spacing:1px;padding:6px 10px;border-radius:999px;border:1px solid rgba(232,185,35,.35);color:#E8DCC0;background:rgba(255,255,255,.04);animation:floatY 3s ease-in-out infinite}
+.fill-row span:nth-child(2){animation-delay:.4s}
+.fill-row span:nth-child(3){animation-delay:.8s}
+.fill-row span:nth-child(4){animation-delay:1.2s}
+@media(max-width:650px){.grid{grid-template-columns:1fr}.card h1{font-size:28px}}
+
+</style>
+</head>
+<body>
+<div class="mud-bg"><i></i><i></i><i></i><i></i><i></i></div>
+<div class="wrap">
+<div class="card">
+<div class="top">✦ TRADERMAKER ✦ SPECIAL OFFER</div>
+<h1>SPECIAL OFFER</h1>
+<p>It's not about money. It's about you not being alone in the trenches.<br>You go through the gate and you're different than when you walked in.</p>
+<div class="price">First month <b>2€</b> &nbsp;•&nbsp; Then <b>10€ / month</b></div>
+<div class="grid">
+<a class="opt pocasie" href="pocasie.html"><span class="steam">♨️</span><b>🌦️ Weather (Počasie)</b><span>WEATHER CONFESSION — BLUE</span><p>Not a forecast, but a confession. Mud → muddy water → evaporation. Blue water, brown mud, purple steam.</p></a>
+<a class="opt trhovisko" href="trhovisko.html"><span class="flame">🔥</span><b>🛖 Marketplace (Trhovisko)</b><span>WOODEN CABIN — WOOD</span><p>Trades, thoughts, ideas, knowledge. No flex. Warm wood, brown, beige. We're in this together.</p></a>
+<a class="opt lupez" href="lupez.html"><span class="laser"></span><span class="laser laser2"></span><b>🎬 Organized Robbery (Lúpež)</b><span>PLAN, NOT SIGNAL — BLACK + RED LASERS</span><p>Not untrustworthy, but dangerous. Black, smoke, red lasers like in a movie.</p></a>
+<a class="opt vestica" href="vestica.html"><span class="spark" style="right:18px;top:14px"></span><span class="spark" style="right:34px;top:32px;animation-delay:.7s"></span><b>🔮 Fortune Teller (Veštica)</b><span>FORTUNE, NOT CERTAINTY — PURPLE + PINK</span><p>Analyst predictions. Mysterious, shady, neon purple + pink. Bloomberg — gold at 5200$.</p></a>
+</div>
+<div class="fill-row"><span>🌫️ MUD → WATER → STEAM</span><span>🪵 WOOD • FIRE</span><span>🔴 LASERS • SMOKE</span><span>✨ NEON • FORTUNE</span></div>
+<div class="marquee"><div>✦ TRADERMAKER &nbsp;•&nbsp; MUD &nbsp;•&nbsp; WATER &nbsp;•&nbsp; STEAM &nbsp;•&nbsp; WOOD &nbsp;•&nbsp; LASERS &nbsp;•&nbsp; NEON &nbsp;•&nbsp; TRADERMAKER &nbsp;•&nbsp; MUD &nbsp;•&nbsp; WATER &nbsp;•&nbsp; STEAM &nbsp;•&nbsp; WOOD &nbsp;•&nbsp; LASERS &nbsp;•&nbsp; NEON &nbsp;•&nbsp; </div></div>
+<a class="btn" href="#">Go through the gate →</a>
+<small>incl. VAT • cancel in 1 click • no questions • information only, not advice</small>
+</div>
+</div>
+<div class="note"><b>Special Offer card — coloured by theme, mysterious.</b> Each world has its own colour, like what's happening in that theme. No white cards. Weather = blue + mud, Marketplace = wood, Robbery = black + red lasers, Fortune Teller = purple + pink neon.</div>
+</body>
+</html>

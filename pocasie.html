@@ -1,0 +1,308 @@
+<!DOCTYPE html>
+<html lang="sk">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Počasie | Spoveď počasia | TraderMaker</title>
+<meta name="description" content="Päť udalostí: včera, dnes, zajtra. Nie predpoveď. Spoveď.">
+<style>
+:root{
+  --bg:#0A0E1A;
+  --gold:#E8B923;
+  --gold2:#D4AF37;
+  --ink:#EDE8DC;
+  --serif:"Iowan Old Style","Palatino Linotype",Palatino,Georgia,serif;
+  --sans:system-ui,-apple-system,"Segoe UI",Roboto,Helvetica,Arial,sans-serif;
+  --hand:"Segoe Script","Bradley Hand","Snell Roundhand","Comic Sans MS",cursive;
+}
+*{margin:0;padding:0;box-sizing:border-box}
+html{-webkit-text-size-adjust:100%}
+body{background:var(--bg);color:var(--ink);font-family:var(--sans);line-height:1.6;overflow-x:hidden}
+a{color:var(--gold)}
+a:focus-visible,button:focus-visible{outline:2px solid var(--gold);outline-offset:3px;border-radius:4px}
+.wrap{max-width:720px;margin:0 auto;padding:0 20px;position:relative;z-index:2}
+
+/* ---------- top bar ---------- */
+.bar{display:flex;justify-content:space-between;align-items:center;padding:16px 20px;max-width:1000px;margin:0 auto}
+.brand{font-family:var(--serif);font-weight:700;letter-spacing:.06em;color:var(--gold);font-size:18px}
+.lang{display:flex;align-items:center;gap:8px;font-size:14px;color:#7d8499}
+.lang button{background:none;border:0;color:#9aa1b5;font:inherit;font-weight:600;cursor:pointer;padding:6px 4px;letter-spacing:.04em}
+.lang button[aria-pressed="true"]{color:var(--gold)}
+
+/* ---------- hero ---------- */
+.hero{position:relative;text-align:center;padding:44px 20px 110px;
+  background:radial-gradient(ellipse 70% 50% at 50% 30%,rgba(232,185,35,.10),transparent 70%),var(--bg)}
+.hero h1{font-family:var(--serif);font-weight:800;font-size:clamp(46px,13vw,92px);letter-spacing:.02em;line-height:1.05}
+.hero .en{font-family:var(--serif);font-style:italic;color:var(--gold);font-size:clamp(18px,4.5vw,24px);margin-top:6px}
+.slip{display:inline-block;position:relative;margin:40px auto 0;padding:34px 30px 16px;background:#F1E6B8;color:#1b1408;
+  font-family:var(--serif);font-weight:800;font-size:clamp(26px,7.5vw,42px);letter-spacing:.03em;line-height:1.1;
+  transform:rotate(-2deg);box-shadow:0 18px 40px rgba(0,0,0,.55);
+  border-radius:2px 3px 2px 4px}
+.slip::before{content:"";position:absolute;top:-12px;left:50%;width:90px;height:24px;transform:translateX(-50%) rotate(2deg);
+  background:rgba(232,185,35,.55);box-shadow:0 1px 3px rgba(0,0,0,.3)}
+.fix{position:relative;display:inline-block}
+.fix s{text-decoration-thickness:4px;text-decoration-color:#b3261e}
+.fix i{position:absolute;left:50%;top:-.95em;transform:translateX(-50%) rotate(-5deg);white-space:nowrap;
+  font-family:var(--hand);font-style:normal;font-weight:700;font-size:.8em;color:#1d3a8a;letter-spacing:0}
+.hero .line{max-width:520px;margin:34px auto 0;color:#b9bdcb;font-size:17px}
+.sr{position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0);white-space:nowrap}
+
+/* ---------- river (three bands, no hard lines) ---------- */
+.band{position:relative}
+.band h2{font-size:clamp(30px,7.5vw,46px);line-height:1.1;display:flex;align-items:center;gap:14px}
+.band h2 svg{flex:none;width:34px;height:34px;stroke:var(--gold);fill:none;stroke-width:1.8;stroke-linecap:round;stroke-linejoin:round}
+.when{margin-top:8px;color:var(--gold);font-size:15px;font-weight:600;letter-spacing:.03em}
+.intro{margin-top:10px;max-width:560px;font-size:17px}
+.cards{margin-top:26px;display:grid;gap:18px}
+.card h3{font-family:var(--serif);font-size:21px;line-height:1.25}
+.card .head{display:flex;justify-content:space-between;align-items:flex-start;gap:12px;flex-wrap:wrap}
+.chip{display:inline-flex;gap:8px;font-size:13px;font-weight:600;padding:3px 10px;border:1px solid var(--gold2);border-radius:999px;white-space:nowrap}
+.card p{margin-top:8px}
+.card .note b{color:var(--gold)}
+.card .src{font-size:13px;opacity:.75;margin-top:8px}
+
+/* Včera: zákop, blato */
+.mud{padding:56px 0 100px;color:#EADFC8;
+  background:linear-gradient(180deg,#0A0E1A 0%,#1d140a 14%,#2f2112 55%,#3b2b17 100%)}
+.mud::before{content:"";position:absolute;inset:0;opacity:.35;mix-blend-mode:overlay;pointer-events:none;
+  background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='220' height='220'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.8' numOctaves='3'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='.6'/%3E%3C/svg%3E");
+  -webkit-mask-image:linear-gradient(180deg,transparent,#000 25%,#000 75%,transparent);
+  mask-image:linear-gradient(180deg,transparent,#000 25%,#000 75%,transparent)}
+.mud h2{font-family:var(--serif);font-weight:800;text-shadow:0 3px 10px rgba(0,0,0,.6)}
+.mud .card{background:#1a1109;border-left:3px solid var(--gold2);border-radius:4px 16px 6px 12px;padding:20px 22px;
+  box-shadow:inset 0 10px 24px rgba(0,0,0,.6),inset 0 -2px 8px rgba(255,255,255,.03)}
+
+/* Dnes: voda, ľad */
+.water{padding:120px 0 100px;color:#EAF6F7;
+  background:linear-gradient(180deg,#3b2b17 0%,#46412b 12%,#35504f 24%,#1d4a66 42%,#103456 100%)}
+.silt{position:absolute;left:0;right:0;top:-50px;height:190px;pointer-events:none;filter:blur(18px);z-index:1;
+  background:
+   radial-gradient(60% 40% at 20% 50%,rgba(95,72,40,.75),transparent 70%),
+   radial-gradient(50% 45% at 72% 40%,rgba(80,88,60,.65),transparent 70%),
+   radial-gradient(40% 35% at 45% 75%,rgba(60,92,92,.55),transparent 70%)}
+.water h2{font-family:var(--serif);font-weight:500}
+.water .cards{gap:26px}
+.water .card{--r:-.8deg;color:#0b1b2b;padding:20px 24px;border-radius:20px 28px 14px 24px;
+  background:linear-gradient(145deg,rgba(238,250,255,.92),rgba(190,225,245,.74));
+  border:1px solid rgba(255,255,255,.75);backdrop-filter:blur(4px);
+  box-shadow:0 16px 34px rgba(0,10,30,.45),inset 0 0 24px rgba(255,255,255,.55);
+  animation:bob 9s ease-in-out infinite}
+.water .card:nth-child(2){--r:.9deg;animation-delay:-4s;margin-left:clamp(0px,4vw,36px)}
+.water .chip{color:#5a4200;border-color:#b8921c;background:rgba(232,185,35,.18)}
+.water .card .note b{color:#7a5a00}
+@keyframes bob{0%,100%{transform:translateY(0) rotate(var(--r))}50%{transform:translateY(-7px) rotate(calc(var(--r) * -1))}}
+
+/* Zajtra: sen, vyparovanie */
+.dream{padding:110px 0 130px;color:#F1EBFF;overflow:hidden;
+  background:linear-gradient(180deg,#103456 0%,#27407a 22%,#4b3f8c 55%,#2a2060 80%,#0A0E1A 100%)}
+.dream h2{font-family:var(--serif);font-weight:300;font-style:italic;text-shadow:0 0 24px rgba(190,160,255,.6)}
+.dream .card{padding:26px 30px;border-radius:44px;
+  background:radial-gradient(ellipse at 30% 20%,rgba(255,255,255,.16),rgba(180,150,255,.08) 60%,transparent 100%);
+  box-shadow:0 0 64px rgba(160,130,255,.28);backdrop-filter:blur(6px);text-shadow:0 0 14px rgba(190,160,255,.35)}
+.dream .card:nth-child(2){margin-left:clamp(0px,4vw,36px)}
+.vap{position:absolute;border-radius:50%;filter:blur(34px);background:rgba(200,170,255,.22);pointer-events:none;animation:rise 16s linear infinite}
+.vap:nth-child(1){width:220px;height:220px;left:-40px;bottom:10%}
+.vap:nth-child(2){width:180px;height:180px;right:-30px;bottom:30%;animation-delay:-6s}
+.vap:nth-child(3){width:260px;height:260px;left:30%;bottom:0;animation-delay:-11s}
+@keyframes rise{0%{transform:translateY(60px) scale(.8);opacity:0}30%{opacity:1}100%{transform:translateY(-260px) scale(1.4);opacity:0}}
+
+/* ---------- rules + footer ---------- */
+.rules{text-align:center;padding:30px 20px 60px}
+.rules h2{font-family:var(--serif);font-size:clamp(28px,7vw,40px);color:var(--gold)}
+.rules p{max-width:560px;margin:16px auto 0;color:#c7cad6;font-size:17px}
+footer{text-align:center;padding:28px 20px 44px;border-top:1px solid rgba(232,185,35,.35);font-size:14px;color:#9aa1b5}
+footer .disc{color:var(--ink);font-weight:600;font-size:15px}
+footer p{margin-top:8px}
+
+@media(max-width:600px){
+  .mud .card,.water .card{padding:18px}
+  .dream .card{padding:22px;border-radius:34px}
+  .water .card:nth-child(2),.dream .card:nth-child(2){margin-left:0}
+}
+@media(prefers-reduced-motion:reduce){*{animation:none!important}}
+</style>
+</head>
+<body>
+
+<div class="bar">
+  <div class="brand">TraderMaker</div>
+  <div class="lang" role="group" aria-label="Jazyk / Language">
+    <button type="button" data-l="sk" aria-pressed="true">SK</button><span aria-hidden="true">|</span><button type="button" data-l="en" aria-pressed="false">EN</button>
+  </div>
+</div>
+
+<header class="hero">
+  <h1 data-i="title">Počasie</h1>
+  <div class="en" data-i="sub">Weather Confession</div>
+  <div class="slip" id="slip"></div>
+  <p class="line" data-i="line"></p>
+</header>
+
+<main>
+  <section class="band mud" aria-labelledby="h-mud">
+    <div class="wrap">
+      <h2 id="h-mud">
+        <svg viewBox="0 0 32 32" aria-hidden="true"><path d="M3 12h6l3 4 4-4 3 4 4-4h6"/><path d="M3 20h6l3 4 4-4 3 4 4-4h6"/></svg>
+        <span data-i="mudH"></span>
+      </h2>
+      <div class="when" data-d="-1"></div>
+      <p class="intro" data-i="mudP"></p>
+      <div class="cards" id="ev-mud"></div>
+    </div>
+  </section>
+
+  <section class="band water" aria-labelledby="h-water">
+    <div class="silt" aria-hidden="true"></div>
+    <div class="wrap">
+      <h2 id="h-water">
+        <svg viewBox="0 0 32 32" aria-hidden="true"><path d="M16 4c5 7 8 11 8 15a8 8 0 0 1-16 0c0-4 3-8 8-15z"/></svg>
+        <span data-i="waterH"></span>
+      </h2>
+      <div class="when" data-d="0"></div>
+      <p class="intro" data-i="waterP"></p>
+      <div class="cards" id="ev-water"></div>
+    </div>
+  </section>
+
+  <section class="band dream" aria-labelledby="h-dream">
+    <span class="vap" aria-hidden="true"></span><span class="vap" aria-hidden="true"></span><span class="vap" aria-hidden="true"></span>
+    <div class="wrap">
+      <h2 id="h-dream">
+        <svg viewBox="0 0 32 32" aria-hidden="true"><path d="M9 22a6 6 0 0 1 1-11.9A7 7 0 0 1 23.5 12 5 5 0 0 1 23 22z"/></svg>
+        <span data-i="dreamH"></span>
+      </h2>
+      <div class="when" data-d="1"></div>
+      <p class="intro" data-i="dreamP"></p>
+      <div class="cards" id="ev-dream"></div>
+    </div>
+  </section>
+
+  <section class="rules">
+    <h2 data-i="rulesH"></h2>
+    <p data-i="rulesP"></p>
+  </section>
+</main>
+
+<footer>
+  <div class="disc" data-i="disc"></div>
+  <p>Šimon Čierťaský - TradeMaker, IČO 57 992 291, Bratislava, tradermaker.app</p>
+  <p><a href="/" data-i="back"></a></p>
+</footer>
+
+<script>
+/* ============================================================
+   DATA: 5 udalostí. Pri licencii si firma prepíše tento blok
+   (svoje udalosti, svoje trhy, svoj čas). Nič iné netreba meniť.
+   band: mud = včera, water = dnes, dream = zajtra
+   ============================================================ */
+var EVENTS = [
+  { band:"mud", market:"USD", time:"14:30 CET",
+    title:{sk:"US CPI, inflácia", en:"US CPI, inflation"},
+    text:{sk:"Inflácia vyšla vyššia, ako trh čakal. Trh sa najprv zľakol, potom sa upokojil.",
+          en:"Inflation came in higher than the market expected. It flinched first, then settled."},
+    label:{sk:"Lekcia", en:"Lesson"},
+    note:{sk:"prvá reakcia nie je verdikt.", en:"the first reaction is not the verdict."},
+    src:"BLS" },
+
+  { band:"water", market:"EUR", time:"14:15 CET",
+    title:{sk:"ECB, rozhodnutie o úrokoch", en:"ECB, interest rate decision"},
+    text:{sk:"ECB rozhoduje o úrokoch. Čakáme, či voda zostane pokojná, alebo sa zakalí.",
+          en:"The ECB decides on rates. We wait to see whether the water stays calm or turns murky."},
+    label:{sk:"Sleduj", en:"Watch"},
+    note:{sk:"tón vyhlásenia, nielen číslo.", en:"the tone of the statement, not only the number."},
+    src:"ECB" },
+
+  { band:"water", market:"USD", time:"14:30 CET",
+    title:{sk:"US, žiadosti o dávky", en:"US jobless claims"},
+    text:{sk:"Koľko ľudí požiadalo o dávky. Malá vec, ale voda sa z nej vie zakaliť.",
+          en:"How many people filed for benefits. A small thing, but it can cloud the water."},
+    label:{sk:"Sleduj", en:"Watch"},
+    note:{sk:"trend za posledné týždne, nie jedno číslo.", en:"the trend over recent weeks, not one number."},
+    src:"US DOL" },
+
+  { band:"dream", market:"USD", time:"14:30 CET",
+    title:{sk:"NFP, zamestnanosť v USA", en:"NFP, US employment"},
+    text:{sk:"Non-Farm Payrolls. Sen, ktorý sa môže splniť aj nesplniť.",
+          en:"Non-Farm Payrolls. A dream that may or may not come true."},
+    label:{sk:"Pravidlo", en:"Rule"},
+    note:{sk:"plán si urob vopred, nie počas čísla.", en:"make the plan beforehand, not during the number."},
+    src:"BLS" },
+
+  { band:"dream", market:"USD", time:{sk:"popoludní", en:"afternoon"},
+    title:{sk:"Fed, prejav", en:"Fed, speech"},
+    text:{sk:"Fed bude rozprávať. Sen, ktorý vie vodu rozvlniť.",
+          en:"The Fed will speak. A dream that can ripple the water."},
+    label:{sk:"Pravidlo", en:"Rule"},
+    note:{sk:"slová nie sú signál, drž sa svojho plánu.", en:"words are not a signal, keep to your plan."},
+    src:"Federal Reserve" }
+];
+
+var T = {
+  sk:{ title:"Počasie", sub:"Weather Confession",
+    line:"Päť udalostí, ktoré stoja za to, rozložených na včera, dnes a zajtra.",
+    mudH:"Včera, zákop", mudP:"Čo sa stalo, čo sa zakopalo a z čoho sa poučiť. Minulosť už neovplyvníš, lekciu si z nej zobrať môžeš.",
+    waterH:"Dnes, voda", waterP:"Čo teraz tečie a čo je naživo. Sleduj pokojne, nenaháňaj.",
+    dreamH:"Zajtra, sen", dreamP:"Čo príde a na čo sa pripraviť. Sen, nie FOMO, a s pravidlom.",
+    rulesH:"Nie predpoveď. Spoveď.",
+    rulesP:"Toto nie je kalendár na naháňanie čísel ani signál na obchod. Je to päť udalostí, ktoré stoja za pozornosť, bez šumu naokolo. Esenciu koncentrujeme, neriedime.",
+    disc:"Len informácie, nie odporúčanie. Rozhoduješ sa sám.", back:"Späť na TraderMaker",
+    slip:{struck:"PRED", hand:"S", rest:"POVEĎ", aria:"Predpoveď, prečiarknuté a opravené na spoveď"},
+    src:"Zdroj", locale:"sk-SK", pageTitle:"Počasie | Spoveď počasia | TraderMaker" },
+  en:{ title:"Počasie", sub:"Weather Confession",
+    line:"Five events worth your attention, spread across yesterday, today and tomorrow.",
+    mudH:"Yesterday, the trench", mudP:"What happened, what got buried, and what to learn from it. You can’t change the past, but you can keep the lesson.",
+    waterH:"Today, the water", waterP:"What flows right now, what is live. Watch calmly, don’t chase.",
+    dreamH:"Tomorrow, the dream", dreamP:"What comes next and how to prepare. A dream, not FOMO, with a rule.",
+    rulesH:"Not a forecast. A confession.",
+    rulesP:"This is not a calendar for chasing numbers, and not a signal to trade. It is five events worth your attention, without the noise around them. We concentrate the essence, we don’t dilute it.",
+    disc:"Information only, not advice. You decide.", back:"Back to TraderMaker",
+    slip:{struck:"FORECAST", hand:"CONFESSION", rest:"", aria:"Forecast, crossed out and corrected to confession"},
+    src:"Source", locale:"en-GB", pageTitle:"Počasie | Weather Confession | TraderMaker" }
+};
+
+var lang = "sk";
+
+function pick(v){ return (typeof v === "string") ? v : v[lang]; }
+function esc(s){ return String(s).replace(/[&<>"]/g, function(c){ return {"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;"}[c]; }); }
+
+function render(){
+  var t = T[lang];
+  document.documentElement.lang = lang;
+  document.title = t.pageTitle;
+
+  document.querySelectorAll("[data-i]").forEach(function(el){ el.textContent = t[el.getAttribute("data-i")]; });
+
+  var s = t.slip;
+  document.getElementById("slip").innerHTML =
+    '<span class="sr">' + esc(s.aria) + '</span>' +
+    '<span aria-hidden="true"><span class="fix"><s>' + esc(s.struck) + '</s><i>' + esc(s.hand) + '</i></span>' + esc(s.rest) + '</span>';
+
+  document.querySelectorAll("[data-d]").forEach(function(el){
+    var d = new Date(); d.setDate(d.getDate() + parseInt(el.getAttribute("data-d"), 10));
+    el.textContent = new Intl.DateTimeFormat(t.locale, {weekday:"long", day:"numeric", month:"numeric"}).format(d);
+  });
+
+  ["mud","water","dream"].forEach(function(b){
+    document.getElementById("ev-" + b).innerHTML = EVENTS.filter(function(e){ return e.band === b; }).map(function(e){
+      return '<article class="card">' +
+        '<div class="head"><h3>' + esc(pick(e.title)) + '</h3>' +
+        '<span class="chip"><span>' + esc(pick(e.time)) + '</span><span>' + esc(e.market) + '</span></span></div>' +
+        '<p>' + esc(pick(e.text)) + '</p>' +
+        '<p class="note"><b>' + esc(pick(e.label)) + ':</b> ' + esc(pick(e.note)) + '</p>' +
+        '<p class="src">' + esc(t.src) + ': ' + esc(e.src) + '</p>' +
+        '</article>';
+    }).join("");
+  });
+
+  document.querySelectorAll(".lang button").forEach(function(b){
+    b.setAttribute("aria-pressed", b.getAttribute("data-l") === lang ? "true" : "false");
+  });
+}
+
+document.querySelectorAll(".lang button").forEach(function(b){
+  b.addEventListener("click", function(){ lang = b.getAttribute("data-l"); render(); });
+});
+render();
+</script>
+</body>
+</html>

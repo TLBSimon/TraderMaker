@@ -1,0 +1,160 @@
+<!DOCTYPE html>
+<html lang="sk">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Organizovaná Lúpež – TraderMaker</title>
+<meta name="description" content="Nie signál. Plán. Celý plán obchodu na jednej stene: vstup, výstup, stop, riziko a dôvod.">
+<style>
+:root{--bg:#0A0E1A;--room:#070A14;--gold:#E8B923;--laser:#EF4444;--ink:#F3F4F6;--mute:#9CA3AF;--sheet:#10162A;--line:#232B45}
+*{margin:0;padding:0;box-sizing:border-box}
+html{background:var(--bg)}
+body{background:var(--bg);color:var(--ink);font-family:Georgia,"Times New Roman",serif;line-height:1.6;overflow-x:hidden;min-height:100vh;position:relative}
+body::before{content:"";position:fixed;inset:0;background:radial-gradient(ellipse at 50% 0%,rgba(239,68,68,.12),transparent 60%),radial-gradient(ellipse at 50% 100%,rgba(0,0,0,.7),transparent 70%);pointer-events:none;z-index:0}
+.smoke{position:fixed;inset:-20%;pointer-events:none;z-index:0;opacity:.5;
+background:radial-gradient(40% 25% at 20% 30%,rgba(156,163,175,.10),transparent 70%),radial-gradient(35% 22% at 80% 55%,rgba(156,163,175,.08),transparent 70%),radial-gradient(45% 25% at 40% 85%,rgba(156,163,175,.07),transparent 70%);
+filter:blur(30px);animation:drift 40s ease-in-out infinite alternate}
+@keyframes drift{from{transform:translate3d(-3%,0,0)}to{transform:translate3d(3%,-2%,0)}}
+main,header,footer{position:relative;z-index:1}
+header{display:flex;justify-content:space-between;align-items:center;padding:14px 18px;border-bottom:1px solid var(--line);font-family:Arial,sans-serif}
+header b{color:var(--gold);letter-spacing:2px;font-size:15px}
+.lang{display:flex;gap:2px;border:1px solid var(--gold);border-radius:999px;overflow:hidden}
+.lang button{background:none;border:0;color:var(--gold);font:600 13px Arial,sans-serif;padding:6px 12px;cursor:pointer}
+.lang button[aria-pressed=true]{background:var(--gold);color:var(--bg)}
+.lang button:focus-visible,a:focus-visible{outline:2px solid var(--gold);outline-offset:3px}
+
+.hero{position:relative;text-align:center;padding:64px 20px 36px;max-width:900px;margin:0 auto}
+h1{font-size:clamp(34px,8vw,68px);font-weight:700;letter-spacing:.06em;line-height:1.1;text-shadow:0 0 28px rgba(239,68,68,.55)}
+.sub{margin-top:10px;color:var(--gold);font-style:italic;font-size:clamp(16px,3.4vw,20px)}
+.lead{margin:18px auto 0;max-width:520px;color:#D1D5DB;font-size:17px}
+.beams{position:absolute;inset:0;pointer-events:none;overflow:hidden}
+.beam{position:absolute;left:-10%;width:120%;height:2px;background:var(--laser);box-shadow:0 0 14px var(--laser),0 0 40px rgba(239,68,68,.5);opacity:.75}
+.b1{top:18%;transform:rotate(-4deg);animation:sweep1 14s ease-in-out infinite alternate}
+.b2{top:62%;transform:rotate(5deg);opacity:.5;animation:sweep2 18s ease-in-out infinite alternate}
+.b3{top:88%;transform:rotate(-2deg);opacity:.35;animation:sweep1 22s ease-in-out infinite alternate-reverse}
+@keyframes sweep1{from{transform:rotate(-5deg) translateY(-14px)}to{transform:rotate(-2deg) translateY(14px)}}
+@keyframes sweep2{from{transform:rotate(6deg) translateY(10px)}to{transform:rotate(3deg) translateY(-12px)}}
+
+.wall{max-width:900px;margin:0 auto;padding:10px 16px 20px}
+.wall-title{text-align:center;color:var(--mute);font:13px Arial,sans-serif;letter-spacing:.08em;margin-bottom:22px}
+.sheet{position:relative;background:var(--sheet);border:1px solid var(--line);border-left:4px solid var(--laser);border-radius:6px;padding:22px 20px 20px;margin-bottom:22px;box-shadow:0 18px 40px rgba(0,0,0,.45)}
+.sheet::before{content:"";position:absolute;top:-6px;left:22px;width:12px;height:12px;border-radius:50%;background:var(--gold);box-shadow:0 0 0 3px var(--bg)}
+.tag{font:600 12px Arial,sans-serif;color:var(--laser);margin-bottom:4px}
+h2{font-size:24px;line-height:1.25}
+.meta{color:var(--mute);font:13px Arial,sans-serif;margin:4px 0 14px}
+.plan{display:grid;grid-template-columns:repeat(4,1fr);gap:8px;margin-bottom:14px}
+.plan div{background:rgba(255,255,255,.04);border:1px solid var(--line);border-radius:6px;padding:9px 10px}
+.plan small{display:block;color:var(--gold);font:600 12px Arial,sans-serif;margin-bottom:2px}
+.plan span{font:700 17px Arial,sans-serif}
+.plan .stop span{color:var(--laser)}
+.why{font-size:16px;color:#E5E7EB;border-top:1px dashed var(--line);padding-top:12px}
+.why b{color:var(--gold);font-weight:700}
+.rr{margin-top:8px;color:var(--mute);font:13px Arial,sans-serif}
+
+.rules{max-width:640px;margin:20px auto 0;padding:26px 20px;text-align:center;border:1px dashed var(--laser);border-radius:8px;background:rgba(239,68,68,.05)}
+.rules p{font-size:19px}
+.rules p+p{margin-top:8px;color:var(--mute);font-size:16px}
+.rules strong{color:var(--ink)}
+footer{max-width:900px;margin:44px auto 0;padding:24px 18px 40px;text-align:center;border-top:1px solid var(--line);color:var(--mute);font:13px/1.7 Arial,sans-serif}
+footer a{color:var(--gold);display:inline-block;margin-top:10px;font-size:14px;text-decoration:none;border-bottom:1px solid var(--gold)}
+@media(max-width:600px){.plan{grid-template-columns:1fr 1fr}.hero{padding-top:48px}}
+@media(prefers-reduced-motion:reduce){.smoke,.beam{animation:none}}
+</style>
+</head>
+<body>
+<div class="smoke" aria-hidden="true"></div>
+
+<header>
+  <b>TRADERMAKER</b>
+  <div class="lang" role="group" aria-label="Jazyk / Language">
+    <button type="button" data-l="sk" aria-pressed="true">SK</button>
+    <button type="button" data-l="en" aria-pressed="false">EN</button>
+  </div>
+</header>
+
+<main>
+  <section class="hero">
+    <div class="beams" aria-hidden="true"><i class="beam b1"></i><i class="beam b2"></i><i class="beam b3"></i></div>
+    <h1>Organizovaná Lúpež</h1>
+    <p class="sub">The Organized Heist</p>
+    <p class="lead" data-en="Not a signal. A plan. See the whole plan before you listen to anyone's call.">Nie signál. Plán. Pozri si celý plán, skôr než vypočuješ niečí signál.</p>
+  </section>
+
+  <section class="wall">
+    <p class="wall-title" data-en="Three plans on the wall. Entry, exit, stop, risk, reason." >Tri plány na stene. Vstup, výstup, stop, riziko, dôvod.</p>
+
+    <article class="sheet">
+      <p class="tag" data-en="PLAN 1">PLÁN č. 1</p>
+      <h2>XAU / Zlato</h2>
+      <p class="meta" data-en="Author: Šimon · 22 Nov 2026 · Status: waiting for confirmation, not clicking blind">Autor: Šimon · 22. 11. 2026 · Stav: čakám na potvrdenie, neklikám slepo</p>
+      <div class="plan">
+        <div><small data-en="ENTRY">VSTUP</small><span>5 000 $</span></div>
+        <div><small data-en="EXIT">VÝSTUP</small><span>5 200 $</span></div>
+        <div class="stop"><small>STOP</small><span>4 950 $</span></div>
+        <div><small data-en="RISK">RIZIKO</small><span>1 %</span></div>
+      </div>
+      <p class="why" data-en="<b>Why:</b> Bloomberg's target and the support level together form a wall. If the wall holds, the build stands. If it cracks, the plan is off.">
+        <b>Prečo:</b> Cieľ od Bloombergu a support tvoria spolu múr. Ak múr vydrží, stavba stojí. Ak praskne, plán padá.</p>
+      <p class="rr" data-en="Reward to risk 4 : 1">Pomer zisk : strata 4 : 1</p>
+    </article>
+
+    <article class="sheet">
+      <p class="tag" data-en="PLAN 2">PLÁN č. 2</p>
+      <h2>EUR / USD</h2>
+      <p class="meta" data-en="Author: Jano · 22 Nov 2026 · Status: sideways structure">Autor: Jano · 22. 11. 2026 · Stav: bočná konštrukcia</p>
+      <div class="plan">
+        <div><small data-en="ENTRY">VSTUP</small><span>1,08</span></div>
+        <div><small data-en="EXIT">VÝSTUP</small><span>1,12</span></div>
+        <div class="stop"><small>STOP</small><span>1,07</span></div>
+        <div><small data-en="RISK">RIZIKO</small><span>0,5 %</span></div>
+      </div>
+      <p class="why" data-en="<b>Why:</b> The euro moves sideways. I wait for the edge, not the middle. If it breaks out, I go with it. If not, I don't click.">
+        <b>Prečo:</b> Euro sa hýbe v bokovke. Čakám na okraj, nie na stred. Keď to prerazí, idem s tým. Keď nie, neklikám.</p>
+      <p class="rr" data-en="Reward to risk 4 : 1">Pomer zisk : strata 4 : 1</p>
+    </article>
+
+    <article class="sheet">
+      <p class="tag" data-en="PLAN 3">PLÁN č. 3</p>
+      <h2>BTC</h2>
+      <p class="meta" data-en="Author: Petra · 22 Nov 2026 · Status: a series, not one trade">Autor: Petra · 22. 11. 2026 · Stav: séria, nie jeden obchod</p>
+      <div class="plan">
+        <div><small data-en="ENTRY">VSTUP</small><span>95 000 $</span></div>
+        <div><small data-en="EXIT">VÝSTUP</small><span>110 000 $</span></div>
+        <div class="stop"><small>STOP</small><span>90 000 $</span></div>
+        <div><small data-en="RISK">RIZIKO</small><span>1 %</span></div>
+      </div>
+      <p class="why" data-en="<b>Why:</b> Bitcoin climbs in steps. One step means nothing, the series means everything. The stop is my brake.">
+        <b>Prečo:</b> Bitcoin ide po schodíkoch. Jeden schod nič neznamená, séria znamená všetko. Stop je moja brzda.</p>
+      <p class="rr" data-en="Reward to risk 3 : 1">Pomer zisk : strata 3 : 1</p>
+    </article>
+
+    <section class="rules">
+      <p data-en="<strong>This is not a recommendation. This is a plan.</strong> It is dangerous if you take it blindly."><strong>Toto nie je odporúčanie. Toto je plán.</strong> Je to nebezpečné, ak to berieš slepo.</p>
+      <p data-en="A signal without a plan is a heist without a plan. Here you see the whole plan. Decide for yourself.">Signál bez plánu je lúpež bez plánu. Tu vidíš celý plán. Rozhodni sa sám.</p>
+    </section>
+  </section>
+</main>
+
+<footer>
+  <p data-en="Information only, not a recommendation. You decide.">Len informácie, nie odporúčanie. Rozhoduješ sa sám.</p>
+  <p>Šimon Čierťaský - TradeMaker, IČO 57 992 291, Bratislava, tradermaker.app</p>
+  <a href="/" data-en="Back to TraderMaker">Späť na TraderMaker</a>
+</footer>
+
+<script>
+(function(){
+  var els=document.querySelectorAll("[data-en]");
+  els.forEach(function(e){e.setAttribute("data-sk",e.innerHTML.trim())});
+  var btns=document.querySelectorAll(".lang button");
+  function set(l){
+    els.forEach(function(e){e.innerHTML=e.getAttribute(l==="en"?"data-en":"data-sk")});
+    document.documentElement.lang=l;
+    btns.forEach(function(b){b.setAttribute("aria-pressed",b.dataset.l===l)});
+    try{localStorage.setItem("tm-lang",l)}catch(x){}
+  }
+  btns.forEach(function(b){b.addEventListener("click",function(){set(b.dataset.l)})});
+  try{var s=localStorage.getItem("tm-lang");if(s==="en")set("en")}catch(x){}
+})();
+</script>
+</body>
+</html>

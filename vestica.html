@@ -1,0 +1,319 @@
+<!DOCTYPE html>
+<html lang="sk">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Veštica – TraderMaker</title>
+<meta name="description" content="Veštica – predikcie analytikov so zdrojom a dôvodom. Len informácie, nie odporúčanie.">
+<meta name="theme-color" content="#0A0E1A">
+<style>
+:root{
+  --bg:#0A0E1A;
+  --ink:#EDE9FA;
+  --muted:#B3A8D3;
+  --gold:#E8B923;
+  --gold2:#D4AF37;
+  --violet:#A855F7;
+  --pink:#EC4899;
+  --line:#2A1F4A;
+  --serif:"Palatino Linotype","Book Antiqua",Palatino,Georgia,serif;
+  --sans:system-ui,-apple-system,"Segoe UI",Roboto,Arial,sans-serif;
+}
+*{margin:0;padding:0;box-sizing:border-box}
+html{scroll-behavior:smooth}
+body{
+  background:var(--bg);color:var(--ink);font-family:var(--sans);line-height:1.6;
+  overflow-x:hidden;min-height:100vh;
+  background-image:
+    radial-gradient(ellipse 70% 40% at 50% 0%,rgba(168,85,247,.16),transparent 70%),
+    radial-gradient(ellipse 50% 30% at 85% 60%,rgba(236,72,153,.07),transparent 70%);
+}
+a{color:var(--gold);text-underline-offset:3px}
+a:hover{color:#fff}
+:focus-visible{outline:2px solid var(--gold);outline-offset:3px;border-radius:2px}
+
+/* money rivers - faint, behind everything */
+.rivers{position:fixed;inset:0;z-index:0;pointer-events:none;opacity:.16}
+.rivers svg{width:100%;height:100%}
+.rivers path{fill:none;stroke-linecap:round;stroke-dasharray:1 16;animation:flow 40s linear infinite}
+.rivers path:nth-child(2){animation-duration:55s;animation-direction:reverse}
+.rivers path:nth-child(3){animation-duration:48s}
+.rivers path:nth-child(4){animation-duration:62s;animation-direction:reverse}
+@keyframes flow{to{stroke-dashoffset:-800}}
+
+/* top bar */
+.top{
+  position:relative;z-index:3;display:flex;justify-content:space-between;align-items:center;
+  padding:max(14px,env(safe-area-inset-top)) 18px 14px;border-bottom:1px solid var(--line);
+  background:rgba(10,14,26,.85);backdrop-filter:blur(6px)
+}
+.brand{font-family:var(--serif);font-weight:700;letter-spacing:.14em;font-size:15px;color:var(--ink)}
+.brand span{color:var(--violet);font-weight:400;letter-spacing:.04em;margin-left:8px}
+.lang{display:flex;gap:2px;border:1px solid var(--gold2);border-radius:999px;padding:2px}
+.lang button{
+  background:none;border:0;color:var(--muted);font:600 13px var(--sans);padding:6px 14px;border-radius:999px;cursor:pointer;
+  min-height:32px
+}
+.lang button[aria-pressed="true"]{background:var(--gold);color:var(--bg)}
+
+/* hero */
+.hero{position:relative;z-index:2;text-align:center;padding:44px 20px 8px}
+.hero h1{
+  font-family:var(--serif);font-weight:700;font-size:clamp(44px,13vw,96px);letter-spacing:.12em;
+  padding-left:.12em;line-height:1;color:#fff;
+  text-shadow:0 0 18px rgba(168,85,247,.9),0 0 52px rgba(236,72,153,.55);
+  animation:rise 1.6s cubic-bezier(.2,.7,.2,1) both
+}
+@keyframes rise{from{opacity:0;filter:blur(10px);transform:translateY(10px)}to{opacity:1;filter:none;transform:none}}
+.hero .en{font-family:var(--serif);font-style:italic;color:var(--gold);font-size:clamp(17px,4.5vw,22px);margin-top:12px}
+.hero .what{max-width:34em;margin:14px auto 0;color:var(--muted);font-size:16px}
+
+/* pendulum */
+.pend{display:block;margin:6px auto 0;background:none;border:0;cursor:pointer;color:inherit;font:inherit;padding:0 30px}
+.pend svg{display:block;margin:0 auto;width:80px;height:210px;overflow:visible}
+.pend .swing{transform-origin:40px 4px;animation:swing 4.4s ease-in-out infinite}
+.pend.wild .swing{animation-duration:2.2s}
+@keyframes swing{0%,100%{transform:rotate(11deg)}50%{transform:rotate(-11deg)}}
+.pend.wild .swing{animation-name:swingwide}
+@keyframes swingwide{0%,100%{transform:rotate(22deg)}50%{transform:rotate(-22deg)}}
+.pend-note{min-height:26px;font-family:var(--serif);font-style:italic;color:var(--muted);font-size:15px;text-align:center;padding:0 20px}
+
+/* stones + clovers */
+.stones{position:relative;z-index:2;display:flex;justify-content:center;align-items:flex-end;gap:clamp(10px,3vw,26px);padding:18px 16px 6px}
+.stones svg{width:34px;height:34px;filter:drop-shadow(0 0 8px rgba(168,85,247,.55))}
+.stones svg.big{width:46px;height:46px}
+.stones svg.clv{filter:drop-shadow(0 0 7px rgba(232,185,35,.45))}
+
+/* layout with side walls */
+.stage{position:relative;z-index:2;max-width:1280px;margin:0 auto;padding:12px 16px 20px;display:grid;grid-template-columns:1fr;gap:18px}
+.wall{display:flex;gap:14px;justify-content:center;flex-wrap:wrap;padding:10px 0}
+.poster{
+  width:min(190px,44vw);padding:16px 14px 18px;color:#1A0A2A;font-family:var(--sans);
+  box-shadow:0 10px 26px rgba(0,0,0,.6);
+  clip-path:polygon(0 3%,6% 0,14% 2%,23% 0,35% 3%,47% 0,60% 2%,72% 0,85% 3%,94% 0,100% 2%,100% 96%,92% 100%,80% 97%,66% 100%,52% 98%,38% 100%,25% 97%,12% 100%,4% 97%,0 100%);
+  transform:rotate(var(--r,-3deg))
+}
+.poster b{display:block;font-family:var(--serif);font-size:19px;line-height:1.2;margin-bottom:6px}
+.poster span{display:block;font-size:13.5px;line-height:1.45}
+.p1{background:#F1DFC1;--r:-3.5deg}
+.p2{background:#FFC9E6;--r:2.5deg}
+.p3{background:#DCC6FA;--r:-1.5deg}
+.p4{background:#F1DFC1;--r:3deg}
+.p2 b,.p4 b{text-decoration:underline wavy rgba(26,10,42,.35);text-underline-offset:4px}
+
+@media(min-width:1100px){
+  .stage{grid-template-columns:210px minmax(0,1fr) 210px;gap:30px;align-items:start}
+  .wall{flex-direction:column;align-items:center;position:sticky;top:24px;padding:20px 0}
+  .poster{width:190px}
+}
+
+/* cards */
+.main{min-width:0}
+.cards{display:grid;gap:18px;grid-template-columns:1fr}
+@media(min-width:720px){.cards{grid-template-columns:1fr 1fr}.cards .feature{grid-column:1/-1}}
+
+.card{
+  position:relative;background:rgba(18,14,38,.82);padding:20px 20px 18px;
+  border:1px solid rgba(168,85,247,.55);border-left:4px solid var(--violet);
+  box-shadow:0 0 28px rgba(168,85,247,.12),0 8px 24px rgba(0,0,0,.45);
+  border-radius:3px 14px 3px 14px
+}
+.card.pink{border-color:rgba(236,72,153,.5);border-left-color:var(--pink);box-shadow:0 0 28px rgba(236,72,153,.1),0 8px 24px rgba(0,0,0,.45)}
+.card.feature{
+  background:linear-gradient(135deg,rgba(232,185,35,.1),rgba(18,14,38,.85) 55%);
+  border-color:var(--gold);border-left-color:var(--gold);border-radius:3px 20px 3px 20px;
+  padding:26px 24px 22px;box-shadow:0 0 40px rgba(232,185,35,.12),0 10px 28px rgba(0,0,0,.5)
+}
+.tag{display:inline-block;font-size:12.5px;font-weight:600;color:var(--bg);background:var(--pink);padding:2px 11px;border-radius:999px;margin-bottom:10px}
+.feature .tag{background:var(--gold)}
+.card h2{font-family:var(--serif);font-size:23px;line-height:1.25;margin-bottom:10px;color:#fff}
+.feature h2{font-size:clamp(25px,5.4vw,34px)}
+.card dl{display:grid;grid-template-columns:auto 1fr;gap:3px 12px;font-size:15px}
+.card dt{color:var(--muted);font-size:13.5px;padding-top:2px}
+.card dd{color:var(--ink)}
+
+/* message */
+.rules{max-width:760px;margin:34px auto 10px;padding:0 6px;text-align:center}
+.rules p{font-family:var(--serif);font-size:clamp(17px,4.3vw,20px);line-height:1.7;color:var(--ink)}
+.rules p+p{margin-top:12px}
+.rules .big{font-size:clamp(21px,5.5vw,28px);color:var(--gold);font-style:italic;margin-top:20px}
+
+/* footer */
+.foot{position:relative;z-index:2;margin-top:40px;border-top:1px solid var(--line);background:rgba(10,14,26,.9);padding:26px 18px max(26px,env(safe-area-inset-bottom));text-align:center}
+.foot .disc{font-weight:600;color:var(--ink);margin-bottom:8px}
+.foot .who{color:var(--muted);font-size:13.5px;margin-bottom:12px}
+.foot .back{display:inline-block;border:1px solid var(--gold);padding:9px 20px;border-radius:999px;font-weight:600;font-size:14.5px;text-decoration:none}
+.foot .back:hover{background:var(--gold);color:var(--bg)}
+
+@media(prefers-reduced-motion:reduce){
+  .rivers path,.pend .swing,.hero h1{animation:none}
+  html{scroll-behavior:auto}
+}
+</style>
+</head>
+<body>
+
+<div class="rivers" aria-hidden="true">
+  <svg viewBox="0 0 1000 1000" preserveAspectRatio="none">
+    <path d="M-50 120 C 200 260, 300 -20, 520 180 S 860 330, 1060 140" stroke="#E8B923" stroke-width="5"/>
+    <path d="M-50 420 C 160 560, 380 300, 560 470 S 880 620, 1060 430" stroke="#A855F7" stroke-width="4"/>
+    <path d="M-50 700 C 220 820, 340 560, 560 740 S 820 900, 1060 700" stroke="#EC4899" stroke-width="4"/>
+    <path d="M-50 930 C 240 1020, 400 820, 600 940 S 880 1040, 1060 900" stroke="#E8B923" stroke-width="5"/>
+  </svg>
+</div>
+
+<header class="top">
+  <div class="brand">TRADERMAKER<span>Veštica</span></div>
+  <div class="lang" role="group" aria-label="Jazyk / Language">
+    <button type="button" data-lang="sk" aria-pressed="true">SK</button>
+    <button type="button" data-lang="en" aria-pressed="false">EN</button>
+  </div>
+</header>
+
+<section class="hero">
+  <h1>VEŠTICA</h1>
+  <p class="en">The Fortune Teller</p>
+  <p class="what" data-sk="Čo analytici hovoria o tom, kam pôjdu trhy. Stránka je zámerne nedôveryhodná, aby si rozmýšľal sám." data-en="What analysts say about where markets are heading. The page is deliberately untrustworthy, so you think for yourself.">Čo analytici hovoria o tom, kam pôjdu trhy. Stránka je zámerne nedôveryhodná, aby si rozmýšľal sám.</p>
+
+  <button class="pend" type="button" id="pend" aria-label="Kyvadlo / Pendulum">
+    <svg viewBox="0 0 80 210" aria-hidden="true">
+      <defs>
+        <radialGradient id="gem" cx="35%" cy="30%" r="75%">
+          <stop offset="0" stop-color="#ffffff"/>
+          <stop offset=".35" stop-color="#C084FC"/>
+          <stop offset="1" stop-color="#3B0F6B"/>
+        </radialGradient>
+      </defs>
+      <g class="swing">
+        <line x1="40" y1="4" x2="40" y2="150" stroke="#E8B923" stroke-width="1.6" stroke-dasharray="3 2"/>
+        <circle cx="40" cy="4" r="3" fill="#E8B923"/>
+        <path d="M40 146 L56 172 L40 204 L24 172 Z" fill="url(#gem)" stroke="#E8B923" stroke-width="1.5"/>
+        <path d="M24 172 H56 M40 146 L40 204" stroke="rgba(255,255,255,.35)" stroke-width=".8"/>
+      </g>
+    </svg>
+  </button>
+  <p class="pend-note" id="pendNote" aria-live="polite"></p>
+</section>
+
+<div class="stones" aria-hidden="true">
+  <svg viewBox="0 0 40 40"><path d="M6 28 L12 12 L26 8 L35 20 L31 33 L14 35 Z" fill="#2B1B55" stroke="#A855F7" stroke-width="1.4"/><path d="M12 12 L19 22 L35 20 M19 22 L14 35" fill="none" stroke="#7C3AED" stroke-width=".8"/></svg>
+  <svg class="clv" viewBox="0 0 40 40"><g fill="#16351F" stroke="#E8B923" stroke-width="1.2"><circle cx="20" cy="11" r="7"/><circle cx="29" cy="20" r="7"/><circle cx="20" cy="29" r="7"/><circle cx="11" cy="20" r="7"/></g><path d="M20 28 Q22 35 27 38" stroke="#E8B923" stroke-width="1.5" fill="none"/></svg>
+  <svg class="big" viewBox="0 0 40 40"><path d="M20 4 L34 15 L20 37 L6 15 Z" fill="#4C1D95" stroke="#EC4899" stroke-width="1.5"/><path d="M6 15 H34 M20 4 L14 15 L20 37 L26 15 Z" fill="none" stroke="#F9A8D4" stroke-width=".8"/></svg>
+  <svg class="clv" viewBox="0 0 40 40"><g fill="#16351F" stroke="#E8B923" stroke-width="1.2"><circle cx="20" cy="11" r="7"/><circle cx="29" cy="20" r="7"/><circle cx="20" cy="29" r="7"/><circle cx="11" cy="20" r="7"/></g><path d="M20 28 Q18 35 13 38" stroke="#E8B923" stroke-width="1.5" fill="none"/></svg>
+  <svg viewBox="0 0 40 40"><path d="M8 30 L10 14 L24 7 L34 18 L30 32 L16 36 Z" fill="#2B1B55" stroke="#A855F7" stroke-width="1.4"/><path d="M10 14 L20 22 L34 18 M20 22 L16 36" fill="none" stroke="#7C3AED" stroke-width=".8"/></svg>
+</div>
+
+<div class="stage">
+  <aside class="wall" aria-hidden="true">
+    <div class="poster p1"><b data-sk="Zlato na 5 200 $?" data-en="Gold at $5,200?">Zlato na 5 200 $?</b><span data-sk="Kto veští? Bloomberg. A čo ty?" data-en="Who says so? Bloomberg. And you?">Kto veští? Bloomberg. A čo ty?</span></div>
+    <div class="poster p2"><b data-sk="Nikomu neverím." data-en="I trust no one.">Nikomu neverím.</b><span data-sk="Ani tejto stránke. Over si to." data-en="Not even this page. Check it yourself.">Ani tejto stránke. Over si to.</span></div>
+  </aside>
+
+  <main class="main">
+    <div class="cards">
+
+      <article class="card feature">
+        <span class="tag" data-sk="Hlavná veštba" data-en="Main prediction">Hlavná veštba</span>
+        <h2 data-sk="Zlato (XAU): 5 200 $ do konca roka" data-en="Gold (XAU): $5,200 by year-end">Zlato (XAU): 5 200 $ do konca roka</h2>
+        <dl>
+          <dt data-sk="Zdroj" data-en="Source">Zdroj</dt><dd>Bloomberg</dd>
+          <dt data-sk="Dôvod" data-en="Reason">Dôvod</dt><dd data-sk="Silný dopyt, neistota na trhoch, centrálne banky nakupujú." data-en="Strong demand, market uncertainty, central banks are buying.">Silný dopyt, neistota na trhoch, centrálne banky nakupujú.</dd>
+          <dt data-sk="Háčik" data-en="Catch">Háčik</dt><dd data-sk="Ak dopyt a nákupy bánk zoslabnú, veštba padá." data-en="If demand and bank buying fade, the prediction falls.">Ak dopyt a nákupy bánk zoslabnú, veštba padá.</dd>
+        </dl>
+      </article>
+
+      <article class="card pink">
+        <span class="tag" data-sk="Veštba" data-en="Prediction">Veštba</span>
+        <h2>EUR/USD: 1,12</h2>
+        <dl>
+          <dt data-sk="Zdroj" data-en="Source">Zdroj</dt><dd>Goldman Sachs</dd>
+          <dt data-sk="Dôvod" data-en="Reason">Dôvod</dt><dd data-sk="Silnejšie euro, smerom k 1,12." data-en="A stronger euro, heading toward 1.12.">Silnejšie euro, smerom k 1,12.</dd>
+          <dt data-sk="Háčik" data-en="Catch">Háčik</dt><dd data-sk="Bočný pohyb, ale s tlakom hore." data-en="Sideways move, but with upward pressure.">Bočný pohyb, ale s tlakom hore.</dd>
+        </dl>
+      </article>
+
+      <article class="card">
+        <span class="tag" data-sk="Veštba" data-en="Prediction">Veštba</span>
+        <h2 data-sk="Bitcoin: 110 000 $" data-en="Bitcoin: $110,000">Bitcoin: 110 000 $</h2>
+        <dl>
+          <dt data-sk="Zdroj" data-en="Source">Zdroj</dt><dd>JPMorgan</dd>
+          <dt data-sk="Dôvod" data-en="Reason">Dôvod</dt><dd data-sk="Priestor k 110 000 $, ak vydrží múr na 95 000 $." data-en="Room to $110,000, if the wall at $95,000 holds.">Priestor k 110 000 $, ak vydrží múr na 95 000 $.</dd>
+          <dt data-sk="Háčik" data-en="Catch">Háčik</dt><dd data-sk="Schodíky hore, nie rovná čiara." data-en="Stairs up, not a straight line.">Schodíky hore, nie rovná čiara.</dd>
+        </dl>
+      </article>
+
+      <article class="card pink">
+        <span class="tag" data-sk="Veštba" data-en="Prediction">Veštba</span>
+        <h2 data-sk="S&amp;P 500: nové maximá" data-en="S&amp;P 500: new highs">S&amp;P 500: nové maximá</h2>
+        <dl>
+          <dt data-sk="Zdroj" data-en="Source">Zdroj</dt><dd>Reuters</dd>
+          <dt data-sk="Dôvod" data-en="Reason">Dôvod</dt><dd data-sk="Trh očakáva nové maximá." data-en="The market expects new highs.">Trh očakáva nové maximá.</dd>
+          <dt data-sk="Háčik" data-en="Catch">Háčik</dt><dd data-sk="S prestávkami. Nie každý deň je hore." data-en="With pauses. Not every day is up.">S prestávkami. Nie každý deň je hore.</dd>
+        </dl>
+      </article>
+
+      <article class="card">
+        <span class="tag" data-sk="Veštba" data-en="Prediction">Veštba</span>
+        <h2 data-sk="Ropa: 85 $" data-en="Oil: $85">Ropa: 85 $</h2>
+        <dl>
+          <dt data-sk="Zdroj" data-en="Source">Zdroj</dt><dd>UBS</dd>
+          <dt data-sk="Dôvod" data-en="Reason">Dôvod</dt><dd data-sk="Okolo 85 $, podľa toho, čo spraví dopyt." data-en="Around $85, depending on what demand does.">Okolo 85 $, podľa toho, čo spraví dopyt.</dd>
+          <dt data-sk="Háčik" data-en="Catch">Háčik</dt><dd data-sk="Voda, nie oheň. Nečakaj skok." data-en="Water, not fire. Don't expect a jump.">Voda, nie oheň. Nečakaj skok.</dd>
+        </dl>
+      </article>
+
+    </div>
+
+    <section class="rules">
+      <p data-sk="Veštica ukazuje, čo hovoria analytici, so zdrojom a dôvodom. Nie je to signál, rada ani odporúčanie." data-en="Veštica shows what analysts say, with a source and a reason. It is not a signal, advice or a recommendation.">Veštica ukazuje, čo hovoria analytici, so zdrojom a dôvodom. Nie je to signál, rada ani odporúčanie.</p>
+      <p class="big" data-sk="Ber to ako veštbu, nie ako istotu. Rozhoduješ sa sám." data-en="Take it as a prophecy, not as a certainty. You decide.">Ber to ako veštbu, nie ako istotu. Rozhoduješ sa sám.</p>
+    </section>
+  </main>
+
+  <aside class="wall" aria-hidden="true">
+    <div class="poster p3"><b data-sk="Kto veští?" data-en="Who is telling?">Kto veští?</b><span data-sk="Nie my. Analytici. My len ukazujeme." data-en="Not us. Analysts. We only show.">Nie my. Analytici. My len ukazujeme.</span></div>
+    <div class="poster p4"><b data-sk="Nikdy slepo." data-en="Never blindly.">Nikdy slepo.</b><span data-sk="Veštba nie je istota. Rozmysli si to sám." data-en="A prophecy is not a certainty. Think it through yourself.">Veštba nie je istota. Rozmysli si to sám.</span></div>
+  </aside>
+</div>
+
+<footer class="foot">
+  <p class="disc" data-sk="Len informácie, nie odporúčanie. Rozhoduješ sa sám." data-en="Information only, not a recommendation. You decide.">Len informácie, nie odporúčanie. Rozhoduješ sa sám.</p>
+  <p class="who">Šimon Čierťaský - TradeMaker, IČO 57 992 291, Bratislava, tradermaker.app</p>
+  <a class="back" href="/" data-sk="Späť na TraderMaker" data-en="Back to TraderMaker">Späť na TraderMaker</a>
+</footer>
+
+<script>
+(function(){
+  var notes={
+    sk:["Kyvadlo neodpovedá. Odpovedáš ty.","Kývne. Alebo nie. Nič to nedokazuje.","Dotkni sa ho znova. Stále nevie nič."],
+    en:["The pendulum doesn't answer. You do.","It swings. Or it doesn't. It proves nothing.","Touch it again. It still knows nothing."]
+  };
+  var lang="sk",i=0;
+  var pend=document.getElementById("pend"),note=document.getElementById("pendNote");
+
+  function apply(l){
+    lang=l;
+    document.documentElement.lang=l;
+    document.querySelectorAll("[data-sk]").forEach(function(el){
+      el.textContent=el.getAttribute("data-"+l);
+    });
+    document.querySelectorAll(".lang button").forEach(function(b){
+      b.setAttribute("aria-pressed",b.getAttribute("data-lang")===l?"true":"false");
+    });
+    pend.setAttribute("aria-label",l==="sk"?"Kyvadlo":"Pendulum");
+    note.textContent="";
+  }
+  document.querySelectorAll(".lang button").forEach(function(b){
+    b.addEventListener("click",function(){apply(b.getAttribute("data-lang"))});
+  });
+  pend.addEventListener("click",function(){
+    pend.classList.add("wild");
+    note.textContent=notes[lang][i%notes[lang].length];
+    i++;
+    clearTimeout(pend._t);
+    pend._t=setTimeout(function(){pend.classList.remove("wild")},5000);
+  });
+})();
+</script>
+</body>
+</html>

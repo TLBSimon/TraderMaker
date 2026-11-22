@@ -13,12 +13,15 @@ body::before{content:"";position:fixed;inset:0;pointer-events:none;z-index:90;op
 body::after{content:"";position:fixed;inset:0;pointer-events:none;z-index:89;background:radial-gradient(ellipse at center,transparent 55%,rgba(0,0,0,.55) 100%)}
 [hidden]{display:none !important}
 button{font:inherit;cursor:pointer;border:0}
-header{display:flex;align-items:center;gap:14px;padding:14px 18px;border-bottom:1px solid #232B45;font-family:Arial,sans-serif}
+header{display:flex;justify-content:space-between;align-items:center;gap:14px;padding:14px 18px;border-bottom:1px solid #232B45;font-family:Arial,sans-serif}
+.lang{display:flex;gap:2px;border:1px solid #E8B923;border-radius:999px;overflow:hidden;flex-shrink:0}
+.lang button{background:none;border:0;color:#E8B923;font:600 13px Arial,sans-serif;padding:6px 12px;cursor:pointer}
+.lang button[aria-pressed=true]{background:#E8B923;color:#0A0E1A}
 header b{color:#E8B923;letter-spacing:2px}
 .back{color:#E8B923;text-decoration:none;font:600 12px Arial,sans-serif;border:1px solid #E8B923;padding:5px 11px;border-radius:999px}
 .pg{max-width:860px;margin:0 auto;padding:26px 18px 10px}
 .live,.pill,.side{font-family:ui-monospace,Menlo,Consolas,monospace}
-.live{position:fixed;top:12px;right:14px;z-index:60;display:flex;align-items:center;gap:8px;padding:7px 12px;border-radius:999px;background:rgba(16,22,42,.75);border:1px solid rgba(232,185,35,.25);backdrop-filter:blur(10px);font-size:9px;letter-spacing:.16em;color:rgba(255,255,255,.75);view-transition-name:live}
+.live{position:fixed;top:12px;right:128px;z-index:60;display:flex;align-items:center;gap:8px;padding:7px 12px;border-radius:999px;background:rgba(16,22,42,.75);border:1px solid rgba(232,185,35,.25);backdrop-filter:blur(10px);font-size:9px;letter-spacing:.16em;color:rgba(255,255,255,.75);view-transition-name:live}
 .live i{width:7px;height:7px;border-radius:50%;background:#10B981;box-shadow:0 0 8px #10B981;animation:pulse 2.4s ease-in-out infinite}
 .live b{color:#E8B923;font-weight:500}
 @keyframes pulse{50%{opacity:.45}}
@@ -147,7 +150,7 @@ body.fade{transition:opacity .175s}
 </style>
 </head>
 <body>
-<header><b>TRADERMAKER</b><a class="back" href="lupez.html">← Lúpež</a></header>
+<header><div style="display:flex;align-items:center;gap:14px"><b>TRADERMAKER</b><a class="back" href="lupez.html">← Lúpež</a></div><div class="lang" role="group" aria-label="Jazyk / Language"><button type="button" data-l="sk" aria-pressed="false">SK</button><button type="button" data-l="en" aria-pressed="true">EN</button></div></header>
 <div class="live" aria-live="polite"><i></i><span>LIVE • LOCKED</span><b id="liveTxt">01 • LÚPEŽ</b></div>
 <nav class="side" aria-label="Strany"><button id="s1" class="on"><i></i><span>01</span></button><button id="s2"><i></i><span>02</span></button></nav>
 <div id="sand" aria-hidden="true"></div>
@@ -207,7 +210,7 @@ why:'Vidím múr okolo vstupu. Cena sa oňho opiera a zatiaľ ho nepustila. Ak s
 w:'Zatvorenie sviečky nad múrom a to, že sa cena späť pod neho nevráti.',
 a:[['Ak múr vydrží','idem.'],['Ak praskne','neklikám.'],['Ak príde knot pod 4 950 $','stop je neskoro, nehonim to.']],
 c:'Dnes a tento týždeň. Piatok po 15:00 neklikaj, lebo to skáče.',o:'Zatvorená sviečka pod 4 950 $ alebo veľká správa tesne pred vstupom. Vtedy je plán mŕtvy.'},
-{t:'EUR / USD',u:'🛡️ TANKY',d:'Ťažká jednotka. Pomaly sa tlačí cez múr, drží pozíciu. Neuhýba pri prvom náraze.',v:['1,08','1,12','1,07','0,5 %'],
+{t:'EUR / USD',u:'🛡 TANKY',d:'Ťažká jednotka. Pomaly sa tlačí cez múr, drží pozíciu. Neuhýba pri prvom náraze.',v:['1,08','1,12','1,07','0,5 %'],
 why:'Euro stojí v bokovke. Stred ma nezaujíma, tam je len šum. Čakám na okraj, nie na stred. Keď prerazí, idem s tým.',
 w:'Potvrdenie na okraji: cena sa od neho odrazí a nezavrie späť do stredu.',
 a:[['Ak okraj vydrží','idem.'],['Ak sa zavrie pod 1,07','neklikám.'],['Ak príde knot pod 1,07','stop je neskoro, nehonim to.']],
@@ -225,14 +228,14 @@ $('plans').innerHTML=plans.map((p,n)=>`<article class="plan"><p class="tag">PLÁ
 const CR='<div class="cracks"><svg width="100%" height="100%" viewBox="0 0 400 300" preserveAspectRatio="none"><path pathLength="1" d="M20 0 L80 90 L60 140 L110 200 L90 300 M200 0 L180 70 L230 130 L210 220 L240 300" stroke="rgba(0,0,0,.55)" stroke-width="1.6" fill="none"/><path pathLength="1" d="M0 110 L70 100 L130 145 L200 125 L260 170 L330 150 L400 190 M400 40 L330 70 L280 60 L210 110" stroke="rgba(0,0,0,.5)" stroke-width="1.3" fill="none"/><path pathLength="1" d="M22 0 L82 90 L62 140 L112 200 M0 112 L70 102 L130 147" stroke="rgba(255,243,176,.3)" stroke-width=".7" fill="none"/></svg></div>';
 const gold=[
 {c:'s1',st:'✦ PEVNÉ ZLATO ✦',pin:'📌 PRIPNUTÉ • 1 DEŇ • PEVNÉ ZLATO',tm:'⏳ Zostáva 18h',n:'1. Marek - XAU / Zlato',h:'Stály klient • 3 mesiace • 12 myšlienok • Ani raz neflexoval',u:'🎯 ODSTREĽOVAČ',d:'<b>🎯 Odstreľovač:</b> Čaká na jeden presný výstrel. Jeden vstup, jeden výstup. Žiadny chaos. Ak netrafí, čaká na ďalší deň.',v:['5 000 $','5 200 $','4 950 $','1 %'],w:'Čakám na múr. Ak múr vydrží, idem. Ak praskne, neklikám. Povedzte mi, kde mám dieru.',f:[['Jano','Stop je neskoro, daj si druhý.'],['Petra','V piatok po 15:00 to skáče.'],['Šimon','Rozdeľ na dva vstupy.']]},
-{c:'s2',st:'⚠ ZNIČENÉ • PRASKLINY',pin:'📌 PRED 14h • ZNIČENÉ',tm:'🕰️ Posúva sa nižšie',n:'2. Petra - BTC',h:'Stála klientka • 4 mesiace • 18 myšlienok • Séria, nie jeden obchod',u:'⚡ RÝCHLA ROTA',d:'<b>⚡ Rýchla rota:</b> Rýchlo dnu, rýchlo von. Scalp, malý zisk, preč. Rýchlosť je jej pancier. Nesedí v obchode hodiny.',v:['95 000 $','110 000 $','90 000 $','1 %'],w:'Bitcoin ide po schodíkoch. Jeden schod nič, séria všetko. Stop je moja brzda.',f:[['Marek','Pri rýchlej rote je stop príliš ďaleko. Skráť ho.'],['Jano','V nedeľu večer to lieta, nechoď vtedy rýchlo.'],['Šimon','Daj si max 2 rýchle vstupy za deň, nie 10.']]},
-{c:'s3',st:'☁ PRACH • ROZPADÁ SA',pin:'🕰️ PRED 5 DŇAMI • PRACH • SPOMIENKA',tm:'',n:'3. Jano - EUR / USD',h:'Stály klient • 5 mesiacov • 22 myšlienok • Bočná konštrukcia',u:'🛡️ TANKY',d:'<b>🛡️ Tanky:</b> Ťažká jednotka. Pomaly sa tlačí cez múr, drží pozíciu. Neuhýba pri prvom náraze.',v:['1,08','1,12','1,07','0,5 %'],w:'Euro v bokovke. Čakám na okraj, nie na stred. Keď prerazí, idem s tým.',f:[['Petra','Tanky sú pomalé, ale tu si dal príliš malý stop.'],['Marek','Na euro si daj pozor v utorok, falošné prerazenie.'],['Šimon','Tanky + bokovka = čakaj na potvrdenie.']]}];
+{c:'s2',st:'⚠ ZNIČENÉ • PRASKLINY',pin:'📌 PRED 14h • ZNIČENÉ',tm:'🕰 Posúva sa nižšie',n:'2. Petra - BTC',h:'Stála klientka • 4 mesiace • 18 myšlienok • Séria, nie jeden obchod',u:'⚡ RÝCHLA ROTA',d:'<b>⚡ Rýchla rota:</b> Rýchlo dnu, rýchlo von. Scalp, malý zisk, preč. Rýchlosť je jej pancier. Nesedí v obchode hodiny.',v:['95 000 $','110 000 $','90 000 $','1 %'],w:'Bitcoin ide po schodíkoch. Jeden schod nič, séria všetko. Stop je moja brzda.',f:[['Marek','Pri rýchlej rote je stop príliš ďaleko. Skráť ho.'],['Jano','V nedeľu večer to lieta, nechoď vtedy rýchlo.'],['Šimon','Daj si max 2 rýchle vstupy za deň, nie 10.']]},
+{c:'s3',st:'☁ PRACH • ROZPADÁ SA',pin:'🕰 PRED 5 DŇAMI • PRACH • SPOMIENKA',tm:'',n:'3. Jano - EUR / USD',h:'Stály klient • 5 mesiacov • 22 myšlienok • Bočná konštrukcia',u:'🛡 TANKY',d:'<b>🛡 Tanky:</b> Ťažká jednotka. Pomaly sa tlačí cez múr, drží pozíciu. Neuhýba pri prvom náraze.',v:['1,08','1,12','1,07','0,5 %'],w:'Euro v bokovke. Čakám na okraj, nie na stred. Keď prerazí, idem s tým.',f:[['Petra','Tanky sú pomalé, ale tu si dal príliš malý stop.'],['Marek','Na euro si daj pozor v utorok, falošné prerazenie.'],['Šimon','Tanky + bokovka = čakaj na potvrdenie.']]}];
 $('gold').innerHTML=gold.map(g=>`<article class="gw ${g.c}"><span class="stamp">${g.st}</span>${g.c=='s1'?'':CR}${g.c=='s3'?'<div class="dust"></div>':''}
 <div class="torn" style="transform:rotate(${g.c=='s1'?-.6:g.c=='s2'?1:-1.2}deg)"><span class="pin">${g.pin}</span>${g.tm?`<span class="late">${g.tm}</span>`:''}
 <h3>${g.n}</h3><p class="hist">${g.h}</p><p class="ul">JEDNOTKA: ${g.u}</p><div class="ud2">${g.d}</div>
 <div class="gn">${g.v.map((x,i)=>`<div${i==2?' class="st"':''}>${NL[i]}<b>${x}</b></div>`).join('')}</div>
 <p class="why"><b>Prečo:</b> ${g.w}</p>
-<div class="fb"><div>🕳️ <b>DIERA - ${g.f[0][0]}:</b> ${g.f[0][1]}</div><div class="w">⚠️ <b>VAROVANIE - ${g.f[1][0]}:</b> ${g.f[1][1]}</div><div class="r">💡 <b>ODPORÚČANIE - ${g.f[2][0]}:</b> ${g.f[2][1]}</div></div></div></article>`).join('');
+<div class="fb"><div>🕳 <b>DIERA - ${g.f[0][0]}:</b> ${g.f[0][1]}</div><div class="w">⚠ <b>VAROVANIE - ${g.f[1][0]}:</b> ${g.f[1][1]}</div><div class="r">💡 <b>ODPORÚČANIE - ${g.f[2][0]}:</b> ${g.f[2][1]}</div></div></div></article>`).join('');
 mk($('trace'),30,i=>{i.style.left=(3+R()*94)+'%';i.style.bottom=(4+R()*40)+'px';i.style.width=i.style.height=(2+R()*2.5)+'px';i.style.animationDelay=(R()*6)+'s'});
 mk($('cw'),10,i=>{i.style.left=(10+R()*80)+'%';i.style.animationDelay=(R()*3.2)+'s'});
 document.querySelectorAll('.dust').forEach(d=>mk(d,18,i=>{i.style.left=(4+R()*92)+'%';i.style.top=(R()*55)+'%';i.style.animationDelay=(R()*3)+'s';i.style.animationDuration=(2.4+R()*1.8)+'s'}));
@@ -262,5 +265,5 @@ let ty=0,ab=false,at=false;
 addEventListener('touchstart',e=>{ty=e.touches[0].clientY;ab=atBottom();at=atTop()},{passive:true});
 addEventListener('touchend',e=>{const dy=e.changedTouches[0].clientY-ty;if(cur===1&&ab&&dy<-90)go(2);else if(cur===2&&at&&dy>90)go(1)},{passive:true});
 </script>
-</body>
+<script>document.querySelectorAll('.lang button').forEach(function(b){b.addEventListener('click',function(){document.querySelectorAll('.lang button').forEach(function(x){x.setAttribute('aria-pressed',x===b?'true':'false')});document.documentElement.lang=b.getAttribute('data-l');});});</script></body>
 </html>

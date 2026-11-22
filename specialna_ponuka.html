@@ -3,27 +3,36 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>Karta - Špeciálna ponuka - TraderMaker</title>
+<title>Karta - Špeciálna ponuka - farebná - TraderMaker</title>
 <style>
 *{margin:0;padding:0;box-sizing:border-box}
-body{font-family:Arial,sans-serif;background:#FBF6E8;color:#2B2110}
+body{font-family:Arial,sans-serif;background:radial-gradient(ellipse at 50% 0%, #5A3E22 0%, #3A2A12 45%, #241A0D 100%);color:#E8DCC0;min-height:100vh}
 a{text-decoration:none;color:inherit}
-.wrap{max-width:900px;margin:0 auto;padding:24px 16px}
-.card{background:#0A0E1A;border:4px solid #E8B923;border-radius:28px;padding:36px 26px;color:#fff;box-shadow:0 24px 60px rgba(0,0,0,.35);text-align:center}
-.card .top{letter-spacing:4px;font-size:12px;color:#E8B923}
-.card h1{font-family:Georgia,serif;font-size:36px;letter-spacing:3px;color:#E8B923;margin-top:10px}
-.card p{margin-top:12px;line-height:1.7;color:#E8DCC0}
-.price{margin-top:18px;font-size:18px}
+.wrap{max-width:940px;margin:0 auto;padding:24px 16px}
+.card{background:#0A0E1A;border:4px solid #E8B923;border-radius:28px;padding:36px 26px;color:#fff;box-shadow:0 18px 40px rgba(0,0,0,.45);text-align:center;position:relative;overflow:hidden}
+.card:before{content:"";position:absolute;inset:0;background:radial-gradient(ellipse at 50% 0%,rgba(232,185,35,.15),transparent 55%);pointer-events:none}
+.card .top{letter-spacing:4px;font-size:12px;color:#E8B923;position:relative}
+.card h1{font-family:Georgia,serif;font-size:36px;letter-spacing:3px;color:#E8B923;margin-top:10px;position:relative}
+.card p{margin-top:12px;line-height:1.7;color:#E8DCC0;position:relative}
+.price{margin-top:18px;font-size:18px;position:relative}
 .price b{color:#E8B923;font-size:28px}
-.grid{display:grid;grid-template-columns:1fr 1fr;gap:14px;margin-top:24px;text-align:left}
-.opt{background:#FFFDF5;color:#2B2110;border-radius:16px;padding:18px;border:1px solid #E8DCC0;transition:transform .2s}
-.opt:hover{transform:translateY(-3px)}
-.opt b{font-family:Georgia,serif;font-size:18px}
-.opt span{display:block;font-size:13px;color:#8B5A00;margin-top:4px}
-.opt p{color:#5A3E1A;font-size:14px;line-height:1.5;margin-top:8px}
-.btn{display:inline-block;margin-top:22px;background:#E8B923;color:#0A0E1A;padding:14px 26px;border-radius:999px;font-weight:800}
-small{display:block;margin-top:12px;color:#9CA3AF;font-size:12px}
-.note{max-width:900px;margin:14px auto;padding:0 16px;line-height:1.6;color:#5A3E1A;font-size:14px}
+.grid{display:grid;grid-template-columns:1fr 1fr;gap:16px;margin-top:24px;text-align:left;position:relative}
+.opt{border-radius:18px;outline:none;padding:20px;border:1px solid rgba(0,0,0,.35);transition:transform .2s;box-shadow:0 10px 24px rgba(0,0,0,.35)}
+.opt:hover{transform:translateY(-4px) scale(1.01)}
+.opt b{font-family:Georgia,serif;font-size:19px}
+.opt span{display:block;font-size:12px;letter-spacing:1px;margin-top:4px;opacity:.9}
+.opt p{font-size:14px;line-height:1.55;margin-top:8px}
+.pocasie{background:linear-gradient(160deg,#3A2A12 0%,#5A6A7A 45%,#6AA0C0 70%,#A88BC0 100%);color:#fff}
+.pocasie p{color:#EAF6FF}
+.trhovisko{background:linear-gradient(160deg,#8B5A2A,#C49A5A 55%,#F5EFE0 100%);color:#2B2110}
+.trhovisko p{color:#4A2E00}
+.lupez{background:linear-gradient(160deg,#000,#1A0A0A 60%,#2A0A0A);color:#fff;border-color:#EF4444}
+.lupez p{color:#FECACA}
+.vestica{background:linear-gradient(160deg,#1A0A2E,#6A1A8A 55%,#EC4899 100%);color:#fff}
+.vestica p{color:#FCE7F3}
+.btn{display:inline-block;margin-top:24px;background:#E8B923;color:#0A0E1A;padding:15px 28px;border-radius:999px;font-weight:800;position:relative;box-shadow:0 10px 30px rgba(232,185,35,.45)}
+small{display:block;margin-top:12px;color:#9CA3AF;font-size:12px;position:relative}
+.note{max-width:940px;margin:14px auto;padding:0 16px;line-height:1.6;color:#D8C9A8;font-size:14px}
 @media(max-width:650px){.grid{grid-template-columns:1fr}.card h1{font-size:28px}}
 </style>
 </head>
@@ -35,15 +44,15 @@ small{display:block;margin-top:12px;color:#9CA3AF;font-size:12px}
 <p>Nie je to o peniazoch. Je to o tom, že nebudeš sám v zákopoch.<br>Prejdeš cez bránu a si iný, ako keď si do nej vošiel.</p>
 <div class="price">Prvý mesiac <b>2€</b> &nbsp;•&nbsp; Potom <b>10€ / mesiac</b></div>
 <div class="grid">
-<a class="opt" href="pocasie.html"><b>🌦️ Počasie</b><span>SPOVEĎ POČASIA</span><p>Nie predpoveď, ale spoveď. Blato → bahnistá voda → vyparovanie. Len 5 udalostí.</p></a>
-<a class="opt" href="trhovisko.html"><b>🛖 Trhovisko</b><span>DREVENÁ CHATA</span><p>Obchody, myšlienky, predstavy, poznatky. Bez flexu. Sme v tom spolu.</p></a>
-<a class="opt" href="lupez.html"><b>🎬 Organizovaná Lúpež</b><span>PLÁN, NIE SIGNÁL</span><p>Nie nedôveryhodné, ale nebezpečné. Dym, lasery. Celý plán, nie len signál.</p></a>
-<a class="opt" href="vestica.html"><b>🔮 Veštica</b><span>VEŠTBA, NIE ISTOTA</span><p>Predikcie analytikov. Shady, street. Bloomberg — zlato na 5200$.</p></a>
+<a class="opt pocasie" href="pocasie.html"><b>🌦️ Počasie</b><span>SPOVEĎ POČASIA — MODRÁ</span><p>Nie predpoveď, ale spoveď. Blato → bahnistá voda → vyparovanie. Modrá voda, hnedé blato, fialová para.</p></a>
+<a class="opt trhovisko" href="trhovisko.html"><b>🛖 Trhovisko</b><span>DREVENÁ CHATA — DREVO</span><p>Obchody, myšlienky, predstavy, poznatky. Bez flexu. Teplé drevo, hnedá, béžová. Sme v tom spolu.</p></a>
+<a class="opt lupez" href="lupez.html"><b>🎬 Organizovaná Lúpež</b><span>PLÁN, NIE SIGNÁL — ČIERNA + ČERVENÉ LASERY</span><p>Nie nedôveryhodné, ale nebezpečné. Čierna, dym, červené lasery ako vo filme.</p></a>
+<a class="opt vestica" href="vestica.html"><b>🔮 Veštica</b><span>VEŠTBA, NIE ISTOTA — FIALOVÁ + RUŽOVÁ</span><p>Predikcie analytikov. Mysteriózna, shady, neón fialová + ružová. Bloomberg — zlato na 5200$.</p></a>
 </div>
 <a class="btn" href="#">Prejsť cez bránu →</a>
 <small>s DPH • zrušenie na 1 klik • bez otázok • len informácie, nie odporúčanie</small>
 </div>
 </div>
-<div class="note"><b>Karta Špeciálna ponuka — namodelovaná spolu.</b> Jedna karta, 4 svety vo vnútri. Keď na svet klikneš, ideš na ten súbor. Keď klikneš na Prejsť cez bránu, ideš na celú ponuku.</div>
+<div class="note"><b>Karta Špeciálna ponuka — farebná podľa témy, mysteriózna.</b> Každý svet má svoju farbu, ako to, čo sa deje v tej tématike. Nie biele karty. Počasie = modrá + blato, Trhovisko = drevo, Lúpež = čierna + červené lasery, Veštica = fialová + ružová neón.</div>
 </body>
 </html>

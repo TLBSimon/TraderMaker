@@ -145,13 +145,56 @@ a:hover{color:#fff}
 .foot .back{display:inline-block;border:1px solid var(--gold);padding:9px 20px;border-radius:999px;font-weight:600;font-size:14.5px;text-decoration:none}
 .foot .back:hover{background:var(--gold);color:var(--bg)}
 
+
+/* --- OŽIVENIE - dizajn ostáva, len to žije --- */
+@keyframes floatY{0%,100%{transform:translateY(0) rotate(var(--r,-3deg))}50%{transform:translateY(-6px) rotate(var(--r,-3deg))}}
+@keyframes cardIn{from{opacity:0;transform:translateY(18px) scale(.98)}to{opacity:1;transform:translateY(0) scale(1)}}
+@keyframes twinkle{0%,100%{opacity:.25;transform:scale(.8)}50%{opacity:1;transform:scale(1.15)}}
+@keyframes neonPulse{0%,100%{box-shadow:0 0 28px rgba(168,85,247,.12),0 8px 24px rgba(0,0,0,.45)}50%{box-shadow:0 0 36px rgba(168,85,247,.28),0 8px 24px rgba(0,0,0,.45)}}
+@keyframes shimmerGold{0%{background-position:-200% 0}100%{background-position:200% 0}}
+@keyframes stoneGlow{0%,100%{filter:drop-shadow(0 0 8px rgba(168,85,247,.55))}50%{filter:drop-shadow(0 0 16px rgba(236,72,153,.85))}}
+@keyframes posterBreathe{0%,100%{transform:rotate(var(--r,-3deg)) translateY(0)}50%{transform:rotate(var(--r,-3deg)) translateY(-3px)}}
+@keyframes sparkFall{0%{transform:translateY(-10px) scale(.6);opacity:0}20%{opacity:1}100%{transform:translateY(520px) scale(1.1);opacity:0}}
+@keyframes glowText{0%,100%{text-shadow:0 0 18px rgba(168,85,247,.9),0 0 52px rgba(236,72,153,.55)}50%{text-shadow:0 0 26px rgba(168,85,247,1),0 0 70px rgba(236,72,153,.85)}}
+.hero h1{animation:rise 1.6s cubic-bezier(.2,.7,.2,1) both, glowText 4s ease-in-out 1.6s infinite}
+.stones svg{animation:stoneGlow 3s ease-in-out infinite}
+.stones svg:nth-child(2){animation-delay:.5s}
+.stones svg:nth-child(3){animation-delay:1s}
+.stones svg:nth-child(4){animation-delay:1.5s}
+.stones svg:nth-child(5){animation-delay:2s}
+.poster{animation:posterBreathe 5s ease-in-out infinite, cardIn .7s ease both}
+.poster:nth-child(2){animation-delay:.3s}
+.poster:hover{animation:none;transform:rotate(0deg) scale(1.05) !important;z-index:5;box-shadow:0 18px 40px rgba(0,0,0,.7);transition:transform .25s, box-shadow .25s}
+.card{animation:cardIn .7s ease both, neonPulse 5s ease-in-out infinite}
+.card:nth-child(2){animation-delay:.15s}
+.card:nth-child(3){animation-delay:.25s}
+.card:nth-child(4){animation-delay:.35s}
+.card:nth-child(5){animation-delay:.45s}
+.card:hover{transform:translateY(-5px);border-color:rgba(236,72,153,.85);box-shadow:0 0 40px rgba(236,72,153,.25),0 14px 32px rgba(0,0,0,.5);transition:transform .25s, box-shadow .25s, border-color .25s}
+.card.feature:hover{border-color:var(--gold);box-shadow:0 0 44px rgba(232,185,35,.25),0 14px 32px rgba(0,0,0,.5)}
+.tag{animation:floatY 3.5s ease-in-out infinite}
+.feature h2{background:linear-gradient(90deg,#fff 20%,var(--gold) 40%,#fff 60%);background-size:200% 100%;-webkit-background-clip:text;background-clip:text;animation:shimmerGold 3.5s linear infinite}
+.sparkles{position:fixed;inset:0;z-index:1;pointer-events:none;overflow:hidden}
+.sparkles i{position:absolute;width:5px;height:5px;border-radius:50%;background:#F0ABFC;box-shadow:0 0 10px #EC4899;animation:twinkle 2.5s ease-in-out infinite}
+.sparkles i:nth-child(1){left:12%;top:18%}
+.sparkles i:nth-child(2){left:82%;top:22%;animation-delay:.6s;background:#E8B923;box-shadow:0 0 10px #E8B923}
+.sparkles i:nth-child(3){left:68%;top:48%;animation-delay:1.1s}
+.sparkles i:nth-child(4){left:22%;top:62%;animation-delay:1.6s;background:#A855F7;box-shadow:0 0 10px #A855F7}
+.sparkles i:nth-child(5){left:90%;top:72%;animation-delay:.3s}
+.sparkles i:nth-child(6){left:8%;top:38%;animation-delay:2s}
+.pend{transition:transform .2s}
+.pend:active{transform:scale(.96)}
+.pend-note{animation:floatY 4s ease-in-out infinite}
+.rules .big{animation:glowText 4s ease-in-out infinite}
 @media(prefers-reduced-motion:reduce){
+
   .rivers path,.pend .swing,.hero h1{animation:none}
   html{scroll-behavior:auto}
 }
 </style>
 </head>
 <body>
+<div class="sparkles" aria-hidden="true"><i></i><i></i><i></i><i></i><i></i><i></i></div>
 
 <div class="rivers" aria-hidden="true">
   <svg viewBox="0 0 1000 1000" preserveAspectRatio="none">
@@ -314,6 +357,22 @@ a:hover{color:#fff}
     pend._t=setTimeout(function(){pend.classList.remove("wild")},5000);
   });
 })();
+</script>
+
+<script>
+// Oživenie - bez zmeny dizajnu
+document.querySelectorAll('.card').forEach(c=>{
+  c.addEventListener('click',()=>{
+    c.style.transform='scale(1.02)';
+    setTimeout(()=>c.style.transform='',180);
+  });
+});
+// Náhodné blikanie hviezdičiek
+setInterval(()=>{
+  const s=document.querySelectorAll('.sparkles i');
+  const r=s[Math.floor(Math.random()*s.length)];
+  if(r){ r.style.opacity='1'; setTimeout(()=>r.style.opacity='',600); }
+},900);
 </script>
 </body>
 </html>

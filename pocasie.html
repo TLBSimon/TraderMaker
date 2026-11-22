@@ -119,10 +119,37 @@ footer p{margin-top:8px}
   .dream .card{padding:22px;border-radius:34px}
   .water .card:nth-child(2),.dream .card:nth-child(2){margin-left:0}
 }
+
+/* --- DÁŽĎ + KVAPKY ČO STEKAJÚ - dizajn ostáva --- */
+.rain{position:fixed;inset:0;z-index:15;pointer-events:none;overflow:hidden;opacity:.75}
+.rain i{position:absolute;top:-120px;width:1.5px;background:linear-gradient(180deg,transparent,rgba(180,220,255,.9));border-radius:2px;animation:rainFall linear infinite}
+@keyframes rainFall{0%{transform:translateY(0) translateX(0);opacity:0}10%{opacity:1}90%{opacity:1}100%{transform:translateY(115vh) translateX(-60px);opacity:0}}
+.drips{position:fixed;inset:0;z-index:16;pointer-events:none;overflow:hidden}
+.drips i{position:absolute;top:-80px;width:3px;background:linear-gradient(180deg,rgba(255,255,255,.05),rgba(200,230,255,.85));border-radius:0 0 8px 8px;animation:dripSlide linear infinite}
+.drips i:after{content:"";position:absolute;bottom:-6px;left:50%;transform:translateX(-50%);width:7px;height:7px;border-radius:50%;background:rgba(200,230,255,.95);box-shadow:0 0 10px rgba(200,230,255,.8)}
+@keyframes dripSlide{0%{transform:translateY(0);opacity:0}8%{opacity:1}85%{opacity:1}100%{transform:translateY(112vh);opacity:0}}
+.clouds{position:absolute;left:0;right:0;top:0;height:120px;pointer-events:none;overflow:hidden;z-index:1}
+.clouds i{position:absolute;top:18px;width:110px;height:34px;border-radius:999px;background:radial-gradient(ellipse,rgba(255,255,255,.18),rgba(255,255,255,.05));filter:blur(4px);animation:cloudMove 32s linear infinite}
+.clouds i:nth-child(2){top:54px;animation-duration:44s;animation-delay:-12s;width:150px}
+.clouds i:nth-child(3){top:8px;animation-duration:28s;animation-delay:-20s;width:90px}
+@keyframes cloudMove{from{left:-180px}to{left:110%}}
+.water .card{position:relative;overflow:hidden}
+.water .card:after{content:"";position:absolute;left:20%;bottom:8px;width:44px;height:10px;border:1.5px solid rgba(255,255,255,.55);border-radius:50%;opacity:0;animation:ripple 4s ease-out infinite}
+@keyframes ripple{0%{transform:scale(.5);opacity:.9}100%{transform:scale(2.2);opacity:0}}
+.mud .card{position:relative}
+.mud .card:before{content:"●";position:absolute;right:14px;top:10px;font-size:10px;color:rgba(232,185,35,.6);animation:bubbleMud 3s ease-in-out infinite}
+@keyframes bubbleMud{0%,100%{transform:translateY(0);opacity:.4}50%{transform:translateY(-4px);opacity:1}}
+.rain-toggle{position:fixed;right:14px;bottom:14px;z-index:30;background:rgba(10,14,26,.85);color:#E8B923;border:1px solid #E8B923;padding:9px 14px;border-radius:999px;font:600 13px system-ui;cursor:pointer;backdrop-filter:blur(6px)}
+.rain-toggle:hover{background:#E8B923;color:#0A0E1A}
+body.no-rain .rain,body.no-rain .drips{display:none}
 @media(prefers-reduced-motion:reduce){*{animation:none!important}}
+
 </style>
 </head>
 <body>
+<div class="rain" aria-hidden="true"></div>
+<div class="drips" aria-hidden="true"></div>
+<button class="rain-toggle" id="rainToggle" type="button">🌧️ Prší — vypnúť dážď</button>
 
 <div class="bar">
   <div class="brand">TraderMaker</div>
@@ -131,7 +158,7 @@ footer p{margin-top:8px}
   </div>
 </div>
 
-<header class="hero">
+<header class="hero"><div class="clouds" aria-hidden="true"><i></i><i></i><i></i></div>
   <h1 data-i="title">Počasie</h1>
   <div class="en" data-i="sub">Weather Confession</div>
   <div class="slip" id="slip"></div>
@@ -303,6 +330,34 @@ document.querySelectorAll(".lang button").forEach(function(b){
   b.addEventListener("click", function(){ lang = b.getAttribute("data-l"); render(); });
 });
 render();
+</script>
+
+<script>
+// Dážď + kvapky čo stekajú po obrazovke
+const rain=document.querySelector('.rain');
+const drips=document.querySelector('.drips');
+for(let i=0;i<70;i++){
+  const d=document.createElement('i');
+  d.style.left=Math.random()*100+'vw';
+  d.style.height=(28+Math.random()*50)+'px';
+  d.style.animationDuration=(0.7+Math.random()*0.9)+'s';
+  d.style.animationDelay=(-Math.random()*2)+'s';
+  d.style.opacity=(0.35+Math.random()*0.5).toFixed(2);
+  rain.appendChild(d);
+}
+for(let i=0;i<14;i++){
+  const d=document.createElement('i');
+  d.style.left=(4+Math.random()*92)+'vw';
+  d.style.height=(40+Math.random()*90)+'px';
+  d.style.animationDuration=(5+Math.random()*6)+'s';
+  d.style.animationDelay=(-Math.random()*8)+'s';
+  drips.appendChild(d);
+}
+const btn=document.getElementById('rainToggle');
+btn.addEventListener('click',()=>{
+  const off=document.body.classList.toggle('no-rain');
+  btn.textContent=off ? '☀️ Bez dažďa — zapnúť dážď' : '🌧️ Prší — vypnúť dážď';
+});
 </script>
 </body>
 </html>

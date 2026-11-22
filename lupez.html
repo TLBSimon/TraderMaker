@@ -58,11 +58,49 @@ h2{font-size:24px;line-height:1.25}
 footer{max-width:900px;margin:44px auto 0;padding:24px 18px 40px;text-align:center;border-top:1px solid var(--line);color:var(--mute);font:13px/1.7 Arial,sans-serif}
 footer a{color:var(--gold);display:inline-block;margin-top:10px;font-size:14px;text-decoration:none;border-bottom:1px solid var(--gold)}
 @media(max-width:600px){.plan{grid-template-columns:1fr 1fr}.hero{padding-top:48px}}
-@media(prefers-reduced-motion:reduce){.smoke,.beam{animation:none}}
+
+/* --- OŽIVENIE: kľudná, ale nebezpečná --- */
+@keyframes breathe{0%,100%{transform:translateY(0)}50%{transform:translateY(-3px)}}
+@keyframes cardIn{from{opacity:0;transform:translateY(18px)}to{opacity:1;transform:translateY(0)}}
+@keyframes scan{0%{top:-10%;opacity:0}12%{opacity:.55}88%{opacity:.55}100%{top:110%;opacity:0}}
+@keyframes recBlink{0%,100%{opacity:1}50%{opacity:.25}}
+@keyframes dust{0%{transform:translateY(0) translateX(0);opacity:0}15%{opacity:.7}100%{transform:translateY(-420px) translateX(24px);opacity:0}}
+@keyframes stopPulse{0%,100%{text-shadow:0 0 0 rgba(239,68,68,0)}50%{text-shadow:0 0 14px rgba(239,68,68,.85)}}
+@keyframes titleFlicker{0%,100%{opacity:1}92%{opacity:1}93%{opacity:.82}94%{opacity:1}96%{opacity:.9}97%{opacity:1}}
+@keyframes goldDot{0%,100%{box-shadow:0 0 0 3px var(--bg),0 0 0 rgba(232,185,35,0)}50%{box-shadow:0 0 0 3px var(--bg),0 0 12px rgba(232,185,35,.7)}}
+h1{animation:titleFlicker 9s linear infinite}
+.hero .lead{animation:breathe 6s ease-in-out infinite}
+.sheet{animation:cardIn .7s ease both, breathe 8s ease-in-out infinite}
+.sheet:nth-of-type(2){animation-delay:.15s}
+.sheet:nth-of-type(3){animation-delay:.3s}
+.sheet:nth-of-type(4){animation-delay:.45s}
+.sheet:hover{transform:translateY(-4px);border-color:rgba(239,68,68,.75);box-shadow:0 0 32px rgba(239,68,68,.18),0 18px 40px rgba(0,0,0,.5);transition:transform .3s, box-shadow .3s, border-color .3s}
+.sheet::before{animation:goldDot 4s ease-in-out infinite}
+.plan .stop span{animation:stopPulse 3.5s ease-in-out infinite}
+.plan div{transition:transform .25s}
+.plan div:hover{transform:scale(1.04)}
+.scan{position:fixed;left:0;right:0;height:1.5px;background:linear-gradient(90deg,transparent,rgba(239,68,68,.75),transparent);box-shadow:0 0 18px rgba(239,68,68,.8);z-index:20;pointer-events:none;animation:scan 14s linear infinite;opacity:0}
+.dust{position:fixed;inset:0;z-index:1;pointer-events:none;overflow:hidden}
+.dust i{position:absolute;bottom:-20px;width:3px;height:3px;border-radius:50%;background:rgba(255,255,255,.55);animation:dust 11s linear infinite}
+.dust i:nth-child(1){left:14%;animation-delay:0s}
+.dust i:nth-child(2){left:32%;animation-delay:2.5s;animation-duration:13s}
+.dust i:nth-child(3){left:55%;animation-delay:1s}
+.dust i:nth-child(4){left:72%;animation-delay:4s;animation-duration:12s}
+.dust i:nth-child(5){left:88%;animation-delay:.5s}
+.rec{position:fixed;top:14px;right:14px;z-index:30;display:flex;align-items:center;gap:6px;font:600 11px Arial,sans-serif;letter-spacing:1.5px;color:#FCA5A5;background:rgba(0,0,0,.55);border:1px solid rgba(239,68,68,.4);padding:5px 9px;border-radius:999px;backdrop-filter:blur(4px)}
+.rec i{width:8px;height:8px;border-radius:50%;background:#EF4444;box-shadow:0 0 10px #EF4444;animation:recBlink 1.8s ease-in-out infinite}
+.rules{position:relative;overflow:hidden}
+.rules:after{content:"";position:absolute;top:0;left:-30%;width:30%;height:100%;background:linear-gradient(90deg,transparent,rgba(239,68,68,.18),transparent);animation:shimmer 6s ease-in-out infinite}
+@keyframes shimmer{0%{left:-30%}60%,100%{left:110%}}
+@media(prefers-reduced-motion:reduce){.smoke,.beam,.scan,.dust i,.sheet,h1{animation:none}}
+
 </style>
 </head>
 <body>
 <div class="smoke" aria-hidden="true"></div>
+<div class="scan" aria-hidden="true"></div>
+<div class="dust" aria-hidden="true"><i></i><i></i><i></i><i></i><i></i></div>
+<div class="rec" aria-hidden="true"><i></i> REC • TICHÁ MIESTNOSŤ</div>
 
 <header>
   <b>TRADERMAKER</b>
@@ -155,6 +193,16 @@ footer a{color:var(--gold);display:inline-block;margin-top:10px;font-size:14px;t
   btns.forEach(function(b){b.addEventListener("click",function(){set(b.dataset.l)})});
   try{var s=localStorage.getItem("tm-lang");if(s==="en")set("en")}catch(x){}
 })();
+</script>
+
+<script>
+// Kľudná, ale nebezpečná - klik na plán = jemný pulz, ako keď sa dotkneš steny
+document.querySelectorAll('.sheet').forEach(s=>{
+  s.addEventListener('click',()=>{
+    s.style.transform='scale(1.01)';
+    setTimeout(()=>s.style.transform='',200);
+  });
+});
 </script>
 </body>
 </html>

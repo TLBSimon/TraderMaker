@@ -34,6 +34,14 @@ a{text-decoration:none;color:inherit}
 small{display:block;margin-top:12px;color:#9CA3AF;font-size:12px;position:relative}
 .note{max-width:940px;margin:14px auto;padding:0 16px;line-height:1.6;color:#D8C9A8;font-size:14px}
 
+
+.top{position:relative;z-index:3;display:flex;justify-content:space-between;align-items:center;padding:max(14px,env(safe-area-inset-top)) 18px 14px;border-bottom:1px solid rgba(232,185,35,.25);background:rgba(10,14,26,.85);backdrop-filter:blur(6px)}
+.brand{font-family:Georgia,serif;font-weight:700;letter-spacing:.14em;font-size:15px;color:#E8DCC0}
+.brand span{color:#E8B923;font-weight:400;letter-spacing:.04em;margin-left:8px}
+.lang{display:flex;gap:2px;border:1px solid #E8B923;border-radius:999px;padding:2px}
+.lang button{background:none;border:0;color:#E8DCC0;font:600 13px Arial,sans-serif;padding:6px 14px;border-radius:999px;cursor:pointer;min-height:32px}
+.lang button[aria-pressed="true"]{background:#E8B923;color:#0A0E1A}
+
 /* --- ANIMÁCIE + VÝPLŇ - dizajn ostáva, len to žije --- */
 @keyframes fadeUp{from{opacity:0;transform:translateY(14px)}to{opacity:1;transform:translateY(0)}}
 @keyframes goldGlow{0%,100%{box-shadow:0 18px 40px rgba(0,0,0,.45),0 0 0 rgba(232,185,35,0)}50%{box-shadow:0 18px 40px rgba(0,0,0,.45),0 0 28px rgba(232,185,35,.35)}}
@@ -85,25 +93,50 @@ small{display:block;margin-top:12px;color:#9CA3AF;font-size:12px;position:relati
 </style>
 </head>
 <body>
+<header class="top">
+<div class="brand">TRADERMAKER<span data-sk="Špeciálna ponuka" data-en="Special Offer">Špeciálna ponuka</span></div>
+<div class="lang" role="group" aria-label="Jazyk / Language">
+<button type="button" data-lang="sk" aria-pressed="true">SK</button>
+<button type="button" data-lang="en" aria-pressed="false">EN</button>
+</div>
+</header>
 <div class="mud-bg"><i></i><i></i><i></i><i></i><i></i></div>
 <div class="wrap">
 <div class="card">
-<div class="top">✦ TRADERMAKER ✦ ŠPECIÁLNA PONUKA</div>
-<h1>ŠPECIÁLNA PONUKA</h1>
-<p>Nie je to o peniazoch. Je to o tom, že nebudeš sám v zákopoch.<br>Prejdeš cez bránu a si iný, ako keď si do nej vošiel.</p>
-<div class="price">Prvý mesiac <b>2€</b> &nbsp;•&nbsp; Potom <b>10€ / mesiac</b></div>
+<div class="top">✦ TRADERMAKER ✦ <span data-sk="ŠPECIÁLNA PONUKA" data-en="SPECIAL OFFER">ŠPECIÁLNA PONUKA</span></div>
+<h1 data-sk="ŠPECIÁLNA PONUKA" data-en="SPECIAL OFFER">ŠPECIÁLNA PONUKA</h1>
+<p><span data-sk="Nie je to o peniazoch. Je to o tom, že nebudeš sám v zákopoch." data-en="It's not about money. It's about you not being alone in the trenches.">Nie je to o peniazoch. Je to o tom, že nebudeš sám v zákopoch.</span><br><span data-sk="Prejdeš cez bránu a si iný, ako keď si do nej vošiel." data-en="You go through the gate and you're different than when you walked in.">Prejdeš cez bránu a si iný, ako keď si do nej vošiel.</span></p>
+<div class="price"><span data-sk="Prvý mesiac" data-en="First month">Prvý mesiac</span> <b>2€</b> &nbsp;•&nbsp; <span data-sk="Potom" data-en="Then">Potom</span> <b>10€ / <span data-sk="mesiac" data-en="month">mesiac</span></b></div>
 <div class="grid">
-<a class="opt pocasie" href="pocasie.html"><span class="steam">♨️</span><b>🌦️ Počasie</b><span>SPOVEĎ POČASIA — MODRÁ</span><p>Nie predpoveď, ale spoveď. Blato → bahnistá voda → vyparovanie. Modrá voda, hnedé blato, fialová para.</p></a>
-<a class="opt trhovisko" href="trhovisko.html"><span class="flame">🔥</span><b>🛖 Trhovisko</b><span>DREVENÁ CHATA — DREVO</span><p>Obchody, myšlienky, predstavy, poznatky. Bez flexu. Teplé drevo, hnedá, béžová. Sme v tom spolu.</p></a>
-<a class="opt lupez" href="lupez.html"><span class="laser"></span><span class="laser laser2"></span><b>🎬 Organizovaná Lúpež</b><span>PLÁN, NIE SIGNÁL — ČIERNA + ČERVENÉ LASERY</span><p>Nie nedôveryhodné, ale nebezpečné. Čierna, dym, červené lasery ako vo filme.</p></a>
-<a class="opt vestica" href="vestica.html"><span class="spark" style="right:18px;top:14px"></span><span class="spark" style="right:34px;top:32px;animation-delay:.7s"></span><b>🔮 Veštica</b><span>VEŠTBA, NIE ISTOTA — FIALOVÁ + RUŽOVÁ</span><p>Predikcie analytikov. Mysteriózna, shady, neón fialová + ružová. Bloomberg — zlato na 5200$.</p></a>
+<a class="opt pocasie" href="pocasie.html"><span class="steam">♨️</span><b data-sk="🌦️ Počasie" data-en="🌦️ Weather (Počasie)">🌦️ Počasie</b><span data-sk="SPOVEĎ POČASIA — MODRÁ" data-en="WEATHER CONFESSION — BLUE">SPOVEĎ POČASIA — MODRÁ</span><p data-sk="Nie predpoveď, ale spoveď. Blato → bahnistá voda → vyparovanie. Modrá voda, hnedé blato, fialová para." data-en="Not a forecast, but a confession. Mud → muddy water → evaporation. Blue water, brown mud, purple steam.">Nie predpoveď, ale spoveď. Blato → bahnistá voda → vyparovanie. Modrá voda, hnedé blato, fialová para.</p></a>
+<a class="opt trhovisko" href="trhovisko.html"><span class="flame">🔥</span><b data-sk="🛖 Trhovisko" data-en="🛖 Marketplace (Trhovisko)">🛖 Trhovisko</b><span data-sk="DREVENÁ CHATA — DREVO" data-en="WOODEN CABIN — WOOD">DREVENÁ CHATA — DREVO</span><p data-sk="Obchody, myšlienky, predstavy, poznatky. Bez flexu. Teplé drevo, hnedá, béžová. Sme v tom spolu." data-en="Trades, thoughts, ideas, knowledge. No flex. Warm wood, brown, beige. We're in this together.">Obchody, myšlienky, predstavy, poznatky. Bez flexu. Teplé drevo, hnedá, béžová. Sme v tom spolu.</p></a>
+<a class="opt lupez" href="lupez.html"><span class="laser"></span><span class="laser laser2"></span><b data-sk="🎬 Organizovaná Lúpež" data-en="🎬 Organized Robbery (Lúpež)">🎬 Organizovaná Lúpež</b><span data-sk="PLÁN, NIE SIGNÁL — ČIERNA + ČERVENÉ LASERY" data-en="PLAN, NOT SIGNAL — BLACK + RED LASERS">PLÁN, NIE SIGNÁL — ČIERNA + ČERVENÉ LASERY</span><p data-sk="Nie nedôveryhodné, ale nebezpečné. Čierna, dym, červené lasery ako vo filme." data-en="Not untrustworthy, but dangerous. Black, smoke, red lasers like in a movie.">Nie nedôveryhodné, ale nebezpečné. Čierna, dym, červené lasery ako vo filme.</p></a>
+<a class="opt vestica" href="vestica.html"><span class="spark" style="right:18px;top:14px"></span><span class="spark" style="right:34px;top:32px;animation-delay:.7s"></span><b data-sk="🔮 Veštica" data-en="🔮 Fortune Teller (Veštica)">🔮 Veštica</b><span data-sk="VEŠTBA, NIE ISTOTA — FIALOVÁ + RUŽOVÁ" data-en="FORTUNE, NOT CERTAINTY — PURPLE + PINK">VEŠTBA, NIE ISTOTA — FIALOVÁ + RUŽOVÁ</span><p data-sk="Predikcie analytikov. Mysteriózna, shady, neón fialová + ružová. Bloomberg — zlato na 5200$." data-en="Analyst predictions. Mysterious, shady, neon purple + pink. Bloomberg — gold at 5200$.">Predikcie analytikov. Mysteriózna, shady, neón fialová + ružová. Bloomberg — zlato na 5200$.</p></a>
 </div>
-<div class="fill-row"><span>🌫️ BLATO → VODA → PARA</span><span>🪵 DREVO • OHEŇ</span><span>🔴 LASERY • DYM</span><span>✨ NEÓN • VEŠTBA</span></div>
-<div class="marquee"><div>✦ TRADERMAKER &nbsp;•&nbsp; BLATO &nbsp;•&nbsp; VODA &nbsp;•&nbsp; PARA &nbsp;•&nbsp; DREVO &nbsp;•&nbsp; LASERY &nbsp;•&nbsp; NEÓN &nbsp;•&nbsp; TRADERMAKER &nbsp;•&nbsp; BLATO &nbsp;•&nbsp; VODA &nbsp;•&nbsp; PARA &nbsp;•&nbsp; DREVO &nbsp;•&nbsp; LASERY &nbsp;•&nbsp; NEÓN &nbsp;•&nbsp; </div></div>
-<a class="btn" href="#">Prejsť cez bránu →</a>
-<small>s DPH • zrušenie na 1 klik • bez otázok • len informácie, nie odporúčanie</small>
+<div class="fill-row"><span data-sk="🌫️ BLATO → VODA → PARA" data-en="🌫️ MUD → WATER → STEAM">🌫️ BLATO → VODA → PARA</span><span data-sk="🪵 DREVO • OHEŇ" data-en="🪵 WOOD • FIRE">🪵 DREVO • OHEŇ</span><span data-sk="🔴 LASERY • DYM" data-en="🔴 LASERS • SMOKE">🔴 LASERY • DYM</span><span data-sk="✨ NEÓN • VEŠTBA" data-en="✨ NEON • FORTUNE">✨ NEÓN • VEŠTBA</span></div>
+<div class="marquee"><div data-sk="✦ TRADERMAKER &nbsp;•&nbsp; BLATO &nbsp;•&nbsp; VODA &nbsp;•&nbsp; PARA &nbsp;•&nbsp; DREVO &nbsp;•&nbsp; LASERY &nbsp;•&nbsp; NEÓN &nbsp;•&nbsp; TRADERMAKER &nbsp;•&nbsp; BLATO &nbsp;•&nbsp; VODA &nbsp;•&nbsp; PARA &nbsp;•&nbsp; DREVO &nbsp;•&nbsp; LASERY &nbsp;•&nbsp; NEÓN &nbsp;•&nbsp; " data-en="✦ TRADERMAKER &nbsp;•&nbsp; MUD &nbsp;•&nbsp; WATER &nbsp;•&nbsp; STEAM &nbsp;•&nbsp; WOOD &nbsp;•&nbsp; LASERS &nbsp;•&nbsp; NEON &nbsp;•&nbsp; TRADERMAKER &nbsp;•&nbsp; MUD &nbsp;•&nbsp; WATER &nbsp;•&nbsp; STEAM &nbsp;•&nbsp; WOOD &nbsp;•&nbsp; LASERS &nbsp;•&nbsp; NEON &nbsp;•&nbsp; ">✦ TRADERMAKER &nbsp;•&nbsp; BLATO &nbsp;•&nbsp; VODA &nbsp;•&nbsp; PARA &nbsp;•&nbsp; DREVO &nbsp;•&nbsp; LASERY &nbsp;•&nbsp; NEÓN &nbsp;•&nbsp; TRADERMAKER &nbsp;•&nbsp; BLATO &nbsp;•&nbsp; VODA &nbsp;•&nbsp; PARA &nbsp;•&nbsp; DREVO &nbsp;•&nbsp; LASERY &nbsp;•&nbsp; NEÓN &nbsp;•&nbsp; </div></div>
+<a class="btn" href="#" data-sk="Prejsť cez bránu →" data-en="Go through the gate →">Prejsť cez bránu →</a>
+<small data-sk="s DPH • zrušenie na 1 klik • bez otázok • len informácie, nie odporúčanie" data-en="incl. VAT • cancel in 1 click • no questions • information only, not advice">s DPH • zrušenie na 1 klik • bez otázok • len informácie, nie odporúčanie</small>
 </div>
 </div>
-<div class="note"><b>Karta Špeciálna ponuka — farebná podľa témy, mysteriózna.</b> Každý svet má svoju farbu, ako to, čo sa deje v tej tématike. Nie biele karty. Počasie = modrá + blato, Trhovisko = drevo, Lúpež = čierna + červené lasery, Veštica = fialová + ružová neón.</div>
+<div class="note"><b data-sk="Karta Špeciálna ponuka — farebná podľa témy, mysteriózna." data-en="Special Offer card — coloured by theme, mysterious.">Karta Špeciálna ponuka — farebná podľa témy, mysteriózna.</b> <span data-sk="Každý svet má svoju farbu, ako to, čo sa deje v tej tématike. Nie biele karty. Počasie = modrá + blato, Trhovisko = drevo, Lúpež = čierna + červené lasery, Veštica = fialová + ružová neón." data-en="Each world has its own colour, like what's happening in that theme. No white cards. Weather = blue + mud, Marketplace = wood, Robbery = black + red lasers, Fortune Teller = purple + pink neon.">Každý svet má svoju farbu, ako to, čo sa deje v tej tématike. Nie biele karty. Počasie = modrá + blato, Trhovisko = drevo, Lúpež = čierna + červené lasery, Veštica = fialová + ružová neón.</span></div>
+<script>
+(function(){
+  var titles={sk:'Karta - Špeciálna ponuka - farebná - TraderMaker',en:'Card - Special Offer - coloured - TraderMaker'};
+  function apply(l){
+    document.documentElement.lang=l;
+    document.title=titles[l];
+    document.querySelectorAll('[data-sk]').forEach(function(el){
+      el.textContent=el.getAttribute('data-'+l);
+    });
+    document.querySelectorAll('.lang button').forEach(function(b){
+      b.setAttribute('aria-pressed',b.getAttribute('data-lang')===l?'true':'false');
+    });
+  }
+  document.querySelectorAll('.lang button').forEach(function(b){
+    b.addEventListener('click',function(){apply(b.getAttribute('data-lang'))});
+  });
+})();
+</script>
 </body>
 </html>

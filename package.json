@@ -1,0 +1,9 @@
+{
+  "name": "tradermaker",
+  "version": "1.0.0",
+  "description": "TraderMaker - Educational trading platform",
+  "private": true,
+  "dependencies": {
+    "@vercel/analytics": "^1.4.1"
+  }
+}

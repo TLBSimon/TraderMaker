@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="sk">
+<html lang="sk" data-tm-page="pocasie" data-tm-top="pad">
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -139,11 +139,64 @@ footer p{margin-top:8px}
 .mud .card{position:relative}
 .mud .card:before{content:"●";position:absolute;right:14px;top:10px;font-size:10px;color:rgba(232,185,35,.6);animation:bubbleMud 3s ease-in-out infinite}
 @keyframes bubbleMud{0%,100%{transform:translateY(0);opacity:.4}50%{transform:translateY(-4px);opacity:1}}
-.rain-toggle{position:fixed;right:14px;bottom:14px;z-index:30;background:rgba(10,14,26,.85);color:#E8B923;border:1px solid #E8B923;padding:9px 14px;border-radius:999px;font:600 13px system-ui;cursor:pointer;backdrop-filter:blur(6px)}
+.rain-toggle{position:fixed;right:14px;bottom:78px;z-index:30;background:rgba(10,14,26,.85);color:#E8B923;border:1px solid #E8B923;padding:9px 14px;border-radius:999px;font:600 13px system-ui;cursor:pointer;backdrop-filter:blur(6px)}
 .rain-toggle:hover{background:#E8B923;color:#0A0E1A}
 body.no-rain .rain,body.no-rain .drips{display:none}
 @media(prefers-reduced-motion:reduce){*{animation:none!important}}
 
+</style>
+<style id="tm-walk-css">
+/* ===== TM-WALK: spoločný prechod + navigácia (rovnaké vo všetkých súboroch) ===== */
+html{background:#070E1A}
+#tm-walk{position:fixed;inset:0;z-index:2147483000;background:#070E1A;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:22px;opacity:0;visibility:hidden;pointer-events:none;transition:opacity .15s ease,visibility 0s linear .15s}
+#tm-walk.on{opacity:1;visibility:visible;pointer-events:auto;transition:opacity .15s ease}
+#tm-walk .tm-w-t{font:600 clamp(18px,4vw,26px) Georgia,serif;letter-spacing:.32em;padding-left:.32em;color:#E8E0C8}
+#tm-walk .tm-w-bar{width:min(320px,70vw);height:4px;border-radius:4px;overflow:hidden;background:rgba(232,185,35,.18)}
+#tm-walk .tm-w-bar i{display:block;height:100%;background:#E8B923;transform:scaleX(0);transform-origin:left center}
+#tm-walk.on .tm-w-bar i{transform:scaleX(1);transition:transform 1.1s linear}
+#tm-walk.tm-rm{transition:opacity .2s ease}
+#tm-walk.tm-rm .tm-w-bar{display:none}
+#tm-walk.tm-rm.on .tm-w-bar i{transition:none}
+
+.tm-top{position:fixed;top:0;left:0;right:0;z-index:9000;display:flex;justify-content:space-between;align-items:center;gap:10px;padding:max(6px,env(safe-area-inset-top)) 12px 6px;background:linear-gradient(180deg,rgba(7,14,26,.94),rgba(7,14,26,.6));-webkit-backdrop-filter:blur(8px);backdrop-filter:blur(8px);border-bottom:1px solid rgba(232,185,35,.18)}
+.tm-left{display:flex;align-items:center;gap:12px;min-width:0}
+.tm-lang{display:flex;border:1px solid rgba(232,185,35,.6);border-radius:999px;overflow:hidden;flex:none}
+.tm-lang button{min-width:44px;min-height:44px;background:none;border:0;color:#E8B923;font:700 12px Arial,sans-serif;letter-spacing:.06em;cursor:pointer}
+.tm-lang button[aria-pressed="true"]{background:#E8B923;color:#070E1A}
+.tm-brand{color:#E8B923;font:700 13px Arial,sans-serif;letter-spacing:3px;white-space:nowrap}
+.tm-home{display:inline-flex;align-items:center;min-height:44px;padding:0 16px;border:1px solid rgba(255,255,255,.35);border-radius:999px;color:#fff;text-decoration:none;font:700 12px Arial,sans-serif;letter-spacing:.1em;flex:none}
+.tm-home:hover{background:#E8B923;border-color:#E8B923;color:#070E1A}
+
+.tm-pill{position:fixed;left:50%;bottom:calc(12px + env(safe-area-inset-bottom,0px));transform:translateX(-50%);z-index:9000;display:flex;gap:2px;padding:5px;max-width:calc(100vw - 16px);overflow-x:auto;scrollbar-width:none;border-radius:999px;background:rgba(10,14,26,.92);border:1px solid rgba(232,185,35,.3);-webkit-backdrop-filter:blur(14px);backdrop-filter:blur(14px)}
+.tm-pill::-webkit-scrollbar{display:none}
+.tm-pill a{flex:none;display:inline-flex;align-items:center;min-height:44px;padding:0 12px;border-radius:999px;color:rgba(255,255,255,.68);text-decoration:none;font:600 10px Arial,sans-serif;letter-spacing:.08em;white-space:nowrap}
+.tm-pill a:hover{color:#fff}
+.tm-pill a.on{background:#E8B923;color:#070E1A}
+
+.tm-walknav{display:flex;justify-content:space-between;gap:10px;flex-wrap:wrap;max-width:920px;margin:20px auto 0;padding:0 18px}
+.tm-walknav a{display:inline-flex;align-items:center;min-height:44px;padding:0 20px;border:1px solid rgba(255,255,255,.3);border-radius:999px;color:#fff;text-decoration:none;font:700 12px Arial,sans-serif;letter-spacing:.08em}
+.tm-walknav a.primary{background:#E8B923;border-color:#E8B923;color:#070E1A}
+.content .tm-walknav{padding:0;margin-top:20px}
+
+body{padding-bottom:calc(84px + env(safe-area-inset-bottom,0px))}
+html[data-tm-top="pad"] body{padding-top:62px}
+html:not([data-tm-top="own"]) .live{top:68px!important}
+html[data-tm-top="over"] .hero-text{top:88px!important}
+
+@media(max-width:420px){.tm-brand{font-size:11px;letter-spacing:2px}.tm-home{padding:0 12px}}
+@media(prefers-reduced-motion:reduce){#tm-walk{transition:opacity .2s ease}#tm-walk.on .tm-w-bar i{transition:none}}
+/* ===== /TM-WALK ===== */
+
+/* --- Reálne počasie (Open-Meteo) --- */
+.wxbox{position:relative;z-index:3;max-width:720px;margin:-84px auto 36px;padding:20px;border:1px solid rgba(232,185,35,.45);border-radius:18px;background:rgba(10,14,26,.88);color:#EDE8DC;text-align:center;box-shadow:0 16px 40px rgba(0,0,0,.45)}
+.wxbox h2{font-family:var(--serif);font-size:20px;font-weight:700;color:var(--gold)}
+.wxgrid{display:grid;grid-template-columns:repeat(4,1fr);gap:10px;margin-top:14px}
+.wxgrid div{border:1px solid rgba(255,255,255,.12);border-radius:12px;padding:12px 6px;background:rgba(255,255,255,.04)}
+.wxgrid b{display:block;font:700 22px var(--serif);color:#fff}
+.wxgrid small{display:block;margin-top:4px;font-size:12px;color:#9aa1b5;letter-spacing:.04em}
+.wxstat{margin-top:12px;font-size:13px;color:#b9bdcb}
+.wxstat.old{color:#E8B923;font-weight:600}
+@media(max-width:560px){.wxgrid{grid-template-columns:1fr 1fr}.wxbox{margin:-70px 14px 30px}}
 </style>
 </head>
 <body>
@@ -151,12 +204,6 @@ body.no-rain .rain,body.no-rain .drips{display:none}
 <div class="drips" aria-hidden="true"></div>
 <button class="rain-toggle" id="rainToggle" type="button">🌧️ Prší — vypnúť dážď</button>
 
-<div class="bar">
-  <div class="brand">TraderMaker</div>
-  <div class="lang" role="group" aria-label="Jazyk / Language">
-    <button type="button" data-l="sk" aria-pressed="true">SK</button><span aria-hidden="true">|</span><button type="button" data-l="en" aria-pressed="false">EN</button>
-  </div>
-</div>
 
 <header class="hero"><div class="clouds" aria-hidden="true"><i></i><i></i><i></i></div>
   <h1 data-i="title">Počasie</h1>
@@ -164,6 +211,12 @@ body.no-rain .rain,body.no-rain .drips{display:none}
   <div class="slip" id="slip"></div>
   <p class="line" data-i="line"></p>
 </header>
+
+<section class="wxbox" id="wxBox" aria-live="polite">
+  <h2 data-sk="Skutočné počasie teraz" data-en="Real weather now">Skutočné počasie teraz</h2>
+  <div class="wxgrid" id="wxGrid" hidden></div>
+  <p class="wxstat" id="wxStat">Načítavam počasie…</p>
+</section>
 
 <main>
   <section class="band mud" aria-labelledby="h-mud">
@@ -210,10 +263,11 @@ body.no-rain .rain,body.no-rain .drips{display:none}
   </section>
 </main>
 
+<div data-tm-walknav></div>
 <footer>
   <div class="disc" data-i="disc"></div>
   <p>Šimon Čierťaský - TradeMaker, IČO 57 992 291, Bratislava, tradermaker.app</p>
-  <p><a href="/" data-i="back"></a></p>
+  <p><a data-walk href="index.html" data-i="back"></a></p>
 </footer>
 
 <script>
@@ -287,7 +341,7 @@ var T = {
     src:"Source", locale:"en-GB", pageTitle:"Počasie | Weather Confession | TraderMaker" }
 };
 
-var lang = "sk";
+var lang = (function(){ try { return localStorage.getItem('tm-lang') === 'en' ? 'en' : 'sk'; } catch(e){ return 'sk'; } })();
 
 function pick(v){ return (typeof v === "string") ? v : v[lang]; }
 function esc(s){ return String(s).replace(/[&<>"]/g, function(c){ return {"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;"}[c]; }); }
@@ -326,9 +380,7 @@ function render(){
   });
 }
 
-document.querySelectorAll(".lang button").forEach(function(b){
-  b.addEventListener("click", function(){ lang = b.getAttribute("data-l"); render(); });
-});
+document.addEventListener("tm-lang", function(e){ lang = e.detail === "en" ? "en" : "sk"; render(); });
 render();
 </script>
 
@@ -358,6 +410,252 @@ btn.addEventListener('click',()=>{
   const off=document.body.classList.toggle('no-rain');
   btn.textContent=off ? '☀️ Bez dažďa — zapnúť dážď' : '🌧️ Prší — vypnúť dážď';
 });
+</script>
+<script>
+/* ============================================================
+   POČASIE NAŽIVO (Open-Meteo, bez kľúča). Súradnice a názov mesta meň TU:
+   ============================================================ */
+(function(){
+  var WX_LAT = 48.14, WX_LON = 17.11, WX_PLACE = 'Bratislava';
+  var WX_URL = 'https://api.open-meteo.com/v1/forecast?latitude=' + WX_LAT + '&longitude=' + WX_LON +
+    '&current=temperature_2m,apparent_temperature,wind_speed_10m,precipitation&timezone=auto';
+  var WX_KEY = 'tm-weather-' + WX_LAT + '_' + WX_LON;
+  var grid = document.getElementById('wxGrid'), stat = document.getElementById('wxStat');
+  var state = null, mode = 'loading';   // state = {data:{...}, saved:ms, live:bool}; mode = loading | ok | fail
+  function L(){ return document.documentElement.lang === 'en' ? 'en' : 'sk'; }
+  function num(v){ return typeof v === 'number' && isFinite(v); }
+  function fmt(v, d){ return v.toFixed(d).replace('.', L() === 'en' ? '.' : ','); }
+  function when(ms){ try { return new Date(ms).toLocaleString(L() === 'en' ? 'en-GB' : 'sk-SK', {day:'numeric', month:'numeric', hour:'2-digit', minute:'2-digit'}); } catch(e){ return ''; } }
+  function render(){
+    var sk = L() === 'sk';
+    if(!state){
+      grid.hidden = true; stat.className = 'wxstat';
+      stat.textContent = mode === 'fail' ? (sk ? 'Počasie sa práve nedá načítať.' : 'Weather cannot be loaded right now.') : (sk ? 'Načítavam počasie…' : 'Loading weather…');
+      return;
+    }
+    var d = state.data;
+    grid.hidden = false;
+    grid.innerHTML =
+      '<div><b>' + fmt(d.t, 1) + ' °C</b><small>' + (sk ? 'Teplota' : 'Temperature') + '</small></div>' +
+      '<div><b>' + fmt(d.a, 1) + ' °C</b><small>' + (sk ? 'Pocitovo' : 'Feels like') + '</small></div>' +
+      '<div><b>' + fmt(d.w, 1) + ' km/h</b><small>' + (sk ? 'Vietor' : 'Wind') + '</small></div>' +
+      '<div><b>' + fmt(d.p, 1) + ' mm</b><small>' + (sk ? 'Dážď / zrážky' : 'Rain / precipitation') + '</small></div>';
+    stat.className = 'wxstat' + (state.live ? '' : ' old');
+    stat.textContent = state.live
+      ? WX_PLACE + ' · ' + (sk ? 'Open-Meteo, namerané ' : 'Open-Meteo, measured ') + when(d.time)
+      : (sk ? 'Posledná známa hodnota' : 'Last known value') + ' · ' + WX_PLACE + ' · ' + (sk ? 'uložené ' : 'saved ') + when(state.saved);
+  }
+  function fail(){
+    var saved = null;
+    try { saved = JSON.parse(localStorage.getItem(WX_KEY)); } catch(e){}
+    if(saved && saved.data && num(saved.data.t) && num(saved.data.a) && num(saved.data.w) && num(saved.data.p)){
+      state = {data: saved.data, saved: saved.saved, live: false};
+      render();
+    } else {
+      state = null; mode = 'fail'; render();
+    }
+  }
+  function load(){
+    var ctrl = window.AbortController ? new AbortController() : null;
+    var to = setTimeout(function(){ if(ctrl) ctrl.abort(); }, 8000);
+    fetch(WX_URL, ctrl ? {signal: ctrl.signal} : {})
+      .then(function(r){ if(!r.ok) throw new Error('http'); return r.json(); })
+      .then(function(j){
+        clearTimeout(to);
+        var c = j && j.current;
+        if(!c || !num(c.temperature_2m) || !num(c.apparent_temperature) || !num(c.wind_speed_10m) || !num(c.precipitation)) throw new Error('data');
+        var data = {t: c.temperature_2m, a: c.apparent_temperature, w: c.wind_speed_10m, p: c.precipitation, time: c.time ? Date.parse(c.time) || Date.now() : Date.now()};
+        var saved = Date.now();
+        try { localStorage.setItem(WX_KEY, JSON.stringify({data: data, saved: saved})); } catch(e){}
+        state = {data: data, saved: saved, live: true};
+        render();
+      })
+      .catch(function(){ clearTimeout(to); fail(); });
+  }
+  document.addEventListener('tm-lang', render);
+  render();
+  load();
+})();
+</script>
+<script id="tm-walk-js">
+/* ===== TM-WALK: spoločný prechod + navigácia + SK/EN (ten istý kód v každom súbore) ===== */
+(function () {
+  'use strict';
+  if (window.TM && window.TM.ready) return;
+
+  /* ---------- NASTAVENIA (tu meň) ---------- */
+  var LANG_KEY = 'tm-lang';
+  var WALK_MS = 1100;                       // trvanie prechodu v ms
+  var PILL = [                              // spodný pill: [súbor bez .html, názov]
+    ['ostrov', 'OSTROV'], ['sud', 'SÚD'], ['zahrada', 'ZÁHRADA'], ['stanica', 'STANICA'],
+    ['majak', 'MAJÁK'], ['pivnica', 'PIVNICA'], ['pocasie', 'POČASIE'],
+    ['trhovisko', 'TRHOVISKO'], ['lupez', 'LÚPEŽ'], ['vestica', 'VEŠTICA']
+  ];
+  var FLOW = {                              // SPÄŤ / POKRAČOVAŤ V PRECHÁDZKE pre každú stránku
+    brana: { back: 'index', next: 'specialna_ponuka' },
+    specialna_ponuka: { back: 'index', next: 'pocasie' },
+    ostrov: { back: 'index', next: 'zahrada' },
+    zahrada: { back: 'pivnica', next: 'sud' },
+    sud: { back: 'zahrada', next: 'stanica' },
+    stanica: { back: 'sud', next: 'majak' },
+    majak: { back: 'stanica', next: 'pivnica' },
+    pivnica: { back: 'majak', next: 'zahrada' },
+    pocasie: { back: 'specialna_ponuka', next: 'trhovisko' },
+    trhovisko: { back: 'pocasie', next: 'lupez' },
+    lupez: { back: 'trhovisko', next: 'vestica' },
+    vestica: { back: 'lupez', next: 'ostrov' }
+  };
+  /* ---------- /NASTAVENIA ---------- */
+
+  var root = document.documentElement;
+  var PAGE = root.getAttribute('data-tm-page') || '';
+  var TOP = root.getAttribute('data-tm-top') || 'over';   // over | pad | own
+  var busy = false, ov = null;
+
+  function reduced() { return !!(window.matchMedia && matchMedia('(prefers-reduced-motion: reduce)').matches); }
+
+  /* ---------- jazyk ---------- */
+  function getLang() { try { return localStorage.getItem(LANG_KEY) === 'en' ? 'en' : 'sk'; } catch (e) { return 'sk'; } }
+  function applyLang(l) {
+    root.lang = l;
+    document.querySelectorAll('[data-sk]').forEach(function (el) {
+      var v = el.getAttribute('data-' + l);
+      if (v !== null) el.textContent = v;
+    });
+    document.querySelectorAll('[data-tmlang]').forEach(function (b) {
+      b.setAttribute('aria-pressed', b.getAttribute('data-tmlang') === l ? 'true' : 'false');
+    });
+  }
+  function setLang(l) {
+    l = l === 'en' ? 'en' : 'sk';
+    try { localStorage.setItem(LANG_KEY, l); } catch (e) {}
+    applyLang(l);
+    document.dispatchEvent(new CustomEvent('tm-lang', { detail: l }));
+  }
+
+  /* ---------- je odkaz na inú stránku TraderMaker? ---------- */
+  function internal(a) {
+    if (!a || !a.getAttribute) return false;
+    var h = a.getAttribute('href');
+    if (!h || h.charAt(0) === '#' || /^(mailto:|tel:|javascript:)/i.test(h)) return false;
+    if (a.hasAttribute('download') || a.target === '_blank') return false;
+    if (a.protocol !== location.protocol || a.host !== location.host) return false;
+    if (/\/en\//.test(a.pathname)) return false;                     // anglická verzia webu nechávame bez prechodu
+    if (!/(\.html?|\/)$/.test(a.pathname)) return false;
+    if (a.pathname === location.pathname && a.search === location.search && a.hash) return false;
+    return true;
+  }
+  function mark(scope) {
+    (scope || document).querySelectorAll('a[href]:not([data-walk])').forEach(function (a) {
+      if (internal(a)) a.setAttribute('data-walk', '');
+    });
+  }
+
+  /* ---------- prechod PRECHÁDZKA… ---------- */
+  function makeOverlay() {
+    ov = document.createElement('div');
+    ov.id = 'tm-walk';
+    ov.setAttribute('aria-hidden', 'true');
+    ov.innerHTML = '<div class="tm-w-t">PRECHÁDZKA…</div><div class="tm-w-bar"><i></i></div>';
+    document.body.appendChild(ov);
+  }
+  function walk(url) {
+    if (busy) return;
+    busy = true;
+    var r = reduced();
+    ov.classList.toggle('tm-rm', r);
+    void ov.offsetWidth;                    // zafixuje počiatočný stav lišty (0 %)
+    ov.classList.add('on');
+    setTimeout(function () { location.href = url; }, r ? 200 : WALK_MS);
+  }
+  document.addEventListener('click', function (e) {
+    if (e.defaultPrevented || e.button || e.metaKey || e.ctrlKey || e.shiftKey || e.altKey) return;
+    var a = e.target.closest && e.target.closest('a[href]');
+    if (!a || !(a.hasAttribute('data-walk') || internal(a)) || !internal(a)) return;
+    e.preventDefault();
+    if (a.pathname === location.pathname && a.search === location.search) { window.scrollTo(0, 0); return; }
+    walk(a.href);
+  });
+  window.addEventListener('pageshow', function (e) {
+    if (e.persisted && ov) { busy = false; ov.classList.remove('on'); }
+  });
+
+  /* ---------- navigácia ---------- */
+  function buildTop() {
+    if (TOP === 'own' || document.querySelector('.tm-top')) return;
+    var h = document.createElement('header');
+    h.className = 'tm-top';
+    var toIndex = PAGE !== 'index';
+    h.innerHTML =
+      '<div class="tm-left"><div class="tm-lang" role="group" aria-label="Jazyk / Language">' +
+      '<button type="button" data-tmlang="sk">SK</button><button type="button" data-tmlang="en">EN</button></div>' +
+      '<span class="tm-brand">TRADERMAKER</span></div>' +
+      (toIndex
+        ? '<a class="tm-home" href="index.html" data-walk data-sk="DOMOV" data-en="HOME">DOMOV</a>'
+        : '<a class="tm-home" href="ostrov.html" data-walk>OSTROV</a>');
+    document.body.insertBefore(h, document.body.firstChild);
+    h.querySelectorAll('[data-tmlang]').forEach(function (b) {
+      b.addEventListener('click', function () { setLang(b.getAttribute('data-tmlang')); });
+    });
+  }
+  function buildPill() {
+    if (document.querySelector('.tm-pill')) return;
+    var n = document.createElement('nav');
+    n.className = 'tm-pill';
+    n.setAttribute('aria-label', 'TraderMaker');
+    n.innerHTML = PILL.map(function (p) {
+      return '<a href="' + p[0] + '.html" data-walk' + (p[0] === PAGE ? ' class="on" aria-current="page"' : '') + '>' + p[1] + '</a>';
+    }).join('');
+    document.body.appendChild(n);
+    var on = n.querySelector('a.on');
+    if (on) n.scrollLeft = on.offsetLeft - (n.clientWidth - on.offsetWidth) / 2;
+  }
+  function buildWalkNav() {
+    var f = FLOW[PAGE], slot = document.querySelector('[data-tm-walknav]');
+    if (!f || !slot) return;
+    slot.className = 'tm-walknav';
+    slot.innerHTML =
+      '<a href="' + f.back + '.html" data-walk data-sk="SPÄŤ" data-en="BACK">SPÄŤ</a>' +
+      '<a class="primary" href="' + f.next + '.html" data-walk data-sk="POKRAČOVAŤ V PRECHÁDZKE" data-en="CONTINUE THE WALK">POKRAČOVAŤ V PRECHÁDZKE</a>';
+  }
+
+  /* ---------- príchod na novú stránku: hero zoom 1.08 → 1.0 (2,4 s) + fade-up (0,6 s, stagger 80 ms) ---------- */
+  function arrive() {
+    if (!document.body.animate) return;
+    if (reduced()) { document.body.animate([{ opacity: 0 }, { opacity: 1 }], { duration: 200 }); return; }
+    var hero = document.querySelector('[data-tm-hero]') || document.querySelector('.stage') ||
+      document.querySelector('.hero > img') || document.querySelector('.hero') ||
+      document.querySelector('main section') || document.querySelector('.gate') || document.querySelector('.card');
+    if (hero) hero.animate([{ scale: 1.08 }, { scale: 1 }], { duration: 2400, easing: 'cubic-bezier(.22,1,.36,1)' });
+    var sel = '[data-tm-fade],.hero-text>*,.hero h1,.hero .en,.hero .line,.hero .slip,.hero .what,.content,.truth,.gate,.card,.tm-walknav';
+    var list = [].slice.call(document.querySelectorAll(sel)).filter(function (el, i, all) {
+      var r = el.getBoundingClientRect();
+      if (r.top > innerHeight * 1.2) return false;
+      return !all.some(function (o) { return o !== el && o.contains(el); });
+    }).slice(0, 10);
+    list.forEach(function (el, i) {
+      el.animate([{ opacity: 0, translate: '0 14px' }, { opacity: 1, translate: '0 0' }],
+        { duration: 600, delay: i * 80, easing: 'ease-out', fill: 'backwards' });
+    });
+  }
+
+  /* ---------- štart ---------- */
+  makeOverlay();
+  buildTop();
+  buildPill();
+  buildWalkNav();
+  applyLang(getLang());
+  mark();
+  var t = 0;
+  if (window.MutationObserver) {
+    new MutationObserver(function () { clearTimeout(t); t = setTimeout(mark, 150); })
+      .observe(document.body, { childList: true, subtree: true });
+  }
+  requestAnimationFrame(arrive);
+
+  window.TM = { ready: true, walk: walk, lang: getLang, setLang: setLang };
+})();
+/* ===== /TM-WALK ===== */
 </script>
 </body>
 </html>
